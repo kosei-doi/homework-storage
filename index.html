@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解答管理システム</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>解答管理システム</h1>
+            <p class="subtitle">すべての解答を一覧表示・閲覧できます</p>
+        </header>
+
+        <div class="controls">
+            <div class="filter-section">
+                <label for="filterSubject">科目で絞り込み:</label>
+                <select id="filterSubject">
+                    <option value="">すべて</option>
+                </select>
+
+                <label for="filterSection">セクションで絞り込み:</label>
+                <select id="filterSection">
+                    <option value="">すべて</option>
+                </select>
+
+                <label for="filterQuestion">問番号で絞り込み:</label>
+                <select id="filterQuestion">
+                    <option value="">すべて</option>
+                </select>
+            </div>
+
+            <div class="sort-section">
+                <label for="sortBy">並び替え:</label>
+                <select id="sortBy">
+                    <option value="date-desc">日付（新しい順）</option>
+                    <option value="date-asc">日付（古い順）</option>
+                    <option value="question">問番号順</option>
+                    <option value="subject">科目順</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="solutionsList" class="solutions-list">
+            <p class="loading">解答を読み込んでいます...</p>
+        </div>
+    </div>
+
+    <!-- モーダルウィンドウ -->
+    <div id="solutionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

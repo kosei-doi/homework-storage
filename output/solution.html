@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問５解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>(1) 部分空間 $W = \text{Span}\left\{\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}\right\}$ の正規直交基底をひとつ求めよ。</p>
+            <p>(2) $\begin{pmatrix} 1 \\ 3 \\ k \end{pmatrix}$ が $W$ に含まれるように $k$ の値を定め、(1)で求めた正規直交基底の線形結合で表せ。</p>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">(1) 直交基底を求めます。</div>
+            <p>まず、与えられたベクトルから直交基底を構成します。Gram-Schmidtの直交化法を用います。この方法は、与えられた基底ベクトルから順に、既に求めた直交ベクトルへの正射影を引くことで、互いに直交するベクトルを構成します。</p>
+            <div class="formula">
+                $$\boldsymbol{v}_1 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}, \quad \boldsymbol{v}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>最初の直交基底ベクトルを $\boldsymbol{u}_1 = \boldsymbol{v}_1$ とします。これは、最初のベクトルをそのまま使用することを意味します。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_1 = \boldsymbol{v}_1 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>次に、$\boldsymbol{v}_2$ から $\boldsymbol{u}_1$ への正射影を引いて、$\boldsymbol{u}_1$ に直交するベクトル $\boldsymbol{u}_2$ を求めます。正射影の公式を用いると、次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = \boldsymbol{v}_2 - \frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1}\boldsymbol{u}_1$$
+            </div>
+            <p>この式は、$\boldsymbol{v}_2$ から $\boldsymbol{u}_1$ 方向の成分を除去することで、$\boldsymbol{u}_1$ に直交するベクトルを得ることを意味します。まず、必要な内積を計算します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{v}_2$ と $\boldsymbol{u}_1$ の内積を計算します。</p>
+                <p>$\boldsymbol{v}_2 \cdot \boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} = 1 \cdot (-1) + 1 \cdot 0 + 0 \cdot 1 = -1 + 0 + 0 = -1$</p>
+                <p>$\boldsymbol{u}_1$ のノルムの2乗を計算します。</p>
+                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_1 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} = (-1)^2 + 0^2 + 1^2 = 1 + 0 + 1 = 2$</p>
+            </div>
+            <p>これらの値を用いて、$\boldsymbol{u}_2$ を計算します。正射影の係数は $\frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1} = \frac{-1}{2} = -\frac{1}{2}$ となります。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} - \frac{-1}{2}\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} + \frac{1}{2}\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} + \begin{pmatrix} -\frac{1}{2} \\ 0 \\ \frac{1}{2} \end{pmatrix}$$
+            </div>
+            <p>ベクトルの和を計算します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{u}_2 = \begin{pmatrix} 1 - \frac{1}{2} \\ 1 + 0 \\ 0 + \frac{1}{2} \end{pmatrix} = \begin{pmatrix} \frac{1}{2} \\ 1 \\ \frac{1}{2} \end{pmatrix}$</p>
+            </div>
+            <p>整数比にするために、$\boldsymbol{u}_2$ を $2$ 倍します。これは、直交性を保ったまま、より扱いやすい形にするためです。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = 2 \cdot \begin{pmatrix} \frac{1}{2} \\ 1 \\ \frac{1}{2} \end{pmatrix} = \begin{pmatrix} 1 \\ 2 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>したがって、直交基底は次の通りです。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_1 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}, \quad \boldsymbol{u}_2 = \begin{pmatrix} 1 \\ 2 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>直交性を確認します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 2 \\ 1 \end{pmatrix} = (-1) \cdot 1 + 0 \cdot 2 + 1 \cdot 1 = -1 + 0 + 1 = 0$</p>
+                <p>したがって、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ は互いに直交しています。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(2) 正規直交基底を求めます。</div>
+            <p>直交基底の各ベクトルをその長さで割ることで、正規直交基底を得ます。正規直交基底とは、互いに直交し、かつ各ベクトルの長さが $1$ であるような基底です。各ベクトルのノルムを計算します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{u}_1$ のノルムを計算します。</p>
+                <p>$|\boldsymbol{u}_1| = \sqrt{(-1)^2 + 0^2 + 1^2} = \sqrt{1 + 0 + 1} = \sqrt{2}$</p>
+                <p>$\boldsymbol{u}_2$ のノルムを計算します。</p>
+                <p>$|\boldsymbol{u}_2| = \sqrt{1^2 + 2^2 + 1^2} = \sqrt{1 + 4 + 1} = \sqrt{6}$</p>
+            </div>
+            <p>各ベクトルをそのノルムで割ります。これにより、各ベクトルの長さが $1$ になります。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_1 = \frac{\boldsymbol{u}_1}{|\boldsymbol{u}_1|} = \frac{1}{\sqrt{2}}\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} = \begin{pmatrix} -\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix}$$
+            </div>
+            <div class="formula">
+                $$\boldsymbol{q}_2 = \frac{\boldsymbol{u}_2}{|\boldsymbol{u}_2|} = \frac{1}{\sqrt{6}}\begin{pmatrix} 1 \\ 2 \\ 1 \end{pmatrix} = \begin{pmatrix} \frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{6}} \end{pmatrix}$$
+            </div>
+            <p>各ベクトルを正規化することで、長さが $1$ のベクトルが得られます。この操作は直交性を保ちます。</p>
+            <p>したがって、正規直交基底は次の通りです。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_1 = \begin{pmatrix} -\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix}, \quad \boldsymbol{q}_2 = \begin{pmatrix} \frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{6}} \end{pmatrix}$$
+            </div>
+            <div class="explanation">
+                <p>正規直交基底とは、互いに直交し、かつ各ベクトルの長さが $1$ であるような基底です。直交基底の各ベクトルをそのノルムで割ることで、長さを $1$ にすることができます。この操作は直交性を保ちます。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(3) $k$ の値を定めます。</div>
+            <p>$\begin{pmatrix} 1 \\ 3 \\ k \end{pmatrix}$ が $W$ に含まれるためには、このベクトルが $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せる必要があります。すなわち、次の連立方程式が解を持つ必要があります。</p>
+            <div class="formula">
+                $$\begin{pmatrix} 1 \\ 3 \\ k \end{pmatrix} = c_1\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} + c_2\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>この式を成分ごとに書き下すと、次の連立方程式が得られます。</p>
+            <div class="formula">
+                $$\begin{cases} -c_1 + c_2 = 1 & \text{(第1成分)} \\ c_2 = 3 & \text{(第2成分)} \\ c_1 = k & \text{(第3成分)} \end{cases}$$
+            </div>
+            <p>第2式から $c_2 = 3$ が得られます。これを第1式に代入して $c_1$ を求めます。</p>
+            <div class="calculation">
+                <p>$-c_1 + c_2 = 1$ に $c_2 = 3$ を代入すると、</p>
+                <p>$-c_1 + 3 = 1$</p>
+                <p>$-c_1 = 1 - 3 = -2$</p>
+                <p>$c_1 = 2$</p>
+            </div>
+            <p>第3式から $c_1 = k$ であるため、$k = 2$ となります。</p>
+            <div class="formula">
+                $$k = 2$$
+            </div>
+            <p>したがって、$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ は $W$ に含まれます。</p>
+            <div class="note">
+                <p>連立方程式が解を持つためには、3つの式が矛盾しない必要があります。この場合、$c_1 = 2$、$c_2 = 3$、$k = 2$ がすべての式を満たすため、解が存在します。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(4) 正規直交基底の線形結合で表します。</div>
+            <p>定理3より、正規直交基底 $\boldsymbol{q}_1, \boldsymbol{q}_2$ に対するベクトル $\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ の成分表示は、各係数が内積で与えられます。</p>
+            <div class="formula">
+                $$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} = (\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} \cdot \boldsymbol{q}_1)\boldsymbol{q}_1 + (\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} \cdot \boldsymbol{q}_2)\boldsymbol{q}_2$$
+            </div>
+            <p>各内積を計算します。正規直交基底の場合、各係数は単純に内積で与えられます。</p>
+            <div class="calculation">
+                <p>$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ と $\boldsymbol{q}_1$ の内積を計算します。</p>
+                <p>$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} \cdot \boldsymbol{q}_1 = \begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} \cdot \begin{pmatrix} -\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix} = 1 \cdot \left(-\frac{1}{\sqrt{2}}\right) + 3 \cdot 0 + 2 \cdot \frac{1}{\sqrt{2}} = -\frac{1}{\sqrt{2}} + \frac{2}{\sqrt{2}} = \frac{1}{\sqrt{2}}$</p>
+                <p>$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ と $\boldsymbol{q}_2$ の内積を計算します。</p>
+                <p>$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} \cdot \boldsymbol{q}_2 = \begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} \cdot \begin{pmatrix} \frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{6}} \end{pmatrix} = 1 \cdot \frac{1}{\sqrt{6}} + 3 \cdot \frac{2}{\sqrt{6}} + 2 \cdot \frac{1}{\sqrt{6}} = \frac{1}{\sqrt{6}} + \frac{6}{\sqrt{6}} + \frac{2}{\sqrt{6}} = \frac{9}{\sqrt{6}} = \frac{9\sqrt{6}}{6} = \frac{3\sqrt{6}}{2}$</p>
+            </div>
+            <p>したがって、線形結合は次のようになります。</p>
+            <div class="formula">
+                $$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} = \frac{1}{\sqrt{2}}\boldsymbol{q}_1 + \frac{3\sqrt{6}}{2}\boldsymbol{q}_2$$
+            </div>
+            <div class="explanation">
+                <p>定理3により、正規直交基底に対する成分表示は、各基底ベクトルとの内積が係数となります。これは、各基底ベクトルへの正射影の係数に他なりません。正規直交基底の場合、係数の計算が特に簡単になります。</p>
+            </div>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答え】</div>
+            <p>(1) 部分空間 $W$ の正規直交基底は次の通りです。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_1 = \begin{pmatrix} -\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix}, \quad \boldsymbol{q}_2 = \begin{pmatrix} \frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{6}} \end{pmatrix}$$
+            </div>
+            <p>(2) $k = 2$ のとき、$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ は $W$ に含まれ、正規直交基底の線形結合で次のように表されます。</p>
+            <div class="formula">
+                $$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix} = \frac{1}{\sqrt{2}}\boldsymbol{q}_1 + \frac{3\sqrt{6}}{2}\boldsymbol{q}_2$$
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>求めた結果が正しいことを確認します。3つの観点から検証します。</p>
+            <p>まず、$\boldsymbol{q}_1$ と $\boldsymbol{q}_2$ が正規直交基底であることを確認します。互いに直交し、かつ各ベクトルの長さが $1$ であることを確認します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{q}_1$ と $\boldsymbol{q}_2$ の内積を計算します。</p>
+                <p>$\boldsymbol{q}_1 \cdot \boldsymbol{q}_2 = \begin{pmatrix} -\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix} \cdot \begin{pmatrix} \frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{6}} \end{pmatrix} = \left(-\frac{1}{\sqrt{2}}\right) \cdot \frac{1}{\sqrt{6}} + 0 \cdot \frac{2}{\sqrt{6}} + \frac{1}{\sqrt{2}} \cdot \frac{1}{\sqrt{6}} = -\frac{1}{\sqrt{12}} + \frac{1}{\sqrt{12}} = 0$</p>
+                <p>$\boldsymbol{q}_1$ のノルムを計算します。</p>
+                <p>$|\boldsymbol{q}_1| = \sqrt{\left(-\frac{1}{\sqrt{2}}\right)^2 + 0^2 + \left(\frac{1}{\sqrt{2}}\right)^2} = \sqrt{\frac{1}{2} + 0 + \frac{1}{2}} = \sqrt{1} = 1$</p>
+                <p>$\boldsymbol{q}_2$ のノルムを計算します。</p>
+                <p>$|\boldsymbol{q}_2| = \sqrt{\left(\frac{1}{\sqrt{6}}\right)^2 + \left(\frac{2}{\sqrt{6}}\right)^2 + \left(\frac{1}{\sqrt{6}}\right)^2} = \sqrt{\frac{1}{6} + \frac{4}{6} + \frac{1}{6}} = \sqrt{\frac{6}{6}} = \sqrt{1} = 1$</p>
+                <p>したがって、$\boldsymbol{q}_1$ と $\boldsymbol{q}_2$ は互いに直交し、かつ各ベクトルの長さが $1$ です。これらは正規直交基底をなします。</p>
+            </div>
+            <p>次に、$k = 2$ のとき、$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ が $W$ に含まれることを確認します。連立方程式の解から、$c_1 = 2$、$c_2 = 3$ であることが分かっているので、この線形結合を計算します。</p>
+            <div class="calculation">
+                <p>$2\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} + 3\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 2 \end{pmatrix} + \begin{pmatrix} 3 \\ 3 \\ 0 \end{pmatrix} = \begin{pmatrix} -2 + 3 \\ 0 + 3 \\ 2 + 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$</p>
+                <p>したがって、$\begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$ は $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せるため、$W$ に含まれます。</p>
+            </div>
+            <p>最後に、求めた線形結合が正しいことを確認します。</p>
+            <div class="calculation">
+                <p>右辺を計算します。</p>
+                <p>$\frac{1}{\sqrt{2}}\boldsymbol{q}_1 + \frac{3\sqrt{6}}{2}\boldsymbol{q}_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} -\frac{1}{\sqrt{2}} \\ 0 \\ \frac{1}{\sqrt{2}} \end{pmatrix} + \frac{3\sqrt{6}}{2}\begin{pmatrix} \frac{1}{\sqrt{6}} \\ \frac{2}{\sqrt{6}} \\ \frac{1}{\sqrt{6}} \end{pmatrix}$</p>
+                <p>各項を計算します。</p>
+                <p>$= \begin{pmatrix} -\frac{1}{2} \\ 0 \\ \frac{1}{2} \end{pmatrix} + \begin{pmatrix} \frac{3\sqrt{6}}{2} \cdot \frac{1}{\sqrt{6}} \\ \frac{3\sqrt{6}}{2} \cdot \frac{2}{\sqrt{6}} \\ \frac{3\sqrt{6}}{2} \cdot \frac{1}{\sqrt{6}} \end{pmatrix}$</p>
+                <p>第2項の各成分を計算します。</p>
+                <p>$= \begin{pmatrix} -\frac{1}{2} \\ 0 \\ \frac{1}{2} \end{pmatrix} + \begin{pmatrix} \frac{3}{2} \\ 3 \\ \frac{3}{2} \end{pmatrix} = \begin{pmatrix} -\frac{1}{2} + \frac{3}{2} \\ 0 + 3 \\ \frac{1}{2} + \frac{3}{2} \end{pmatrix} = \begin{pmatrix} 1 \\ 3 \\ 2 \end{pmatrix}$</p>
+                <p>したがって、求めた線形結合は正しいです。</p>
+            </div>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>
+
