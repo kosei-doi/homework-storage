@@ -61,7 +61,7 @@ async function extractSolutionInfo(filePath, fileName) {
         // input.txtから情報を取得（現在の解答の場合）
         if (fileName === 'solution.html') {
             try {
-                const inputResponse = await fetch('input.txt');
+                const inputResponse = await fetch('general/input.txt');
                 if (inputResponse.ok) {
                     const inputText = await inputResponse.text();
                     const lines = inputText.split('\n');
@@ -77,18 +77,18 @@ async function extractSolutionInfo(filePath, fileName) {
                     }
                 }
             } catch (e) {
-                console.warn('Failed to fetch input.txt:', e);
+                console.warn('Failed to fetch general/input.txt:', e);
             }
 
             // assignment.txtから問番号を取得
             try {
-                const assignmentResponse = await fetch('assignment.txt');
+                const assignmentResponse = await fetch('general/assignment.txt');
                 if (assignmentResponse.ok) {
                     const assignmentText = await assignmentResponse.text();
                     question = assignmentText.trim();
                 }
             } catch (e) {
-                console.warn('Failed to fetch assignment.txt:', e);
+                console.warn('Failed to fetch general/assignment.txt:', e);
             }
         }
 
@@ -133,8 +133,8 @@ async function extractSolutionInfo(filePath, fileName) {
 async function loadSolutions() {
     const solutionsList = [];
     
-    // 現在の解答（output/solution.html）
-    const currentSolution = await extractSolutionInfo('output/solution.html', 'solution.html');
+    // 現在の解答（general/output/solution.html）
+    const currentSolution = await extractSolutionInfo('general/output/solution.html', 'solution.html');
     if (currentSolution) {
         solutionsList.push(currentSolution);
     }
@@ -145,14 +145,41 @@ async function loadSolutions() {
     
     // 方法1: 既知のアーカイブファイルをチェック（必要に応じて手動で追加）
     // アーカイブファイル名をここに追加してください
-    const knownArchives = []; // 例: ['solution_問５_20250101_120000.html', 'solution_問３_20250102_140000.html']
+    const knownArchives = [
+        'solution_問3 (2)_20251124_141437.html',
+        'solution_問3 (１)_20251124_143914.html',
+        'solution_問3 (３)_20251124_142313.html'
+    ];
     
+    // 既知のアーカイブファイルを読み込む
     for (const archiveFile of knownArchives) {
-        const archivePath = `archive/${archiveFile}`;
+        const archivePath = `general/archive/${archiveFile}`;
         const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
         if (archiveInfo) {
             solutionsList.push(archiveInfo);
         }
+    }
+
+    // 方法1.5: アーカイブディレクトリのインデックスファイルを読み込む（存在する場合）
+    try {
+        const indexResponse = await fetch('general/archive/index.txt');
+        if (indexResponse.ok) {
+            const indexText = await indexResponse.text();
+            const archiveFiles = indexText.split('\n').map(line => line.trim()).filter(line => line && line.endsWith('.html'));
+            for (const archiveFile of archiveFiles) {
+                // 既に読み込んだファイルはスキップ
+                if (!knownArchives.includes(archiveFile)) {
+                    const archivePath = `general/archive/${archiveFile}`;
+                    const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
+                    if (archiveInfo) {
+                        solutionsList.push(archiveInfo);
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        // インデックスファイルが存在しない場合は無視
+        console.debug('Archive index file not found, using known archives only');
     }
 
     // 方法2: メタデータJSONファイルを読み込む（推奨）

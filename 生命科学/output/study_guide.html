@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命科学(B) 学習ガイド - 超わかりやすい学習資料</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            border-bottom: 5px solid #3498db;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2980b9;
+            font-size: 2em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 6px solid #2196f3;
+            border-radius: 5px;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #7f8c8d;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .important {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .memory-tip {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .memory-tip::before {
+            content: "💡 記憶のヒント";
+            font-weight: bold;
+            color: #2e7d32;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .why-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .why-box::before {
+            content: "❓ なぜそうなるのか？";
+            font-weight: bold;
+            color: #1565c0;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        .flow-diagram {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .key-concept {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .key-concept h3 {
+            color: white;
+            border: none;
+            padding: 0;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #9c27b0;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+
+        .code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e91e63;
+        }
+
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12);
+            margin: 40px 0;
+            border-radius: 2px;
+        }
+
+        .story-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 3px solid #e17055;
+        }
+
+        .story-box::before {
+            content: "📖 ストーリーで記憶";
+            font-weight: bold;
+            color: #d63031;
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧬 生命科学(B) 学習ガイド</h1>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 30px;">
+            早稲田大学 電気・情報生命工学科 | 精緻化と記憶術を意識した超わかりやすい学習資料
+        </p>
+
+        <div class="highlight-box">
+            <strong>📚 この資料の使い方</strong>
+            <ul>
+                <li><strong>精緻化</strong>：各セクションの「なぜそうなるのか？」を必ず読み、理解を深める</li>
+                <li><strong>記憶術</strong>：「記憶のヒント」や「ストーリーで記憶」を活用して視覚的に記憶する</li>
+                <li><strong>図表</strong>：フローチャートや比較表を参考に、自分でも図を描いてみる</li>
+                <li><strong>復習</strong>：重要な概念は色分けされているので、繰り返し確認する</li>
+            </ul>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション1: 生物の定義 -->
+        <h2>第1章：生物とは何か？</h2>
+        
+        <div class="key-concept">
+            <h3>生物の3つの定義</h3>
+            <ol style="color: white; font-size: 1.1em;">
+                <li><strong>細胞構造</strong>：外部と「膜」で区切られている</li>
+                <li><strong>自己複製</strong>：自分の複製をつくる</li>
+                <li><strong>代謝</strong>：外部から物質を取り入れ反応を行う</li>
+            </ol>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜこの3つが重要なのか？</strong></p>
+            <p>生命を定義するには、生物を非生物から区別する明確な基準が必要です。膜がなければ内外の境界がないため、環境と区別できません。自己複製がなければ、個体は存在しても生命の連続性が保てません。代謝がなければ、エネルギーを獲得して活動を維持できません。この3つが揃って初めて「生命」といえるのです。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「細胞・複製・代謝」の3拍子</strong></p>
+            <p>「細胞（さいぼう）」「複製（ふくせい）」「代謝（たいしゃ）」の頭文字を取って「さい・ふく・たい」と覚えましょう。また、細胞は「部屋」、複製は「分身」、代謝は「食べる」とイメージすると覚えやすくなります。</p>
+        </div>
+
+        <h3>ウイルスは生物か？</h3>
+        <div class="comparison-table">
+            <table style="width: 100%;">
+                <tr>
+                    <th>特徴</th>
+                    <th>生物</th>
+                    <th>ウイルス</th>
+                </tr>
+                <tr>
+                    <td><strong>膜による区切り</strong></td>
+                    <td>✅ 必ず細胞膜がある</td>
+                    <td>⚠️ 膜があるものとないものがある</td>
+                </tr>
+                <tr>
+                    <td><strong>自己複製</strong></td>
+                    <td>✅ 自分で複製装置を持つ</td>
+                    <td>❌ 宿主細胞の複製装置を使う</td>
+                </tr>
+                <tr>
+                    <td><strong>代謝</strong></td>
+                    <td>✅ 自分で代謝を行う</td>
+                    <td>❌ 代謝装置を持たない</td>
+                </tr>
+                <tr>
+                    <td><strong>結論</strong></td>
+                    <td><strong>生物</strong></td>
+                    <td><strong>非生物</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜウイルスは非生物なのか？</strong></p>
+            <p>ウイルスは宿主細胞に感染しないと何もできません。自分だけでは複製もできず、代謝もできません。これは「生物」の定義を満たさないため、現在の生物学では「非生物」と分類されています。ただし、ウイルスは生物と非生物の境界に位置する興味深い存在です。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション2: セントラルドグマ -->
+        <h2>第2章：セントラルドグマ - 遺伝情報の流れ</h2>
+
+        <div class="story-box">
+            <p><strong>遺伝情報の旅の物語</strong></p>
+            <p>細胞の中では、遺伝情報が「DNA」という設計図から「RNA」という写しを経て、「タンパク質」という実物を作り出す旅をしています。この旅は「セントラルドグマ」と呼ばれ、生命の最も基本的な仕組みです。</p>
+            <p><strong>旅のルート：</strong></p>
+            <ol>
+                <li><strong>DNA（設計図の保管庫）</strong>：核の中で大切に保管されている</li>
+                <li><strong>転写（写し取り）</strong>：必要な部分だけをRNAに写す</li>
+                <li><strong>RNA（運び屋）</strong>：核から細胞質へ情報を運ぶ</li>
+                <li><strong>翻訳（組み立て）</strong>：RNAの情報をタンパク質に変換</li>
+                <li><strong>タンパク質（実物）</strong>：実際に働く分子</li>
+            </ol>
+        </div>
+
+        <div class="flow-diagram">
+            <h3>セントラルドグマの流れ</h3>
+            <div class="mermaid">
+                graph LR
+                    A[DNA<br/>設計図] -->|転写| B[RNA<br/>写し]
+                    B -->|翻訳| C[タンパク質<br/>実物]
+                    A -->|複製| A
+                    style A fill:#e3f2fd
+                    style B fill:#fff3cd
+                    style C fill:#e8f5e9
+            </div>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜDNA→RNA→タンパク質という流れなのか？</strong></p>
+            <p>DNAは核の中に保管され、直接細胞質に行くことはできません。また、DNAを直接使ってタンパク質を作ると、大切な設計図が傷つく可能性があります。そのため、RNAという「写し」を作って、それを細胞質に運び、そこでタンパク質を作るのです。これにより、設計図（DNA）は安全に保管され、必要な時に必要なだけタンパク質を作ることができます。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「デ・アール・タ」の3文字</strong></p>
+            <p>DNA→RNA→タンパク質の流れを「デ（DNA）・アール（RNA）・タ（タンパク質）」と覚えましょう。また、「デアールタ」を「出会った」と語呂合わせすると覚えやすくなります。</p>
+        </div>
+
+        <h3>新型コロナウイルスの場合</h3>
+        <div class="important">
+            <p><strong>重要：ウイルスはセントラルドグマの例外</strong></p>
+            <p>新型コロナウイルス（SARS-CoV-2）は、遺伝子として<strong>RNA</strong>を使っています。そのため、ウイルスの遺伝情報の流れは：</p>
+            <p><strong>RNA → タンパク質</strong>（DNAを経由しない）</p>
+            <p>ウイルスは宿主細胞の翻訳装置（リボソーム）を使って、自分のRNAから直接タンパク質を作ります。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション3: DNAとRNAの違い -->
+        <h2>第3章：DNAとRNAの違い</h2>
+
+        <div class="comparison-table">
+            <table style="width: 100%;">
+                <tr>
+                    <th>特徴</th>
+                    <th>DNA</th>
+                    <th>RNA</th>
+                </tr>
+                <tr>
+                    <td><strong>糖の種類</strong></td>
+                    <td>デオキシリボース<br/>（2'位にH）</td>
+                    <td>リボース<br/>（2'位にOH）</td>
+                </tr>
+                <tr>
+                    <td><strong>塩基の種類</strong></td>
+                    <td>A, T, G, C<br/>（チミン使用）</td>
+                    <td>A, U, G, C<br/>（ウラシル使用）</td>
+                </tr>
+                <tr>
+                    <td><strong>構造</strong></td>
+                    <td>二重らせん<br/>（2本鎖）</td>
+                    <td>一本鎖</td>
+                </tr>
+                <tr>
+                    <td><strong>役割</strong></td>
+                    <td>遺伝情報の保存</td>
+                    <td>遺伝情報の伝達・実働</td>
+                </tr>
+                <tr>
+                    <td><strong>存在場所</strong></td>
+                    <td>主に核内</td>
+                    <td>核内・細胞質</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜDNAとRNAは違う構造なのか？</strong></p>
+            <p><strong>DNAが二重らせんなのは</strong>：遺伝情報を正確に保存するためです。2本の鎖が相補的（A-T、G-Cで結合）なので、1本が傷ついてももう1本から修復できます。また、2'位にHがあるため、より安定しています。</p>
+            <p><strong>RNAが一本鎖なのは</strong>：情報を伝達し、実際に働く必要があるためです。一本鎖なので折りたたまれて様々な形（二次構造）をとり、リボソームや酵素として機能できます。2'位のOHがあるため、化学反応に参加しやすくなっています。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「デオキシ」と「デオキシ」の違い</strong></p>
+            <p>DNAの糖は「デオキシリボース」。「デオキシ」は「酸素を除いた」という意味です。つまり、リボースの2'位のOH（酸素と水素）がH（水素だけ）になっています。RNAの「リボース」にはOHが残っています。</p>
+            <p><strong>塩基の覚え方</strong>：DNAは「ATGC」、RNAは「AUGC」。T（チミン）とU（ウラシル）の違いだけです。Uは「ウラシル」で「U」の字が特徴的です。</p>
+        </div>
+
+        <h3>塩基対の相補性</h3>
+        <div class="highlight-box">
+            <p><strong>DNAの塩基対</strong></p>
+            <ul>
+                <li><strong>A（アデニン）</strong> ↔ <strong>T（チミン）</strong>：2本の水素結合</li>
+                <li><strong>G（グアニン）</strong> ↔ <strong>C（シトシン）</strong>：3本の水素結合</li>
+            </ul>
+            <p><strong>なぜこの組み合わせなのか？</strong></p>
+            <p>アデニンとチミン、グアニンとシトシンは、それぞれの分子構造がちょうど「鍵と鍵穴」のように合うため、水素結合で結合できます。G-Cの方が結合が強い（3本の水素結合）ため、G-Cが多いDNAほど安定です。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション4: 転写と翻訳 -->
+        <h2>第4章：転写と翻訳 - 遺伝情報の実現</h2>
+
+        <h3>転写（Transcription）</h3>
+        <div class="flow-diagram">
+            <div class="mermaid">
+                graph LR
+                    A[DNA<br/>鋳型鎖] -->|RNAポリメラーゼ| B[mRNA<br/>転写産物]
+                    C[リボヌクレオシド<br/>三リン酸] -->|材料| B
+                    style A fill:#e3f2fd
+                    style B fill:#fff3cd
+                    style C fill:#ffebee
+            </div>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜ転写が必要なのか？</strong></p>
+            <p>DNAは核の中にあり、細胞質にあるリボソーム（タンパク質合成装置）まで直接行けません。また、DNAを直接使うと、大切な設計図が傷つく可能性があります。そのため、RNAという「写し」を作り、それを細胞質に運ぶのです。これにより、設計図は安全に保管され、必要な時に必要なだけタンパク質を作れます。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「転写」と「複写」の違い</strong></p>
+            <p>「転写」はDNAからRNAに「転写」すること。DNAの情報をRNAに「転写」する、と覚えましょう。「転」は「移す」という意味です。</p>
+        </div>
+
+        <h3>翻訳（Translation）</h3>
+        <div class="highlight-box">
+            <p><strong>遺伝暗号（コドン）</strong></p>
+            <p>mRNAの3つの連続したヌクレオチド（トリプレット）が1つのアミノ酸に対応します。これを「コドン」といいます。</p>
+            <ul>
+                <li><strong>開始コドン</strong>：AUG（メチオニン）</li>
+                <li><strong>終止コドン</strong>：UAA, UAG, UGA（アミノ酸を指定しない）</li>
+                <li><strong>コドンの種類</strong>：4³ = 64通り（うち61種類がアミノ酸を指定、3種類が終止コドン）</li>
+            </ul>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜ3つのヌクレオチドで1つのアミノ酸なのか？</strong></p>
+            <p>アミノ酸は20種類あります。1つのヌクレオチドでは4種類（A, U, G, C）しか表現できません。2つでは4² = 16種類で足りません。3つなら4³ = 64通りで、20種類のアミノ酸をすべて指定できます。また、余ったコドンで終止コドンや冗長性（複数のコドンが同じアミノ酸を指定）を実現できます。</p>
+        </div>
+
+        <div class="flow-diagram">
+            <div class="mermaid">
+                graph LR
+                    A[mRNA<br/>5' AUG ... UAA 3'] -->|リボソーム| B[タンパク質<br/>Met ... ]
+                    C[tRNA<br/>アンチコドン] -->|アミノ酸運搬| B
+                    style A fill:#fff3cd
+                    style B fill:#e8f5e9
+                    style C fill:#e3f2fd
+            </div>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「コドン」と「アンチコドン」</strong></p>
+            <p>mRNAの3つの塩基を「コドン」、tRNAの3つの塩基を「アンチコドン」といいます。「アンチ」は「反対」という意味で、コドンと相補的に結合します。例えば、mRNAのAUGに対して、tRNAのUACが結合します。</p>
+        </div>
+
+        <h3>真核生物の特別な処理：スプライシング</h3>
+        <div class="important">
+            <p><strong>エキソンとイントロン</strong></p>
+            <p>真核生物の遺伝子には、<strong>エキソン</strong>（翻訳される部分）と<strong>イントロン</strong>（翻訳されない部分）が交互に並んでいます。転写後、イントロンが除去され、エキソンだけがつなぎ合わされる過程を<strong>スプライシング</strong>といいます。</p>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜイントロンがあるのか？</strong></p>
+            <p>イントロンがあることで、1つの遺伝子から複数の異なるタンパク質を作ることができます（選択的スプライシング）。また、遺伝子の進化や調節にも役立っています。細菌にはイントロンがありませんが、真核生物では広く見られます。</p>
+        </div>
+
+        <div class="flow-diagram">
+            <div class="mermaid">
+                graph LR
+                    A[DNA<br/>エキソン-イントロン-エキソン] -->|転写| B[前駆mRNA<br/>エキソン-イントロン-エキソン]
+                    B -->|スプライシング| C[mRNA<br/>エキソン-エキソン]
+                    C -->|翻訳| D[タンパク質]
+                    style A fill:#e3f2fd
+                    style B fill:#fff3cd
+                    style C fill:#fff3cd
+                    style D fill:#e8f5e9
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション5: タンパク質の構造 -->
+        <h2>第5章：タンパク質の構造と機能</h2>
+
+        <h3>アミノ酸の分類</h3>
+        <div class="comparison-table">
+            <table style="width: 100%;">
+                <tr>
+                    <th>分類</th>
+                    <th>特徴</th>
+                    <th>代表的なアミノ酸</th>
+                </tr>
+                <tr>
+                    <td><strong>極性アミノ酸</strong></td>
+                    <td>電荷を持つか、極性基を持つ</td>
+                    <td>Asp（アスパラギン酸）、Glu（グルタミン酸）、<br/>Lys（リシン）、Arg（アルギニン）</td>
+                </tr>
+                <tr>
+                    <td><strong>非極性アミノ酸</strong></td>
+                    <td>疎水性（水を嫌う）</td>
+                    <td>Ala（アラニン）、Val（バリン）、<br/>Leu（ロイシン）、Phe（フェニルアラニン）</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜアミノ酸の性質が重要なのか？</strong></p>
+            <p>タンパク質の形（立体構造）は、アミノ酸の側鎖の性質によって決まります。極性アミノ酸は水と親和性があり、タンパク質の表面に出やすく、非極性アミノ酸は水を嫌うため、タンパク質の内部に隠れます。この性質の違いが、タンパク質の機能を決定するのです。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：アミノ酸20種類</strong></p>
+            <p>アミノ酸は全部で20種類あります。「20種類」と覚えるより、「極性と非極性に分かれる」と覚えると、タンパク質の構造理解に役立ちます。</p>
+        </div>
+
+        <h3>タンパク質の構造レベル</h3>
+        <div class="flow-diagram">
+            <div class="mermaid">
+                graph TD
+                    A[一次構造<br/>アミノ酸配列] --> B[二次構造<br/>αヘリックス・βシート]
+                    B --> C[三次構造<br/>立体構造]
+                    C --> D[四次構造<br/>複数サブユニット]
+                    style A fill:#ffebee
+                    style B fill:#fff3cd
+                    style C fill:#e8f5e9
+                    style D fill:#e3f2fd
+            </div>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜタンパク質は折りたたまれるのか？</strong></p>
+            <p>タンパク質は、アミノ酸の側鎖の相互作用（水素結合、疎水結合、イオン結合など）によって、エネルギー的に最も安定な形に折りたたまれます。この折りたたまれた形（立体構造）が、タンパク質の機能を決定します。例えば、酵素の活性部位は、特定の立体構造をとることで、基質と結合できるようになります。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション6: 遺伝子発現の調節 -->
+        <h2>第6章：遺伝子発現の調節</h2>
+
+        <div class="highlight-box">
+            <p><strong>遺伝子発現を調節できる7つのステップ</strong></p>
+            <ol>
+                <li><strong>転写調節</strong>：DNAからRNAへの転写を制御</li>
+                <li><strong>RNAプロセシング調節</strong>：スプライシングなどの処理を制御</li>
+                <li><strong>mRNAの輸送と配置</strong>：核から細胞質への移動を制御</li>
+                <li><strong>mRNAの分解</strong>：mRNAの安定性を制御</li>
+                <li><strong>翻訳調節</strong>：mRNAからタンパク質への翻訳を制御</li>
+                <li><strong>タンパク質の分解</strong>：タンパク質の寿命を制御</li>
+                <li><strong>タンパク質の活性調節</strong>：タンパク質の機能を制御</li>
+            </ol>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜこれほど多くの調節段階があるのか？</strong></p>
+            <p>遺伝子発現を多段階で調節することで、細胞は環境に応じて迅速かつ柔軟に反応できます。例えば、転写を止めるだけでなく、すでに作られたmRNAやタンパク質を分解することで、より迅速に遺伝子発現を止められます。また、タンパク質の活性を調節することで、同じタンパク質を異なる条件下で使い回すことができます。</p>
+        </div>
+
+        <div class="story-box">
+            <p><strong>細胞分化の物語</strong></p>
+            <p>同じDNAを持っているのに、筋肉細胞、神経細胞、皮膚細胞など、200種類以上の異なる細胞ができるのはなぜでしょうか？</p>
+            <p>答えは<strong>転写調節因子の組み合わせ</strong>です。どの遺伝子を「ON」にするかは、転写調節因子の組み合わせによって決まります。例えば、転写調節因子1、2、3がONなら筋肉細胞に、1、2、4がONなら神経細胞になります。このように、少ない転写調節因子の組み合わせで、多様な細胞種を作り出せるのです。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「ON/OFFスイッチ」</strong></p>
+            <p>遺伝子発現の調節は、まるでスイッチのON/OFFのように考えられます。転写調節因子がスイッチを押し、遺伝子をONにするイメージです。7つの調節段階は、それぞれ異なるレベルのスイッチです。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション7: PCRとmRNAワクチン -->
+        <h2>第7章：現代の生命科学技術</h2>
+
+        <h3>PCR（ポリメラーゼ連鎖反応）</h3>
+        <div class="flow-diagram">
+            <div class="mermaid">
+                graph LR
+                    A[DNA<br/>少量] -->|1サイクル| B[DNA<br/>2倍]
+                    B -->|2サイクル| C[DNA<br/>4倍]
+                    C -->|30サイクル| D[DNA<br/>10億倍]
+                    style A fill:#ffebee
+                    style B fill:#fff3cd
+                    style C fill:#fff3cd
+                    style D fill:#e8f5e9
+            </div>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜPCRは重要なのか？</strong></p>
+            <p>PCRは、わずかなDNAを短時間で大量に増幅できる技術です。これにより、犯罪現場の微量なDNAから個人を特定したり、ウイルスの遺伝子を検出したりできます。PCRの原理は、DNAの複製過程を試験管内で再現したものです。加熱してDNAを2本鎖に分離し、温度を下げてプライマーを結合させ、DNAポリメラーゼで合成する、というサイクルを繰り返します。1サイクルでDNA量が2倍になるため、30サイクルで約10億倍に増幅できます。</p>
+        </div>
+
+        <div class="important">
+            <p><strong>RT-PCR（逆転写PCR）</strong></p>
+            <p>新型コロナウイルスの検査では、RNAを遺伝子として持つため、まず<strong>逆転写（RT）</strong>でRNAをDNAに変換し、その後<strong>PCR</strong>で増幅します。これを<strong>RT-PCR</strong>といいます。</p>
+            <p><strong>リアルタイムPCR</strong>：増幅しながら検出する方法で、Ct値（シグナルが閾値を超えたサイクル数）でウイルス量を推定できます。</p>
+        </div>
+
+        <h3>mRNAワクチン</h3>
+        <div class="key-concept">
+            <h3>mRNAワクチンの仕組み</h3>
+            <ol style="color: white;">
+                <li>ウイルスのスパイクタンパク質の設計図（mRNA）を脂質に包んで接種</li>
+                <li>細胞内に入ったmRNAがリボソームで翻訳される</li>
+                <li>スパイクタンパク質が作られ、細胞表面に提示される</li>
+                <li>免疫系がこれを認識し、抗体を作る</li>
+                <li>本物のウイルスが来た時に、抗体が結合して感染を防ぐ</li>
+            </ol>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜmRNAワクチンが画期的なのか？</strong></p>
+            <p>従来のワクチンは、ウイルスを不活化したり、タンパク質を精製したりする必要があり、時間がかかります。一方、mRNAワクチンは、ウイルスの遺伝子配列さえ分かれば、すぐにmRNAを合成できます。また、変異株が出現した時も、mRNAの配列を変更するだけで対応できます。これが、新型コロナウイルスのパンデミックに対応できた理由です。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「設計図」と「実物」</strong></p>
+            <p>mRNAワクチンは「設計図（mRNA）」を投与し、体の中で「実物（タンパク質）」を作らせます。従来のワクチンは「実物（不活化ウイルスやタンパク質）」を投与します。設計図の方が変更が容易なので、変異株に対応しやすいのです。</p>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>シュードウリジンの発見（2023年ノーベル生理学・医学賞）</strong></p>
+            <p>カタリン・カリコ博士とドリュー・ワイスマン博士は、ウリジン（U）をシュードウリジン（ψ）に置き換えることで、mRNAが炎症を起こさず、安定になることを発見しました。これがmRNAワクチンの実用化を可能にした重要な発見です。</p>
+            <p><strong>なぜシュードウリジンが重要なのか？</strong></p>
+            <p>通常のmRNAは免疫系に認識され、炎症反応を起こします。しかし、シュードウリジンに置き換えると、免疫系に認識されにくくなり、安定にタンパク質を合成できるようになります。tRNA（転移RNA）にもシュードウリジンが使われており、これがヒントになりました。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- セクション8: DNAの複製 -->
+        <h2>第8章：DNAの複製</h2>
+
+        <div class="flow-diagram">
+            <div class="mermaid">
+                graph LR
+                    A[親DNA<br/>二重らせん] -->|複製起点| B[複製フォーク]
+                    B --> C[娘DNA<br/>2本の二重らせん]
+                    style A fill:#e3f2fd
+                    style B fill:#fff3cd
+                    style C fill:#e8f5e9
+            </div>
+        </div>
+
+        <div class="why-box">
+            <p><strong>なぜDNAは5'→3'方向にしか合成されないのか？</strong></p>
+            <p>DNAポリメラーゼは、新しいヌクレオチドを5'→3'方向にしか結合できません。これは、酵素の活性部位の構造によるものです。一方の鎖（リーディング鎖）は連続的に合成されますが、もう一方の鎖（ラギング鎖）は、短い断片（岡崎フラグメント）を合成してからつなぎ合わせる必要があります。これにより、両方向に進む複製フォークでも、DNAは5'→3'方向に合成されます。</p>
+        </div>
+
+        <div class="memory-tip">
+            <p><strong>記憶のヒント：「5'→3'」の方向</strong></p>
+            <p>DNAの合成は常に5'→3'方向です。「5'→3'」を「ごーさん」（5と3）と覚えるか、「5'が前、3'が後」とイメージしましょう。また、リーディング鎖とラギング鎖の違いは、複製フォークの進行方向に対する合成の方向で覚えます。</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- まとめ -->
+        <h2>まとめ：生命科学の全体像</h2>
+
+        <div class="key-concept">
+            <h3>生命科学の階層構造</h3>
+            <div class="mermaid">
+                graph TD
+                    A[分子<br/>DNA, RNA, タンパク質] --> B[細胞<br/>生命の基本単位]
+                    B --> C[組織<br/>細胞の集合]
+                    C --> D[個体<br/>器官系の統合]
+                    D --> E[生態系<br/>生物間の相互作用]
+                    style A fill:#ffebee
+                    style B fill:#fff3cd
+                    style C fill:#e8f5e9
+                    style D fill:#e3f2fd
+                    style E fill:#f3e5f5
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>学習のポイント</strong></p>
+            <ul>
+                <li><strong>セントラルドグマ</strong>：DNA→RNA→タンパク質の流れを理解する</li>
+                <li><strong>構造と機能の関係</strong>：分子の構造が機能を決定する</li>
+                <li><strong>調節の重要性</strong>：遺伝子発現の多段階調節により、細胞は環境に適応する</li>
+                <li><strong>システムとしての理解</strong>：個々の分子ではなく、システム全体として理解する</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>生命科学(B) 学習ガイド | 早稲田大学 電気・情報生命工学科</p>
+            <p>精緻化と記憶術を意識した学習資料</p>
+            <p style="margin-top: 20px; font-size: 0.9em; color: #999;">
+                この資料は、講義資料を基に、理解を深めるための補助資料として作成されました。<br>
+                疑問点があれば、教科書や講義資料を参照してください。
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

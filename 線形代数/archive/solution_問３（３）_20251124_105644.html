@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問３（３）解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の部分空間の直交基底をひと組求めよ。</p>
+            <div class="formula">
+                $$W = \text{Span}\left\{\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix}\right\}$$
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">(1) 与えられたベクトルを確認します。</div>
+            <p>部分空間 $W$ は、2つのベクトル $\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$ と $\boldsymbol{v}_2 = \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix}$ によって張られています。これらのベクトルが線形独立であることを確認し、直交基底を構成します。</p>
+            <div class="formula">
+                $$\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \quad \boldsymbol{v}_2 = \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix}$$
+            </div>
+            <p>まず、これらのベクトルが線形独立であることを確認します。2つのベクトルが線形独立であることは、一方が他方の定数倍で表せないことと同値です。$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ が平行でないことを確認すれば十分です。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の第2成分を比較します。$\boldsymbol{v}_1$ の第2成分は $1$ で、$\boldsymbol{v}_2$ の第2成分は $0$ です。もしこれらが平行であれば、一方が他方の定数倍で表せるはずですが、第2成分が $1$ と $0$ であることから、これは不可能です。したがって、$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ は平行ではありません。</p>
+            </div>
+            <p>したがって、$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ は線形独立です。</p>
+            <div class="explanation">
+                <p>2つのベクトルが線形独立であることは、一方が他方の定数倍で表せないことと同値です。$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ は平行でないため、線形独立であり、$W$ の基底をなします。これらは $W$ を張り、かつ線形独立であるため、$W$ の基底です。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(2) 直交基底を構成します。</div>
+            <p>講義資料に基づき、正射影を利用して直交基底を構成します。最初のベクトル $\boldsymbol{v}_1$ をそのまま使用し、2番目のベクトル $\boldsymbol{v}_2$ から $\boldsymbol{v}_1$ への正射影を引くことで、$\boldsymbol{v}_1$ に直交するベクトルを作ります。</p>
+            <p>最初の直交基底ベクトルを $\boldsymbol{u}_1 = \boldsymbol{v}_1$ とします。これは、最初のベクトルをそのまま使用することを意味します。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_1 = \boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>次に、$\boldsymbol{v}_2$ から $\boldsymbol{u}_1$ への正射影を引いて、$\boldsymbol{u}_1$ に直交するベクトル $\boldsymbol{u}_2$ を求めます。正射影の公式を用いると、次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = \boldsymbol{v}_2 - \frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1}\boldsymbol{u}_1$$
+            </div>
+            <p>この式は、$\boldsymbol{v}_2$ から $\boldsymbol{u}_1$ 方向の成分を除去することで、$\boldsymbol{u}_1$ に直交するベクトルを得ることを意味します。まず、必要な内積を計算します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{v}_2$ と $\boldsymbol{u}_1$ の内積を計算します。</p>
+                <p>$\boldsymbol{v}_2 \cdot \boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = 1 \cdot 1 + 0 \cdot 1 + (-2) \cdot 0 = 1 + 0 + 0 = 1$</p>
+                <p>$\boldsymbol{u}_1$ のノルムの2乗を計算します。</p>
+                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = 1^2 + 1^2 + 0^2 = 1 + 1 + 0 = 2$</p>
+            </div>
+            <p>これらの値を用いて、$\boldsymbol{u}_2$ を計算します。正射影の係数は $\frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1} = \frac{1}{2}$ となります。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix} - \frac{1}{2}\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix} - \begin{pmatrix} \frac{1}{2} \\ \frac{1}{2} \\ 0 \end{pmatrix}$$
+            </div>
+            <p>この式の右辺第2項は、$\boldsymbol{v}_2$ の $\boldsymbol{u}_1$ への正射影を表しています。これを引くことで、$\boldsymbol{u}_1$ 方向の成分が除去されます。</p>
+            <p>ベクトルの差を計算します。</p>
+            <div class="calculation">
+                <p>各成分ごとに差を計算します。</p>
+                <p>$\boldsymbol{u}_2 = \begin{pmatrix} 1 - \frac{1}{2} \\ 0 - \frac{1}{2} \\ -2 - 0 \end{pmatrix} = \begin{pmatrix} \frac{1}{2} \\ -\frac{1}{2} \\ -2 \end{pmatrix}$</p>
+            </div>
+            <p>整数比にするために、$\boldsymbol{u}_2$ を $2$ 倍します。これは、直交性を保ったまま、より扱いやすい形にするためです。ベクトルを定数倍しても、他のベクトルとの直交性は変わりません。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = 2 \cdot \begin{pmatrix} \frac{1}{2} \\ -\frac{1}{2} \\ -2 \end{pmatrix} = \begin{pmatrix} 2 \cdot \frac{1}{2} \\ 2 \cdot \left(-\frac{1}{2}\right) \\ 2 \cdot (-2) \end{pmatrix} = \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix}$$
+            </div>
+            <p>したがって、直交基底ベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \quad \boldsymbol{u}_2 = \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix}$$
+            </div>
+            <div class="explanation">
+                <p>この方法は、Gram-Schmidtの直交化法と呼ばれます。与えられた基底ベクトルから順に、既に求めた直交ベクトルへの正射影を引くことで、互いに直交するベクトルを構成します。この方法により、元の部分空間を張る直交基底を得ることができます。正射影を引くことで、既存の直交ベクトル方向の成分を除去し、新しい直交ベクトルを作ることができます。最後に、整数比にするために定数倍を行いましたが、ベクトルを定数倍しても他のベクトルとの直交性は変わらないため、直交性を保ったまま行うことができます。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(3) 直交性を確認します。</div>
+            <p>求めた2つのベクトル $\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ が互いに直交することを確認します。内積が $0$ になることを確認します。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix}$$
+            </div>
+            <div class="calculation">
+                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = 1 \cdot 1 + 1 \cdot (-1) + 0 \cdot (-4) = 1 - 1 + 0 = 0$</p>
+            </div>
+            <p>内積が $0$ であることが確認できました。したがって、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ は互いに直交しています。</p>
+            <div class="note">
+                <p>定理1より、直交するベクトルは線形独立です。2つの互いに直交するベクトルは線形独立であるため、これらは $W$ の基底をなします。直交する基底であることから、これらは直交基底です。</p>
+            </div>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答え】</div>
+            <p>部分空間 $W = \text{Span}\left\{\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix}\right\}$ の直交基底は次の通りです。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \quad \boldsymbol{u}_2 = \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix}$$
+            </div>
+            <p>これらは互いに直交し、かつ $W$ を張るため、$W$ の直交基底をなします。</p>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>求めた結果が正しいことを確認します。3つの観点から検証します。</p>
+            <p>まず、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ が互いに直交することを確認します。内積が $0$ になることを確認します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix} = 1 \cdot 1 + 1 \cdot (-1) + 0 \cdot (-4) = 1 - 1 + 0 = 0$</p>
+                <p>したがって、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ は互いに直交しています。</p>
+            </div>
+            <p>次に、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ が元の部分空間 $W$ を張ることを確認します。$\boldsymbol{u}_1 = \boldsymbol{v}_1$ であることは明らかです。$\boldsymbol{u}_2$ が $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せることを確認します。</p>
+            <div class="calculation">
+                <p>$\boldsymbol{u}_2 = \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix}$ について、$\boldsymbol{u}_2$ が $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せることを確認します。Gram-Schmidtの過程では、$\boldsymbol{u}_2 = \boldsymbol{v}_2 - \frac{1}{2}\boldsymbol{v}_1$ から始まり、これを2倍して $\boldsymbol{u}_2 = 2\boldsymbol{v}_2 - \boldsymbol{v}_1$ となりました。この関係が成り立つことを確認します。</p>
+                <p>$2\boldsymbol{v}_2 - \boldsymbol{v}_1 = 2\begin{pmatrix} 1 \\ 0 \\ -2 \end{pmatrix} - \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \\ -4 \end{pmatrix} - \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 2 - 1 \\ 0 - 1 \\ -4 - 0 \end{pmatrix} = \begin{pmatrix} 1 \\ -1 \\ -4 \end{pmatrix} = \boldsymbol{u}_2$</p>
+                <p>したがって、$\boldsymbol{u}_2$ は $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せます。$\boldsymbol{u}_1 = \boldsymbol{v}_1$ と合わせて、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ は $W$ を張ります。</p>
+            </div>
+            <p>さらに、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ が線形独立であることを確認します。これらが互いに直交していることから、定理1により線形独立です。2次元部分空間 $W$ において、2つの線形独立なベクトルは基底をなすため、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ は $W$ の基底です。直交していることから、これらは直交基底です。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>

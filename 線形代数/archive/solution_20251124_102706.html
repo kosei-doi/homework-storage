@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問16 (4) 解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の行列をジョルダン標準形に変形せよ。</p>
+            <div class="formula">
+                $$A = \begin{pmatrix} 1 & -1 & 0 \\ 0 & 1 & 0 \\ -2 & 1 & 1 \end{pmatrix}$$
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">(1) 固有値を求めます。</div>
+            <p>固有方程式 $\det(A - \lambda I) = 0$ を解きます。</p>
+            <div class="formula">
+                $$\det(A - \lambda I) = \begin{vmatrix} 1-\lambda & -1 & 0 \\ 0 & 1-\lambda & 0 \\ -2 & 1 & 1-\lambda \end{vmatrix}$$
+            </div>
+            <p>この行列式を計算します。第2行で余因子展開を行います。第2行の第1列と第3列の成分が $0$ なので、計算が簡単になります。</p>
+            <div class="calculation">
+                <p>$\det(A - \lambda I) = 0 \cdot \begin{vmatrix} -1 & 0 \\ 1 & 1-\lambda \end{vmatrix} - (1-\lambda)\begin{vmatrix} 1-\lambda & 0 \\ -2 & 1-\lambda \end{vmatrix} + 0 \cdot \begin{vmatrix} 1-\lambda & -1 \\ -2 & 1 \end{vmatrix}$</p>
+                <p>$= -(1-\lambda)\begin{vmatrix} 1-\lambda & 0 \\ -2 & 1-\lambda \end{vmatrix}$</p>
+                <p>$= -(1-\lambda)[(1-\lambda)(1-\lambda) - 0 \cdot (-2)]$</p>
+                <p>$= -(1-\lambda)^3$</p>
+                <p>$= -(\lambda - 1)^3$</p>
+            </div>
+            <p>したがって、固有方程式は次のように因数分解されます。</p>
+            <div class="formula">
+                $$\det(A - \lambda I) = -(\lambda - 1)^3 = 0$$
+            </div>
+            <p>固有値は $\lambda = 1$（代数的重複度3）のみです。</p>
+            <div class="note">
+                <p><strong>代数的重複度の求め方：</strong> 特性多項式 $\det(A - \lambda I) = -(\lambda - 1)^3$ を因数分解すると、$(\lambda - 1)$ が3回現れます。したがって、固有値 $\lambda = 1$ の代数的重複度は $3$ です。これは、特性多項式の根として、その固有値が何回現れるかを表しています。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(2) 固有値 $\lambda = 1$ に対する固有ベクトルを求め、幾何的重複度を求めます。</div>
+            <p>$(A - I)\mathbf{x} = \mathbf{0}$ を解きます。</p>
+            <div class="formula">
+                $$A - I = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}$$
+            </div>
+            <p>行基本変形を行って、連立方程式を解きます。第2行は全て $0$ なので、実質的に2つの方程式しかありません。</p>
+            <div class="calculation">
+                <p>$\begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix} \xrightarrow{\text{第2行を削除（全て0）}} \begin{pmatrix} 0 & -1 & 0 \\ -2 & 1 & 0 \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行と第2行を入れ替え}} \begin{pmatrix} -2 & 1 & 0 \\ 0 & -1 & 0 \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行を}-2\text{で割る}, \text{第2行を}-1\text{で割る}} \begin{pmatrix} 1 & -\frac{1}{2} & 0 \\ 0 & 1 & 0 \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行} + \frac{1}{2} \times \text{第2行}} \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix}$</p>
+            </div>
+            <p>この行基本変形の結果から、$x_1 = 0$、$x_2 = 0$ が得られます。$x_3$ は任意です。$x_3 = 1$ とすると、固有空間は1次元で、固有ベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\mathbf{p} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$$
+            </div>
+            <div class="note">
+                <p><strong>幾何的重複度の求め方：</strong> 幾何的重複度は、その固有値に対する固有空間の次元、つまり線形独立な固有ベクトルの個数です。$(A - I)\mathbf{x} = \mathbf{0}$ を解いた結果、$x_1 = 0$、$x_2 = 0$、$x_3$ は任意という条件が得られました。これは、固有空間が $\text{Span}\left\{\begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}\right\}$ という1次元空間であることを意味します。したがって、固有値 $\lambda = 1$ の幾何的重複度は $1$ です。</p>
+                <p>別の求め方として、幾何的重複度は $n - \text{rank}(A - \lambda I)$ で計算できます。ここで、$n$ は行列のサイズです。この場合、$A - I$ の階数を求めると、行基本変形後の階段行列から $\text{rank}(A - I) = 2$ であることが分かります。したがって、幾何的重複度は $3 - 2 = 1$ です。</p>
+            </div>
+            <div class="explanation">
+                <p>固有値 $\lambda = 1$ の幾何的重複度は $1$ です。代数的重複度は $3$ なので、幾何的重複度と一致しません。したがって、この行列は対角化不可能であり、ジョルダン標準形を求める必要があります。これは講義資料の「(3) 固有値が1つで、その固有値の幾何的重複度が1の場合」に該当します。この場合、固有ベクトル一歩前と二歩前を取る必要があります。講義資料によると、$\mathbf{r}$ を適当に選び、$\mathbf{q} = (A - I)\mathbf{r}$、$\mathbf{p} = (A - I)\mathbf{q}$ として、$\mathbf{p}$ がゼロベクトルでなければ、このセットが使えます。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(3) 固有ベクトル $\mathbf{p}$ の「一歩前」のベクトルを求めます。</div>
+            <p>$(A - I)\mathbf{q} = \mathbf{p}$ を満たすベクトル $\mathbf{q}$ を求めます。</p>
+            <div class="formula">
+                $$\begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\mathbf{q} = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>拡大係数行列を行基本変形して、この連立方程式を解きます。</p>
+            <div class="calculation">
+                <p>$\begin{pmatrix} 0 & -1 & 0 & | & 0 \\ 0 & 0 & 0 & | & 0 \\ -2 & 1 & 0 & | & 1 \end{pmatrix}$</p>
+                <p>第2行は全て $0$ なので、第2行を削除します。</p>
+                <p>$\begin{pmatrix} 0 & -1 & 0 & | & 0 \\ -2 & 1 & 0 & | & 1 \end{pmatrix} \xrightarrow{\text{第1行と第2行を入れ替え}} \begin{pmatrix} -2 & 1 & 0 & | & 1 \\ 0 & -1 & 0 & | & 0 \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行を}-2\text{で割る}, \text{第2行を}-1\text{で割る}} \begin{pmatrix} 1 & -\frac{1}{2} & 0 & | & -\frac{1}{2} \\ 0 & 1 & 0 & | & 0 \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行} + \frac{1}{2} \times \text{第2行}} \begin{pmatrix} 1 & 0 & 0 & | & -\frac{1}{2} \\ 0 & 1 & 0 & | & 0 \end{pmatrix}$</p>
+            </div>
+            <p>この行基本変形の結果から、$q_1 = -\frac{1}{2}$、$q_2 = 0$ が得られます。$q_3$ は任意です。$q_3 = 0$ とすると、$\mathbf{q} = \begin{pmatrix} -\frac{1}{2} \\ 0 \\ 0 \end{pmatrix}$ が解として得られます。</p>
+            <div class="formula">
+                $$\mathbf{q} = \begin{pmatrix} -\frac{1}{2} \\ 0 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>このベクトル $\mathbf{q}$ は、$(A - I)\mathbf{q} = \mathbf{p}$ を満たします。これにより、$A\mathbf{q} = \mathbf{q} + \mathbf{p}$ が成り立ちます。整数比にするために、後で全体を調整します。</p>
+            <div class="note">
+                <p>注意：ここで求めた $\mathbf{q}$ は分数を含んでいますが、後で $\mathbf{r}$ を求めた後、全体を整数比に調整します。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(4) 固有ベクトル $\mathbf{q}$ の「二歩前」のベクトルを求めます。</div>
+            <p>$(A - I)\mathbf{r} = \mathbf{q}$ を満たすベクトル $\mathbf{r}$ を求めます。</p>
+            <p>拡大係数行列を行基本変形して、この連立方程式を解きます。ここで、$\mathbf{q} = \begin{pmatrix} -\frac{1}{2} \\ 0 \\ 0 \end{pmatrix}$ を用います。</p>
+            <div class="formula">
+                $$\begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\mathbf{r} = \begin{pmatrix} -\frac{1}{2} \\ 0 \\ 0 \end{pmatrix}$$
+            </div>
+            <div class="calculation">
+                <p>$\begin{pmatrix} 0 & -1 & 0 & | & -\frac{1}{2} \\ 0 & 0 & 0 & | & 0 \\ -2 & 1 & 0 & | & 0 \end{pmatrix}$</p>
+                <p>第2行は全て $0$ なので、第2行を削除します。</p>
+                <p>$\begin{pmatrix} 0 & -1 & 0 & | & -\frac{1}{2} \\ -2 & 1 & 0 & | & 0 \end{pmatrix} \xrightarrow{\text{第1行と第2行を入れ替え}} \begin{pmatrix} -2 & 1 & 0 & | & 0 \\ 0 & -1 & 0 & | & -\frac{1}{2} \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行を}-2\text{で割る}, \text{第2行を}-1\text{で割る}} \begin{pmatrix} 1 & -\frac{1}{2} & 0 & | & 0 \\ 0 & 1 & 0 & | & \frac{1}{2} \end{pmatrix}$</p>
+                <p>$\xrightarrow{\text{第1行} + \frac{1}{2} \times \text{第2行}} \begin{pmatrix} 1 & 0 & 0 & | & \frac{1}{4} \\ 0 & 1 & 0 & | & \frac{1}{2} \end{pmatrix}$</p>
+            </div>
+            <p>この行基本変形の結果から、$r_1 = \frac{1}{4}$、$r_2 = \frac{1}{2}$ が得られます。$r_3$ は任意です。$r_3 = 0$ とすると、$\mathbf{r} = \begin{pmatrix} \frac{1}{4} \\ \frac{1}{2} \\ 0 \end{pmatrix}$ が解として得られます。</p>
+            <p>整数比にするために、全体を $4$ 倍します。すると、</p>
+            <div class="formula">
+                $$\mathbf{p} = \begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix}, \quad \mathbf{q} = \begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix}, \quad \mathbf{r} = \begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>この関係を確認します。</p>
+            <div class="calculation">
+                <p>$(A - I)\mathbf{p} = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$ ✓</p>
+                <p>$(A - I)\mathbf{q} = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix} = \mathbf{p}$ ✓</p>
+                <p>$(A - I)\mathbf{r} = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} = \mathbf{q}$ ✓</p>
+            </div>
+            <p>したがって、これらのベクトルは正しい関係を満たしています。これにより、$A\mathbf{p} = \mathbf{p}$、$A\mathbf{q} = \mathbf{q} + \mathbf{p}$、$A\mathbf{r} = \mathbf{r} + \mathbf{q}$ が成り立ちます。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(5) 変換行列 $P$ を作成し、ジョルダン標準形を求めます。</div>
+            <p>変換行列を $P = (\mathbf{p} \ \mathbf{q} \ \mathbf{r})$ とします。</p>
+            <div class="formula">
+                $$P = \begin{pmatrix} 0 & -2 & 1 \\ 0 & 0 & 2 \\ 4 & 0 & 0 \end{pmatrix}$$
+            </div>
+            <p>この変換行列 $P$ を用いて、$AP$ を計算します。行列の積の性質から、$AP$ の各列は $A$ を各列ベクトルに作用させた結果になります。</p>
+            <div class="formula">
+                $$AP = A(\mathbf{p} \ \mathbf{q} \ \mathbf{r}) = (A\mathbf{p} \ A\mathbf{q} \ A\mathbf{r})$$
+            </div>
+            <p>ここで、これまでに求めた関係式を代入します。</p>
+            <div class="explanation">
+                <p>第1列：$A\mathbf{p} = \mathbf{p} = 1 \cdot \mathbf{p} + 0 \cdot \mathbf{q} + 0 \cdot \mathbf{r}$</p>
+                <p>第2列：$A\mathbf{q} = \mathbf{q} + \mathbf{p} = 1 \cdot \mathbf{p} + 1 \cdot \mathbf{q} + 0 \cdot \mathbf{r}$</p>
+                <p>第3列：$A\mathbf{r} = \mathbf{r} + \mathbf{q} = 0 \cdot \mathbf{p} + 1 \cdot \mathbf{q} + 1 \cdot \mathbf{r}$</p>
+            </div>
+            <p>これらの関係を整理すると、$AP$ の各列がどのようなベクトルになるかが分かります。行列 $AP$ は3つの列ベクトルからなるので、次のように表すことができます。</p>
+            <div class="formula">
+                $$AP = (A\mathbf{p} \ A\mathbf{q} \ A\mathbf{r}) = (\mathbf{p} \ \mathbf{p} + \mathbf{q} \ \mathbf{q} + \mathbf{r})$$
+            </div>
+            <p>この式の意味を詳しく説明します。$AP$ は3列の行列で、各列は次のようになります。</p>
+            <div class="explanation">
+                <p><strong>第1列</strong>：$A\mathbf{p} = \mathbf{p}$ なので、$\mathbf{p}$ ベクトルそのもの</p>
+                <p><strong>第2列</strong>：$A\mathbf{q} = \mathbf{p} + \mathbf{q}$ なので、$\mathbf{p}$ に $\mathbf{q}$ を足したベクトル</p>
+                <p><strong>第3列</strong>：$A\mathbf{r} = \mathbf{q} + \mathbf{r}$ なので、$\mathbf{q}$ に $\mathbf{r}$ を足したベクトル</p>
+            </div>
+            <p>この右辺を、$P$ の列ベクトル $\mathbf{p}$、$\mathbf{q}$、$\mathbf{r}$ を用いて行列の積の形で表すと、</p>
+            <div class="formula">
+                $$AP = (\mathbf{p} \ \mathbf{q} \ \mathbf{r})\begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix} = P\begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$$
+            </div>
+            <p>この式の意味を詳しく説明します。右辺の行列 $\begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$ の各列は、$AP$ の各列を $P$ の列ベクトルで表したときの係数を示しています。</p>
+            <div class="explanation">
+                <p>第1列：$A\mathbf{p} = \mathbf{p}$ なので、係数は $(1, 0, 0)^T$</p>
+                <p>第2列：$A\mathbf{q} = \mathbf{p} + \mathbf{q}$ なので、係数は $(1, 1, 0)^T$</p>
+                <p>第3列：$A\mathbf{r} = \mathbf{q} + \mathbf{r}$ なので、係数は $(0, 1, 1)^T$</p>
+            </div>
+            <p>したがって、$AP = PJ$ が成り立ちます。ここで、$J = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$ とします。この式の両辺に左から $P^{-1}$ をかけると、</p>
+            <div class="formula">
+                $$P^{-1}AP = P^{-1}PJ = IJ = J = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$$
+            </div>
+            <p>これにより、$P^{-1}AP$ がジョルダン標準形になることが確認できました。</p>
+            <p>これが求めるジョルダン標準形です。固有値 $1$ が代数的重複度 $3$、幾何的重複度 $1$ であるため、$3 \times 3$ のジョルダン細胞が現れます。これは講義資料の「(3) 固有値が1つで、その固有値の幾何的重複度が1の場合」に該当します。</p>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答え】</div>
+            <div class="formula">
+                $$P^{-1}AP = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$$
+            </div>
+            <p>ただし、</p>
+            <div class="formula">
+                $$P = \begin{pmatrix} 0 & -2 & 1 \\ 0 & 0 & 2 \\ 4 & 0 & 0 \end{pmatrix}$$
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>求めた結果が正しいことを確認します。各ベクトルが定義された関係式を満たすことを検証します。</p>
+            <div class="calculation">
+                <p>まず、固有値 $1$ に対する固有ベクトル $\mathbf{p}$ について、$A\mathbf{p} = \mathbf{p}$ が成り立つことを確認します。</p>
+                <p>$A\mathbf{p} = \begin{pmatrix} 1 & -1 & 0 \\ 0 & 1 & 0 \\ -2 & 1 & 1 \end{pmatrix}\begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix} = \begin{pmatrix} 1 \cdot 0 + (-1) \cdot 0 + 0 \cdot 4 \\ 0 \cdot 0 + 1 \cdot 0 + 0 \cdot 4 \\ (-2) \cdot 0 + 1 \cdot 0 + 1 \cdot 4 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix}$</p>
+                <p>$\mathbf{p} = \begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix}$ なので、$A\mathbf{p} = \mathbf{p}$ が成り立ちます。これは、$\mathbf{p}$ が固有値 $1$ に対する固有ベクトルであることを示しています。</p>
+            </div>
+            <p>次に、「一歩前」のベクトル $\mathbf{q}$ について、$A\mathbf{q} = \mathbf{q} + \mathbf{p}$ が成り立つことを確認します。</p>
+            <div class="calculation">
+                <p>$A\mathbf{q} = \begin{pmatrix} 1 & -1 & 0 \\ 0 & 1 & 0 \\ -2 & 1 & 1 \end{pmatrix}\begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \cdot (-2) + (-1) \cdot 0 + 0 \cdot 0 \\ 0 \cdot (-2) + 1 \cdot 0 + 0 \cdot 0 \\ (-2) \cdot (-2) + 1 \cdot 0 + 1 \cdot 0 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 4 \end{pmatrix}$</p>
+                <p>一方、$\mathbf{q} + \mathbf{p} = \begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} + \begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 4 \end{pmatrix}$</p>
+                <p>したがって、$A\mathbf{q} = \mathbf{q} + \mathbf{p}$ が成り立ちます。これは $(A - I)\mathbf{q} = \mathbf{p}$ と等価です。つまり、$\mathbf{q}$ は「一歩前」のベクトルとして正しく求められています。</p>
+            </div>
+            <p>最後に、「二歩前」のベクトル $\mathbf{r}$ について、$A\mathbf{r} = \mathbf{r} + \mathbf{q}$ が成り立つことを確認します。</p>
+            <div class="calculation">
+                <p>$A\mathbf{r} = \begin{pmatrix} 1 & -1 & 0 \\ 0 & 1 & 0 \\ -2 & 1 & 1 \end{pmatrix}\begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \cdot 1 + (-1) \cdot 2 + 0 \cdot 0 \\ 0 \cdot 1 + 1 \cdot 2 + 0 \cdot 0 \\ (-2) \cdot 1 + 1 \cdot 2 + 1 \cdot 0 \end{pmatrix} = \begin{pmatrix} -1 \\ 2 \\ 0 \end{pmatrix}$</p>
+                <p>一方、$\mathbf{r} + \mathbf{q} = \begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} + \begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} -1 \\ 2 \\ 0 \end{pmatrix}$</p>
+                <p>したがって、$A\mathbf{r} = \mathbf{r} + \mathbf{q}$ が成り立ちます。これは $(A - I)\mathbf{r} = \mathbf{q}$ と等価です。つまり、$\mathbf{r}$ は「二歩前」のベクトルとして正しく求められています。</p>
+            </div>
+            <p>さらに、$(A - I)\mathbf{q}$ と $(A - I)\mathbf{r}$ を直接計算して、定義された関係式を確認します。</p>
+            <div class="calculation">
+                <p>$(A - I)\mathbf{q} = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \cdot (-2) + (-1) \cdot 0 + 0 \cdot 0 \\ 0 \cdot (-2) + 0 \cdot 0 + 0 \cdot 0 \\ (-2) \cdot (-2) + 1 \cdot 0 + 0 \cdot 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 4 \end{pmatrix} = \mathbf{p}$ ✓</p>
+                <p>$(A - I)\mathbf{r} = \begin{pmatrix} 0 & -1 & 0 \\ 0 & 0 & 0 \\ -2 & 1 & 0 \end{pmatrix}\begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \cdot 1 + (-1) \cdot 2 + 0 \cdot 0 \\ 0 \cdot 1 + 0 \cdot 2 + 0 \cdot 0 \\ (-2) \cdot 1 + 1 \cdot 2 + 0 \cdot 0 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 0 \end{pmatrix} = \mathbf{q}$ ✓</p>
+            </div>
+            <p>したがって、すべての関係式 $(A - I)\mathbf{p} = \mathbf{0}$、$(A - I)\mathbf{q} = \mathbf{p}$、$(A - I)\mathbf{r} = \mathbf{q}$ が正しく成り立っています。</p>
+            <p>以上より、$AP = P\begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{pmatrix}$ が成り立ち、$P^{-1}AP$ がジョルダン標準形になることが確認できました。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>
+
