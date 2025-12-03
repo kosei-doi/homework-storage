@@ -1,6 +1,18 @@
 // 解答ファイルのリスト（手動で管理、または自動生成）
 let solutions = [];
 
+// ベースパスを取得するヘルパー関数
+function getBasePath() {
+    const pathname = window.location.pathname;
+    if (pathname.endsWith('index.html')) {
+        return pathname.replace(/\/[^/]*$/, '/');
+    } else if (pathname.endsWith('/')) {
+        return pathname;
+    } else {
+        return './';
+    }
+}
+
 // 解答情報を抽出する関数
 async function extractSolutionInfo(filePath, fileName) {
     try {
@@ -59,13 +71,10 @@ async function extractSolutionInfo(filePath, fileName) {
                     }
                     if (!question && h1Text.includes('問')) {
                         // より柔軟な問番号の抽出（全角数字、半角数字、括弧を含む）
-                        const questionMatch = h1Text.match(/問[０-９0-9]+[^]*?/);
+                        // 例: "問3 (2)", "問12 (2)", "問５", "問３（２）"
+                        const questionMatch = h1Text.match(/問[０-９0-9]+(?:\s*[（(]\s*[０-９0-9]+\s*[）)])?/);
                         if (questionMatch) {
-                            // 問番号の部分を抽出（例: "問3 (2)" や "問12 (2)"）
-                            const fullMatch = h1Text.match(/問[０-９0-9]+[^]*?/);
-                            if (fullMatch) {
-                                question = fullMatch[0].trim();
-                            }
+                            question = questionMatch[0].trim();
                         }
                     }
                 }
@@ -78,7 +87,9 @@ async function extractSolutionInfo(filePath, fileName) {
         // input.txtから情報を取得（現在の解答の場合）
         if (fileName === 'solution.html') {
             try {
-                const inputResponse = await fetch('general/input.txt');
+                const basePath = getBasePath();
+                const inputPath = basePath + 'general/input.txt';
+                const inputResponse = await fetch(inputPath);
                 if (inputResponse.ok) {
                     const inputText = await inputResponse.text();
                     const lines = inputText.split('\n');
@@ -92,6 +103,8 @@ async function extractSolutionInfo(filePath, fileName) {
                         // 「§9 直交性」のような形式からセクションを抽出
                         section = sectionLine.match(/§\d+/)?.[0] || sectionLine.split(/\s+/)[0] || '';
                     }
+                } else {
+                    console.warn(`Failed to fetch ${inputPath}: HTTP ${inputResponse.status}`);
                 }
             } catch (e) {
                 console.warn('Failed to fetch general/input.txt:', e);
@@ -99,10 +112,14 @@ async function extractSolutionInfo(filePath, fileName) {
 
             // assignment.txtから問番号を取得
             try {
-                const assignmentResponse = await fetch('general/assignment.txt');
+                const basePath = getBasePath();
+                const assignmentPath = basePath + 'general/assignment.txt';
+                const assignmentResponse = await fetch(assignmentPath);
                 if (assignmentResponse.ok) {
                     const assignmentText = await assignmentResponse.text();
                     question = assignmentText.trim();
+                } else {
+                    console.warn(`Failed to fetch ${assignmentPath}: HTTP ${assignmentResponse.status}`);
                 }
             } catch (e) {
                 console.warn('Failed to fetch general/assignment.txt:', e);
@@ -164,14 +181,20 @@ async function extractSolutionInfo(filePath, fileName) {
 // 解答ファイルのリストを取得
 async function loadSolutions() {
     const solutionsList = [];
+    const basePath = getBasePath();
     
     // 現在の解答（general/output/solution.html）
-    const currentSolution = await extractSolutionInfo('general/output/solution.html', 'solution.html');
-    if (currentSolution) {
-        solutionsList.push(currentSolution);
-        console.log('Loaded current solution:', currentSolution);
-    } else {
-        console.warn('Failed to load current solution');
+    try {
+        const currentSolutionPath = basePath + 'general/output/solution.html';
+        const currentSolution = await extractSolutionInfo(currentSolutionPath, 'solution.html');
+        if (currentSolution) {
+            solutionsList.push(currentSolution);
+            console.log('Loaded current solution:', currentSolution);
+        } else {
+            console.warn('Failed to load current solution');
+        }
+    } catch (e) {
+        console.error('Error loading current solution:', e);
     }
 
     // アーカイブされた解答を取得
@@ -180,7 +203,8 @@ async function loadSolutions() {
     
     // アーカイブディレクトリのインデックスファイルを読み込む（推奨方法）
     try {
-        const indexResponse = await fetch('general/archive/index.txt');
+        const indexPath = basePath + 'general/archive/index.txt';
+        const indexResponse = await fetch(indexPath);
         if (indexResponse.ok) {
             const indexText = await indexResponse.text();
             const archiveFiles = indexText.split('\n')
@@ -190,7 +214,7 @@ async function loadSolutions() {
             console.log(`Found ${archiveFiles.length} archive files in index.txt:`, archiveFiles);
             
             for (const archiveFile of archiveFiles) {
-                const archivePath = `general/archive/${archiveFile}`;
+                const archivePath = basePath + `general/archive/${archiveFile}`;
                 console.log(`Attempting to load archive file: ${archiveFile} from path: ${archivePath}`);
                 try {
                     const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
@@ -208,7 +232,7 @@ async function loadSolutions() {
             
             console.log(`Total solutions loaded so far: ${solutionsList.length}`);
         } else {
-            console.warn('Failed to fetch archive/index.txt, status:', indexResponse.status);
+            console.warn(`Failed to fetch ${indexPath}, status:`, indexResponse.status);
         }
     } catch (e) {
         console.warn('Failed to load archive index file:', e);
@@ -222,11 +246,15 @@ async function loadSolutions() {
         ];
         
         for (const archiveFile of knownArchives) {
-            const archivePath = `general/archive/${archiveFile}`;
-            const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
-            if (archiveInfo) {
-                solutionsList.push(archiveInfo);
-                console.log(`Loaded archive (fallback): ${archiveFile}`, archiveInfo);
+            const archivePath = basePath + `general/archive/${archiveFile}`;
+            try {
+                const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
+                if (archiveInfo) {
+                    solutionsList.push(archiveInfo);
+                    console.log(`Loaded archive (fallback): ${archiveFile}`, archiveInfo);
+                }
+            } catch (e) {
+                console.warn(`Failed to load fallback archive ${archiveFile}:`, e);
             }
         }
     }
@@ -258,6 +286,13 @@ async function loadSolutions() {
     return solutionsList;
 }
 
+// HTMLエスケープ関数
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // 解答カードを表示
 function renderSolutionCard(solution) {
     const card = document.createElement('div');
@@ -267,20 +302,23 @@ function renderSolutionCard(solution) {
     card.dataset.question = solution.question;
     card.dataset.date = solution.date;
 
+    // ファイルパスをエスケープ
+    const escapedFilePath = escapeHtml(solution.filePath).replace(/'/g, "\\'");
+
     card.innerHTML = `
         <div class="card-header">
-            <h3 class="card-title">${solution.question}</h3>
-            <span class="card-date">${solution.displayDate}</span>
+            <h3 class="card-title">${escapeHtml(solution.question)}</h3>
+            <span class="card-date">${escapeHtml(solution.displayDate)}</span>
         </div>
         <div class="card-body">
             <div class="card-info">
-                <span class="info-item"><strong>科目:</strong> ${solution.subject}</span>
-                <span class="info-item"><strong>セクション:</strong> ${solution.section}</span>
+                <span class="info-item"><strong>科目:</strong> ${escapeHtml(solution.subject)}</span>
+                <span class="info-item"><strong>セクション:</strong> ${escapeHtml(solution.section)}</span>
             </div>
         </div>
         <div class="card-footer">
-            <button class="view-btn" onclick="viewSolution('${solution.filePath}')">閲覧</button>
-            <button class="view-btn external-btn" onclick="viewSolutionInNewTab('${solution.filePath}')" title="新しいタブで開く">🔗</button>
+            <button class="view-btn" onclick="viewSolution('${escapedFilePath}')">閲覧</button>
+            <button class="view-btn external-btn" onclick="viewSolutionInNewTab('${escapedFilePath}')" title="新しいタブで開く">🔗</button>
         </div>
     `;
 
@@ -297,18 +335,35 @@ async function viewSolution(filePath) {
     const modal = document.getElementById('solutionModal');
     const modalBody = document.getElementById('modalBody');
     
+    if (!modal || !modalBody) {
+        console.error('Modal elements not found');
+        return;
+    }
+    
     modal.style.display = 'block';
+    // モーダルが開かれたらbodyのスクロールを無効にする
+    document.body.classList.add('modal-open');
     modalBody.innerHTML = '<p class="loading">読み込んでいます...</p>';
 
     try {
+        console.log('Loading solution from:', filePath);
         const response = await fetch(filePath);
-        if (!response.ok) throw new Error('Failed to load solution');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: Failed to load solution`);
+        }
         
         const html = await response.text();
         
         // HTMLをパースしてbodyの内容を取得
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
+        
+        // パースエラーをチェック
+        const parserError = doc.querySelector('parsererror');
+        if (parserError) {
+            throw new Error('HTML parsing failed');
+        }
+        
         const bodyContent = doc.body.innerHTML;
         
         // MathJaxを再読み込みするために、コンテナを作成
@@ -319,9 +374,12 @@ async function viewSolution(filePath) {
             window.MathJax.typesetPromise([modalBody]).catch(function (err) {
                 console.error('MathJax rendering error:', err);
             });
+        } else {
+            console.warn('MathJax is not loaded');
         }
     } catch (e) {
-        modalBody.innerHTML = `<p class="error">解答の読み込みに失敗しました: ${e.message}</p>`;
+        console.error('Error loading solution:', e);
+        modalBody.innerHTML = `<p class="error">解答の読み込みに失敗しました: ${escapeHtml(e.message)}</p>`;
     }
 }
 
@@ -416,41 +474,94 @@ function updateFilterOptions() {
 
 // モーダルを閉じる
 function closeModal() {
-    document.getElementById('solutionModal').style.display = 'none';
+    const modal = document.getElementById('solutionModal');
+    if (modal) {
+        modal.style.display = 'none';
+        // モーダルが閉じられたらbodyのスクロールを有効にする
+        document.body.classList.remove('modal-open');
+    }
+}
+
+// ESCキーでモーダルを閉じる
+function handleKeyDown(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('solutionModal');
+        if (modal && modal.style.display === 'block') {
+            closeModal();
+        }
+    }
 }
 
 // 初期化
 async function init() {
-    // モーダルの閉じるボタン
-    document.querySelector('.close').addEventListener('click', closeModal);
-    document.getElementById('solutionModal').addEventListener('click', (e) => {
-        if (e.target.id === 'solutionModal') {
-            closeModal();
+    try {
+        // モーダルの閉じるボタン
+        const closeBtn = document.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        } else {
+            console.error('Close button not found');
         }
-    });
+        
+        const modal = document.getElementById('solutionModal');
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target.id === 'solutionModal') {
+                    closeModal();
+                }
+            });
+        }
+        
+        // ESCキーでモーダルを閉じる
+        document.addEventListener('keydown', handleKeyDown);
 
-    // フィルタとソートのイベントリスナー
-    document.getElementById('filterSubject').addEventListener('change', filterAndSort);
-    document.getElementById('filterSection').addEventListener('change', filterAndSort);
-    document.getElementById('filterQuestion').addEventListener('change', filterAndSort);
-    document.getElementById('sortBy').addEventListener('change', filterAndSort);
+        // フィルタとソートのイベントリスナー
+        const filterSubject = document.getElementById('filterSubject');
+        const filterSection = document.getElementById('filterSection');
+        const filterQuestion = document.getElementById('filterQuestion');
+        const sortBy = document.getElementById('sortBy');
+        
+        if (filterSubject) filterSubject.addEventListener('change', filterAndSort);
+        if (filterSection) filterSection.addEventListener('change', filterAndSort);
+        if (filterQuestion) filterQuestion.addEventListener('change', filterAndSort);
+        if (sortBy) sortBy.addEventListener('change', filterAndSort);
 
-    // 解答を読み込む
-    solutions = await loadSolutions();
-    console.log(`Total solutions loaded: ${solutions.length}`, solutions);
-    
-    if (solutions.length === 0) {
-        document.getElementById('solutionsList').innerHTML = 
-            '<p class="no-results">解答が見つかりませんでした。</p>';
-        return;
+        // 解答を読み込む
+        console.log('Loading solutions...');
+        solutions = await loadSolutions();
+        console.log(`Total solutions loaded: ${solutions.length}`, solutions);
+        
+        const solutionsList = document.getElementById('solutionsList');
+        if (!solutionsList) {
+            console.error('Solutions list container not found');
+            return;
+        }
+        
+        if (solutions.length === 0) {
+            solutionsList.innerHTML = 
+                '<p class="no-results">解答が見つかりませんでした。</p>';
+            return;
+        }
+
+        updateFilterOptions();
+        filterAndSort();
+    } catch (error) {
+        console.error('Initialization error:', error);
+        const solutionsList = document.getElementById('solutionsList');
+        if (solutionsList) {
+            solutionsList.innerHTML = 
+                '<p class="error">初期化エラーが発生しました。ブラウザのコンソールを確認してください。</p>';
+        }
     }
-
-    updateFilterOptions();
-    filterAndSort();
 }
 
 // ページ読み込み時に初期化
-document.addEventListener('DOMContentLoaded', init);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    // DOMContentLoaded は既に発火済み
+    init();
+}
 
 // グローバルスコープにviewSolutionとviewSolutionInNewTabを公開
 window.viewSolution = viewSolution;

@@ -253,11 +253,20 @@ header h1 {
     padding: 10px 20px;
     cursor: pointer;
     align-self: flex-end;
+    line-height: 1;
+    transition: color 0.3s;
+    z-index: 1001;
+    position: relative;
 }
 
 .close:hover,
 .close:focus {
     color: #000;
+    outline: none;
+}
+
+body.modal-open {
+    overflow: hidden;
 }
 
 .modal-body {
