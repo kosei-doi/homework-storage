@@ -23,10 +23,13 @@ async function extractSolutionInfo(filePath, fileName) {
                 // 日付をISO形式で保存（ソート用）
                 date = `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}T${timeStr.substring(0,2)}:${timeStr.substring(2,4)}:${timeStr.substring(4,6)}`;
             }
+            console.log(`Extracted from filename - question: ${question}, date: ${date}`);
         } else if (fileName === 'solution.html') {
             // 現在の解答の場合、日付は現在時刻
             const now = new Date();
             date = now.toISOString();
+        } else {
+            console.warn(`Filename pattern not matched: ${fileName}`);
         }
 
         // HTMLファイルから情報を抽出
@@ -35,6 +38,7 @@ async function extractSolutionInfo(filePath, fileName) {
             if (!response.ok) {
                 console.warn(`Failed to fetch ${filePath}: HTTP ${response.status}`);
                 // fetchが失敗しても、ファイル名から情報を抽出した結果を返す
+                // ファイル名から既に情報を抽出しているので、そのまま続行
             } else {
                 const html = await response.text();
                 
@@ -54,9 +58,14 @@ async function extractSolutionInfo(filePath, fileName) {
                         subject = h1Text.replace(/\s*問.*$/, '').trim();
                     }
                     if (!question && h1Text.includes('問')) {
-                        const questionMatch = h1Text.match(/問[０-９0-9]+/);
+                        // より柔軟な問番号の抽出（全角数字、半角数字、括弧を含む）
+                        const questionMatch = h1Text.match(/問[０-９0-9]+[^]*?/);
                         if (questionMatch) {
-                            question = questionMatch[0];
+                            // 問番号の部分を抽出（例: "問3 (2)" や "問12 (2)"）
+                            const fullMatch = h1Text.match(/問[０-９0-9]+[^]*?/);
+                            if (fullMatch) {
+                                question = fullMatch[0].trim();
+                            }
                         }
                     }
                 }
@@ -122,7 +131,7 @@ async function extractSolutionInfo(filePath, fileName) {
             displayDate = new Date().toLocaleString('ja-JP');
         }
         
-        return {
+        const result = {
             filePath,
             fileName,
             subject: subject || '不明',
@@ -131,9 +140,24 @@ async function extractSolutionInfo(filePath, fileName) {
             date: date || new Date().toISOString(),
             displayDate: displayDate
         };
+        
+        console.log(`Extracted solution info for ${fileName}:`, result);
+        return result;
     } catch (e) {
         console.error(`Error extracting info from ${fileName}:`, e);
-        return null;
+        console.error('Error stack:', e.stack);
+        // エラーが発生しても、ファイル名から抽出した情報を返す
+        const fallbackResult = {
+            filePath,
+            fileName,
+            subject: '不明',
+            section: '不明',
+            question: fileName.match(/solution_(.+?)_/)?.[1] || '不明',
+            date: new Date().toISOString(),
+            displayDate: new Date().toLocaleString('ja-JP')
+        };
+        console.warn(`Returning fallback result for ${fileName}:`, fallbackResult);
+        return fallbackResult;
     }
 }
 
@@ -167,14 +191,22 @@ async function loadSolutions() {
             
             for (const archiveFile of archiveFiles) {
                 const archivePath = `general/archive/${archiveFile}`;
-                const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
-                if (archiveInfo) {
-                    solutionsList.push(archiveInfo);
-                    console.log(`Loaded archive: ${archiveFile}`, archiveInfo);
-                } else {
-                    console.warn(`Failed to load archive: ${archiveFile}`);
+                console.log(`Attempting to load archive file: ${archiveFile} from path: ${archivePath}`);
+                try {
+                    const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
+                    // extractSolutionInfoは常に結果を返す（エラー時もフォールバック結果を返す）
+                    if (archiveInfo && archiveInfo.fileName) {
+                        solutionsList.push(archiveInfo);
+                        console.log(`✅ Successfully loaded archive: ${archiveFile}`, archiveInfo);
+                    } else {
+                        console.error(`❌ Failed to load archive: ${archiveFile} - invalid result:`, archiveInfo);
+                    }
+                } catch (e) {
+                    console.error(`❌ Exception while loading archive: ${archiveFile}`, e);
                 }
             }
+            
+            console.log(`Total solutions loaded so far: ${solutionsList.length}`);
         } else {
             console.warn('Failed to fetch archive/index.txt, status:', indexResponse.status);
         }
