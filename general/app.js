@@ -154,46 +154,49 @@ async function loadSolutions() {
     // 注意: GitHub Pagesではファイルシステムへの直接アクセスができないため、
     // 解答ファイルのリストを手動で管理するか、GitHub APIを使用する必要があります
     
-    // 方法1: 既知のアーカイブファイルをチェック（必要に応じて手動で追加）
-    // アーカイブファイル名をここに追加してください
-    const knownArchives = [
-        'solution_問3 (2)_20251124_141437.html',
-        'solution_問3 (１)_20251124_143914.html',
-        'solution_問3 (３)_20251124_142313.html'
-    ];
-    
-    // 既知のアーカイブファイルを読み込む
-    for (const archiveFile of knownArchives) {
-        const archivePath = `general/archive/${archiveFile}`;
-        const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
-        if (archiveInfo) {
-            solutionsList.push(archiveInfo);
-            console.log(`Loaded archive: ${archiveFile}`, archiveInfo);
-        } else {
-            console.warn(`Failed to load archive: ${archiveFile}`);
-        }
-    }
-
-    // 方法1.5: アーカイブディレクトリのインデックスファイルを読み込む（存在する場合）
+    // アーカイブディレクトリのインデックスファイルを読み込む（推奨方法）
     try {
         const indexResponse = await fetch('general/archive/index.txt');
         if (indexResponse.ok) {
             const indexText = await indexResponse.text();
-            const archiveFiles = indexText.split('\n').map(line => line.trim()).filter(line => line && line.endsWith('.html'));
+            const archiveFiles = indexText.split('\n')
+                .map(line => line.trim())
+                .filter(line => line && line.endsWith('.html'));
+            
+            console.log(`Found ${archiveFiles.length} archive files in index.txt:`, archiveFiles);
+            
             for (const archiveFile of archiveFiles) {
-                // 既に読み込んだファイルはスキップ
-                if (!knownArchives.includes(archiveFile)) {
-                    const archivePath = `general/archive/${archiveFile}`;
-                    const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
-                    if (archiveInfo) {
-                        solutionsList.push(archiveInfo);
-                    }
+                const archivePath = `general/archive/${archiveFile}`;
+                const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
+                if (archiveInfo) {
+                    solutionsList.push(archiveInfo);
+                    console.log(`Loaded archive: ${archiveFile}`, archiveInfo);
+                } else {
+                    console.warn(`Failed to load archive: ${archiveFile}`);
                 }
             }
+        } else {
+            console.warn('Failed to fetch archive/index.txt, status:', indexResponse.status);
         }
     } catch (e) {
-        // インデックスファイルが存在しない場合は無視
-        console.debug('Archive index file not found, using known archives only');
+        console.warn('Failed to load archive index file:', e);
+        // フォールバック: 既知のアーカイブファイルをチェック
+        const knownArchives = [
+            'solution_問3 (2)_20251124_141437.html',
+            'solution_問3 (１)_20251124_143914.html',
+            'solution_問3 (３)_20251124_142313.html',
+            'solution_問12 (2)_20251203_153924.html',
+            'solution_問12 (2)_20251203_154203.html'
+        ];
+        
+        for (const archiveFile of knownArchives) {
+            const archivePath = `general/archive/${archiveFile}`;
+            const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
+            if (archiveInfo) {
+                solutionsList.push(archiveInfo);
+                console.log(`Loaded archive (fallback): ${archiveFile}`, archiveInfo);
+            }
+        }
     }
 
     // 方法2: メタデータJSONファイルを読み込む（推奨）
