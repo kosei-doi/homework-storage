@@ -14,12 +14,15 @@ async function extractSolutionInfo(filePath, fileName) {
         let subject = '';
         let section = '';
 
-        if (nameMatch && nameMatch.length > 1) {
-            question = nameMatch[1];
-            const dateStr = nameMatch[2];
-            const timeStr = nameMatch[3];
-            // 日付をISO形式で保存（ソート用）
-            date = `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}T${timeStr.substring(0,2)}:${timeStr.substring(2,4)}:${timeStr.substring(4,6)}`;
+        if (nameMatch && nameMatch.length >= 4) {
+            // アーカイブファイルの場合（solution_問番号_YYYYMMDD_HHMMSS.html）
+            question = nameMatch[1] || '';
+            const dateStr = nameMatch[2] || '';
+            const timeStr = nameMatch[3] || '';
+            if (dateStr && timeStr) {
+                // 日付をISO形式で保存（ソート用）
+                date = `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}T${timeStr.substring(0,2)}:${timeStr.substring(2,4)}:${timeStr.substring(4,6)}`;
+            }
         } else if (fileName === 'solution.html') {
             // 現在の解答の場合、日付は現在時刻
             const now = new Date();
@@ -29,33 +32,38 @@ async function extractSolutionInfo(filePath, fileName) {
         // HTMLファイルから情報を抽出
         try {
             const response = await fetch(filePath);
-            if (!response.ok) return null;
-            const html = await response.text();
-            
-            // titleタグから科目名を抽出
-            const titleMatch = html.match(/<title>(.+?)<\/title>/);
-            if (titleMatch) {
-                const title = titleMatch[1];
-                // 「線形代数 解答」のような形式から科目名を抽出
-                subject = title.replace(/\s*解答.*$/, '').trim();
-            }
-
-            // h1タグからも情報を抽出
-            const h1Match = html.match(/<h1>(.+?)<\/h1>/);
-            if (h1Match) {
-                const h1Text = h1Match[1];
-                if (!subject) {
-                    subject = h1Text.replace(/\s*問.*$/, '').trim();
+            if (!response.ok) {
+                console.warn(`Failed to fetch ${filePath}: HTTP ${response.status}`);
+                // fetchが失敗しても、ファイル名から情報を抽出した結果を返す
+            } else {
+                const html = await response.text();
+                
+                // titleタグから科目名を抽出
+                const titleMatch = html.match(/<title>(.+?)<\/title>/);
+                if (titleMatch) {
+                    const title = titleMatch[1];
+                    // 「線形代数 解答」のような形式から科目名を抽出
+                    subject = title.replace(/\s*解答.*$/, '').trim();
                 }
-                if (!question && h1Text.includes('問')) {
-                    const questionMatch = h1Text.match(/問[０-９0-9]+/);
-                    if (questionMatch) {
-                        question = questionMatch[0];
+
+                // h1タグからも情報を抽出
+                const h1Match = html.match(/<h1>(.+?)<\/h1>/);
+                if (h1Match) {
+                    const h1Text = h1Match[1];
+                    if (!subject) {
+                        subject = h1Text.replace(/\s*問.*$/, '').trim();
+                    }
+                    if (!question && h1Text.includes('問')) {
+                        const questionMatch = h1Text.match(/問[０-９0-9]+/);
+                        if (questionMatch) {
+                            question = questionMatch[0];
+                        }
                     }
                 }
             }
         } catch (e) {
             console.warn(`Failed to fetch ${filePath}:`, e);
+            // fetchが失敗しても、ファイル名から情報を抽出した結果を返す
         }
 
         // input.txtから情報を取得（現在の解答の場合）
@@ -137,6 +145,9 @@ async function loadSolutions() {
     const currentSolution = await extractSolutionInfo('general/output/solution.html', 'solution.html');
     if (currentSolution) {
         solutionsList.push(currentSolution);
+        console.log('Loaded current solution:', currentSolution);
+    } else {
+        console.warn('Failed to load current solution');
     }
 
     // アーカイブされた解答を取得
@@ -157,6 +168,9 @@ async function loadSolutions() {
         const archiveInfo = await extractSolutionInfo(archivePath, archiveFile);
         if (archiveInfo) {
             solutionsList.push(archiveInfo);
+            console.log(`Loaded archive: ${archiveFile}`, archiveInfo);
+        } else {
+            console.warn(`Failed to load archive: ${archiveFile}`);
         }
     }
 
@@ -388,6 +402,7 @@ async function init() {
 
     // 解答を読み込む
     solutions = await loadSolutions();
+    console.log(`Total solutions loaded: ${solutions.length}`, solutions);
     
     if (solutions.length === 0) {
         document.getElementById('solutionsList').innerHTML = 

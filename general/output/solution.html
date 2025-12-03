@@ -155,104 +155,365 @@
 </head>
 <body>
     <div class="container">
-        <h1>線形代数 問3 (１) 解答</h1>
+        <h1>線形代数 問12 (2) 解答</h1>
 
         <div class="problem">
             <div class="problem-title">【問題】</div>
-            <p>部分空間 $W = \text{Span}\left\{\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix}\right\}$ の直交基底をひと組求めよ。</p>
+            <p>次の対称行列を直交行列によって対角化せよ。</p>
+            <div class="formula">
+                $$A = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}$$
+            </div>
         </div>
 
         <h2>【解答】</h2>
 
         <div class="step">
-            <div class="step-title">(1) 与えられたベクトルを確認します。</div>
-            <p>部分空間 $W$ は、2つのベクトルによって生成される部分空間です。これらのベクトルを $\boldsymbol{v}_1$、$\boldsymbol{v}_2$ とします。</p>
+            <div class="step-title">（1）固有値を求めます。</div>
+            <p>特性方程式 $\det(A - \lambda I) = 0$ を解いて固有値を求めます。</p>
             <div class="formula">
-                $$\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \quad \boldsymbol{v}_2 = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix}$$
+                $$A - \lambda I = \begin{pmatrix}
+                9 - \lambda & -2 \\
+                -2 & 6 - \lambda
+                \end{pmatrix}$$
             </div>
-            <p>これらのベクトルが線形独立であることを確認します。2つのベクトルが線形独立であるためには、一方が他方の定数倍でないことが必要です。$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ を比較すると、$\boldsymbol{v}_1$ の第2成分が $1$ であるのに対し、$\boldsymbol{v}_2$ の第2成分は $0$ であるため、一方が他方の定数倍ではないことが分かります。したがって、これらは線形独立です。</p>
-            <div class="note">
-                <p>線形独立なベクトルの組は部分空間の基底をなします。したがって、$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ は $W$ の基底です。</p>
-            </div>
-        </div>
-
-        <div class="step">
-            <div class="step-title">(2) Gram-Schmidtの直交化法を用いて直交基底を構成します。</div>
-            <p>Gram-Schmidtの直交化法は、与えられた基底ベクトルから順に、既に求めた直交ベクトルへの正射影を引くことで、互いに直交するベクトルを構成する方法です。この方法により、元の部分空間と同じ部分空間を張る直交基底を得ることができます。</p>
-            <p>最初の直交基底ベクトルを $\boldsymbol{u}_1 = \boldsymbol{v}_1$ とします。これは、最初のベクトルをそのまま使用することを意味します。</p>
-            <div class="formula">
-                $$\boldsymbol{u}_1 = \boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
-            </div>
-            <p>次に、$\boldsymbol{v}_2$ から $\boldsymbol{u}_1$ への正射影を引いて、$\boldsymbol{u}_1$ に直交するベクトル $\boldsymbol{u}_2$ を求めます。正射影の公式を用いると、次のようになります。</p>
-            <div class="formula">
-                $$\boldsymbol{u}_2 = \boldsymbol{v}_2 - \frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1}\boldsymbol{u}_1$$
-            </div>
-            <p>この式は、$\boldsymbol{v}_2$ から $\boldsymbol{u}_1$ 方向の成分を除去することで、$\boldsymbol{u}_1$ に直交するベクトルを得ることを意味します。まず、必要な内積を計算します。</p>
+            <p>この行列の行列式を計算します。</p>
             <div class="calculation">
-                <p>$\boldsymbol{v}_2$ と $\boldsymbol{u}_1$ の内積を計算します。内積は対応する成分の積の和として求められます。</p>
-                <p>$\boldsymbol{v}_2 \cdot \boldsymbol{u}_1 = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = (-2) \cdot 1 + 0 \cdot 1 + 1 \cdot 0 = -2 + 0 + 0 = -2$</p>
-                <p>$\boldsymbol{u}_1$ のノルムの2乗を計算します。これは $\boldsymbol{u}_1$ と $\boldsymbol{u}_1$ の内積として求められます。</p>
-                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = 1^2 + 1^2 + 0^2 = 1 + 1 + 0 = 2$</p>
+                $$\det(A - \lambda I) = (9 - \lambda)(6 - \lambda) - (-2)(-2)$$
+                $$= 54 - 9\lambda - 6\lambda + \lambda^2 - 4$$
+                $$= \lambda^2 - 15\lambda + 50$$
             </div>
-            <p>これらの値を用いて、$\boldsymbol{u}_2$ を計算します。正射影の係数は $\frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1} = \frac{-2}{2} = -1$ となります。</p>
-            <div class="formula">
-                $$\boldsymbol{u}_2 = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix} - (-1)\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix} + \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
-            </div>
-            <p>ベクトルの和を計算します。各成分ごとに足し算を行います。</p>
+            <p>特性方程式 $\lambda^2 - 15\lambda + 50 = 0$ を解きます。</p>
             <div class="calculation">
-                <p>$\boldsymbol{u}_2 = \begin{pmatrix} -2 + 1 \\ 0 + 1 \\ 1 + 0 \end{pmatrix} = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$</p>
-                <p>これにより、$\boldsymbol{u}_1$ に直交するベクトル $\boldsymbol{u}_2$ が得られました。</p>
+                $$\lambda^2 - 15\lambda + 50 = (\lambda - 5)(\lambda - 10) = 0$$
             </div>
-            <p>したがって、直交基底は次の通りです。</p>
-            <div class="formula">
-                $$\boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \quad \boldsymbol{u}_2 = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$$
-            </div>
+            <p>したがって、固有値は $\lambda_1 = 5$、$\lambda_2 = 10$ です。</p>
             <div class="explanation">
-                <p>この方法は、Gram-Schmidtの直交化法と呼ばれます。与えられた基底ベクトルから順に、既に求めた直交ベクトルへの正射影を引くことで、互いに直交するベクトルを構成します。この方法により、元の部分空間を張る直交基底を得ることができます。正射影を引くことで、既存の直交ベクトル方向の成分を除去し、新しい直交ベクトルを作ることができます。</p>
+                この行列は2×2の対称行列なので、定理6により固有値は実数であり、異なる固有値に属する固有ベクトルは直交します。
             </div>
         </div>
 
         <div class="step">
-            <div class="step-title">(3) 直交性を確認します。</div>
-            <p>求めた2つのベクトルが互いに直交することを確認します。2つのベクトルが直交するためには、それらの内積が $0$ である必要があります。</p>
-            <div class="calculation">
-                <p>$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ の内積を計算します。</p>
-                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix} = 1 \cdot (-1) + 1 \cdot 1 + 0 \cdot 1 = -1 + 1 + 0 = 0$</p>
+            <div class="step-title">（2）各固有値に対応する固有ベクトルを求めます。</div>
+            
+            <p>まず、$\lambda_1 = 5$ に対応する固有ベクトルを求めます。</p>
+            <div class="formula">
+                $$(A - 5I)\boldsymbol{v}_1 = \boldsymbol{0}$$
             </div>
-            <p>内積が $0$ であるため、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ は互いに直交しています。したがって、これらは直交基底をなします。また、2つのベクトルは線形独立であるため、これらは $W$ の基底でもあります。</p>
+            <div class="calculation">
+                $$\begin{pmatrix}
+                9 - 5 & -2 \\
+                -2 & 6 - 5
+                \end{pmatrix}\begin{pmatrix}
+                x \\
+                y
+                \end{pmatrix} = \begin{pmatrix}
+                4 & -2 \\
+                -2 & 1
+                \end{pmatrix}\begin{pmatrix}
+                x \\
+                y
+                \end{pmatrix} = \begin{pmatrix}
+                0 \\
+                0
+                \end{pmatrix}$$
+            </div>
+            <p>この連立方程式を解きます。</p>
+            <div class="calculation">
+                $$4x - 2y = 0$$
+                $$-2x + y = 0$$
+            </div>
+            <p>第1式から $y = 2x$ が得られます。第2式も同じ関係式を与えます。</p>
+            <p>したがって、$x = 1$ とすると $y = 2$ となり、$\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$ が固有ベクトルです（定数倍を除く）。</p>
+            
+            <p>次に、$\lambda_2 = 10$ に対応する固有ベクトルを求めます。</p>
+            <div class="formula">
+                $$(A - 10I)\boldsymbol{v}_2 = \boldsymbol{0}$$
+            </div>
+            <div class="calculation">
+                $$\begin{pmatrix}
+                9 - 10 & -2 \\
+                -2 & 6 - 10
+                \end{pmatrix}\begin{pmatrix}
+                x \\
+                y
+                \end{pmatrix} = \begin{pmatrix}
+                -1 & -2 \\
+                -2 & -4
+                \end{pmatrix}\begin{pmatrix}
+                x \\
+                y
+                \end{pmatrix} = \begin{pmatrix}
+                0 \\
+                0
+                \end{pmatrix}$$
+            </div>
+            <p>この連立方程式を解きます。</p>
+            <div class="calculation">
+                $$-x - 2y = 0$$
+                $$-2x - 4y = 0$$
+            </div>
+            <p>第1式から $x = -2y$ が得られます。第2式も同じ関係式を与えます。</p>
+            <p>したがって、$y = 1$ とすると $x = -2$ となり、$\boldsymbol{v}_2 = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$ が固有ベクトルです（定数倍を除く）。</p>
+            
             <div class="note">
-                <p>定理1より、直交するベクトルは線形独立です。2つの互いに直交するベクトルは線形独立であるため、これらは $W$ の基底をなします。直交する基底であることから、これらは直交基底です。</p>
+                固有ベクトル $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の内積を計算すると、$\boldsymbol{v}_1 \cdot \boldsymbol{v}_2 = 1 \cdot (-2) + 2 \cdot 1 = 0$ となり、確かに直交しています。これは定理6(b)により、異なる固有値に属する固有ベクトルは直交することを示しています。
             </div>
         </div>
 
-        <div class="answer-box">
-            <div class="answer-title">【答え】</div>
-            <p>部分空間 $W$ の直交基底は次の通りです。</p>
+        <div class="step">
+            <div class="step-title">（3）固有ベクトルを正規化して直交行列を構成します。</div>
+            <p>各固有ベクトルの長さを1に正規化します。</p>
+            
+            <p>$\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$ の長さは $|\boldsymbol{v}_1| = \sqrt{1^2 + 2^2} = \sqrt{5}$ です。</p>
+            <p>したがって、正規化されたベクトルは</p>
             <div class="formula">
-                $$\boldsymbol{u}_1 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}, \quad \boldsymbol{u}_2 = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}$$
+                $$\boldsymbol{q}_1 = \frac{1}{\sqrt{5}}\begin{pmatrix} 1 \\ 2 \end{pmatrix} = \begin{pmatrix} \frac{1}{\sqrt{5}} \\ \frac{2}{\sqrt{5}} \end{pmatrix}$$
+            </div>
+            
+            <p>$\boldsymbol{v}_2 = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$ の長さは $|\boldsymbol{v}_2| = \sqrt{(-2)^2 + 1^2} = \sqrt{5}$ です。</p>
+            <p>したがって、正規化されたベクトルは</p>
+            <div class="formula">
+                $$\boldsymbol{q}_2 = \frac{1}{\sqrt{5}}\begin{pmatrix} -2 \\ 1 \end{pmatrix} = \begin{pmatrix} -\frac{2}{\sqrt{5}} \\ \frac{1}{\sqrt{5}} \end{pmatrix}$$
+            </div>
+            
+            <p>これらの正規化された固有ベクトルを列ベクトルとして並べた行列が直交行列 $P$ です。</p>
+            <div class="formula">
+                $$P = \begin{pmatrix}
+                \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            
+            <div class="explanation">
+                この行列 $P$ の列ベクトルは正規直交基底をなしているため、$P$ は直交行列です。直交行列の性質により、$P^{-1} = {}^tP$ が成り立ちます。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）対角化を確認します。</div>
+            <p>直交行列 $P$ によって $A$ が対角化されることを確認します。</p>
+            
+            <p>まず、$P$ の転置行列を計算します。</p>
+            <div class="formula">
+                $${}^tP = \begin{pmatrix}
+                \frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}} \\
+                -\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            
+            <p>次に、${}^tPAP$ を計算して対角行列になることを確認します。</p>
+            <div class="calculation">
+                $${}^tPAP = \begin{pmatrix}
+                \frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}} \\
+                -\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            
+            <p>まず $AP$ を計算します。</p>
+            <div class="calculation">
+                $$AP = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            <p>第1列は $A\boldsymbol{q}_1$ を計算します。</p>
+            <div class="calculation">
+                $$A\boldsymbol{q}_1 = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{9 - 4}{\sqrt{5}} \\
+                \frac{-2 + 12}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{5}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}}
+                \end{pmatrix} = 5\begin{pmatrix}
+                \frac{1}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}}
+                \end{pmatrix} = 5\boldsymbol{q}_1$$
+            </div>
+            <p>第2列は $A\boldsymbol{q}_2$ を計算します。</p>
+            <div class="calculation">
+                $$A\boldsymbol{q}_2 = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                -\frac{2}{\sqrt{5}} \\
+                \frac{1}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{-18 - 2}{\sqrt{5}} \\
+                \frac{4 + 6}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                -\frac{20}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}}
+                \end{pmatrix} = 10\begin{pmatrix}
+                -\frac{2}{\sqrt{5}} \\
+                \frac{1}{\sqrt{5}}
+                \end{pmatrix} = 10\boldsymbol{q}_2$$
+            </div>
+            <p>したがって、</p>
+            <div class="formula">
+                $$AP = \begin{pmatrix}
+                5\boldsymbol{q}_1 & 10\boldsymbol{q}_2
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{5}{\sqrt{5}} & -\frac{20}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}} & \frac{10}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            
+            <p>次に ${}^tP(AP)$ を計算します。</p>
+            <div class="calculation">
+                $${}^tP(AP) = \begin{pmatrix}
+                \frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}} \\
+                -\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                \frac{5}{\sqrt{5}} & -\frac{20}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}} & \frac{10}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            <p>各成分を計算します。</p>
+            <div class="calculation">
+                $(1,1)$ 成分: $\frac{1}{\sqrt{5}} \cdot \frac{5}{\sqrt{5}} + \frac{2}{\sqrt{5}} \cdot \frac{10}{\sqrt{5}} = \frac{5 + 20}{5} = 5$<br>
+                $(1,2)$ 成分: $\frac{1}{\sqrt{5}} \cdot \left(-\frac{20}{\sqrt{5}}\right) + \frac{2}{\sqrt{5}} \cdot \frac{10}{\sqrt{5}} = \frac{-20 + 20}{5} = 0$<br>
+                $(2,1)$ 成分: $-\frac{2}{\sqrt{5}} \cdot \frac{5}{\sqrt{5}} + \frac{1}{\sqrt{5}} \cdot \frac{10}{\sqrt{5}} = \frac{-10 + 10}{5} = 0$<br>
+                $(2,2)$ 成分: $-\frac{2}{\sqrt{5}} \cdot \left(-\frac{20}{\sqrt{5}}\right) + \frac{1}{\sqrt{5}} \cdot \frac{10}{\sqrt{5}} = \frac{40 + 10}{5} = 10$
+            </div>
+            <p>したがって、</p>
+            <div class="formula">
+                $${}^tPAP = \begin{pmatrix}
+                5 & 0 \\
+                0 & 10
+                \end{pmatrix}$$
+            </div>
+            
+            <p>したがって、${}^tPAP = \begin{pmatrix} 5 & 0 \\ 0 & 10 \end{pmatrix}$ となり、対角行列が得られました。対角成分は固有値 $\lambda_1 = 5$ と $\lambda_2 = 10$ に対応しています。</p>
+            
+            <div class="answer-box">
+                <div class="answer-title">【答え】</div>
+                <p>直交行列</p>
+                <div class="formula">
+                    $$P = \begin{pmatrix}
+                    \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+                    \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                    \end{pmatrix}$$
+                </div>
+                <p>によって、</p>
+                <div class="formula">
+                    $${}^tPAP = \begin{pmatrix}
+                    5 & 0 \\
+                    0 & 10
+                    \end{pmatrix}$$
+                </div>
+                <p>と対角化されます。</p>
             </div>
         </div>
 
         <div class="verification">
             <div class="verification-title">【検証】</div>
-            <p>求めた結果が正しいことを確認します。2つの観点から検証します。</p>
-            <p>まず、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ が互いに直交することを再確認します。内積の計算により、$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = 0$ であることが確認できました。これにより、2つのベクトルは互いに直交しています。</p>
+            <p>求めた結果の正しさを確認します。</p>
+            
+            <p>まず、$P$ が直交行列であることを確認します。直交行列の定義により、${}^tPP = I$ が成り立つことを確認します。</p>
             <div class="calculation">
-                <p>$\boldsymbol{u}_1 \cdot \boldsymbol{u}_2 = 1 \cdot (-1) + 1 \cdot 1 + 0 \cdot 1 = -1 + 1 + 0 = 0$</p>
+                $${}^tPP = \begin{pmatrix}
+                \frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}} \\
+                -\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+                $$= \begin{pmatrix}
+                \frac{1 + 4}{5} & \frac{-2 + 2}{5} \\
+                \frac{-2 + 2}{5} & \frac{4 + 1}{5}
+                \end{pmatrix} = \begin{pmatrix}
+                1 & 0 \\
+                0 & 1
+                \end{pmatrix} = I$$
             </div>
-            <p>次に、求めた直交基底が元の部分空間 $W$ を張ることを確認します。これは、元のベクトル $\boldsymbol{v}_1$、$\boldsymbol{v}_2$ が、求めた直交基底 $\boldsymbol{u}_1$、$\boldsymbol{u}_2$ の線形結合で表せることを示すことで確認できます。これにより、$\text{Span}\{\boldsymbol{u}_1, \boldsymbol{u}_2\} = \text{Span}\{\boldsymbol{v}_1, \boldsymbol{v}_2\} = W$ であることが確認できます。</p>
-            <p>$\boldsymbol{v}_1 = \boldsymbol{u}_1$ であるため、$\boldsymbol{v}_1$ は $\boldsymbol{u}_1$ の線形結合で表せます。$\boldsymbol{v}_2$ について、Gram-Schmidtの直交化法の過程から、$\boldsymbol{v}_2 = \boldsymbol{u}_2 + \frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1}\boldsymbol{u}_1$ という関係が成り立ちます。この式は、$\boldsymbol{v}_2$ が $\boldsymbol{u}_2$ と $\boldsymbol{u}_1$ 方向の成分の和として表されることを意味します。先ほど計算した値 $\frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1} = \frac{-2}{2} = -1$ を用いると、$\boldsymbol{v}_2 = \boldsymbol{u}_2 - \boldsymbol{u}_1$ となります。</p>
+            <p>したがって、$P$ は確かに直交行列です。</p>
+            
+            <p>次に、固有値と固有ベクトルの関係 $A\boldsymbol{q}_i = \lambda_i\boldsymbol{q}_i$ を直接確認します。これは、正規化された固有ベクトルが実際に固有値に対応する固有ベクトルであることを示します。</p>
             <div class="calculation">
-                <p>$\boldsymbol{v}_2 = \boldsymbol{u}_2 - \boldsymbol{u}_1 = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix} - \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} -1 - 1 \\ 1 - 1 \\ 1 - 0 \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix}$</p>
-                <p>これは元のベクトル $\boldsymbol{v}_2$ と一致します。したがって、$\boldsymbol{v}_2$ は $\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ の線形結合で表せます。</p>
+                $$A\boldsymbol{q}_1 = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{9 - 4}{\sqrt{5}} \\
+                \frac{-2 + 12}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{5}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}}
+                \end{pmatrix} = 5\begin{pmatrix}
+                \frac{1}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}}
+                \end{pmatrix} = 5\boldsymbol{q}_1$$
             </div>
-            <p>$\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の両方が $\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ の線形結合で表せるため、$\text{Span}\{\boldsymbol{v}_1, \boldsymbol{v}_2\} \subset \text{Span}\{\boldsymbol{u}_1, \boldsymbol{u}_2\}$ が成り立ちます。逆に、$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ が $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せることを確認します。$\boldsymbol{u}_1 = \boldsymbol{v}_1$ は明らかです。$\boldsymbol{u}_2$ について、Gram-Schmidtの直交化法の過程から、$\boldsymbol{u}_2 = \boldsymbol{v}_2 - \frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1}\boldsymbol{u}_1$ という関係が成り立ちます。$\boldsymbol{u}_1 = \boldsymbol{v}_1$ であることを用いると、$\boldsymbol{u}_2 = \boldsymbol{v}_2 - \frac{\boldsymbol{v}_2 \cdot \boldsymbol{v}_1}{\boldsymbol{v}_1 \cdot \boldsymbol{v}_1}\boldsymbol{v}_1$ となります。先ほど計算した値 $\frac{\boldsymbol{v}_2 \cdot \boldsymbol{u}_1}{\boldsymbol{u}_1 \cdot \boldsymbol{u}_1} = -1$ を用いると、$\boldsymbol{u}_2 = \boldsymbol{v}_2 - (-1)\boldsymbol{v}_1 = \boldsymbol{v}_2 + \boldsymbol{v}_1$ となります。この関係式を確認します。</p>
             <div class="calculation">
-                <p>$\boldsymbol{v}_2 + \boldsymbol{v}_1 = \begin{pmatrix} -2 \\ 0 \\ 1 \end{pmatrix} + \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} -2 + 1 \\ 0 + 1 \\ 1 + 0 \end{pmatrix} = \begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix} = \boldsymbol{u}_2$</p>
-                <p>したがって、$\boldsymbol{u}_2$ は $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せます。</p>
+                $$A\boldsymbol{q}_2 = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                -\frac{2}{\sqrt{5}} \\
+                \frac{1}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \frac{-18 - 2}{\sqrt{5}} \\
+                \frac{4 + 6}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                -\frac{20}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}}
+                \end{pmatrix} = 10\begin{pmatrix}
+                -\frac{2}{\sqrt{5}} \\
+                \frac{1}{\sqrt{5}}
+                \end{pmatrix} = 10\boldsymbol{q}_2$$
             </div>
-            <p>$\boldsymbol{u}_1$ と $\boldsymbol{u}_2$ の両方が $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の線形結合で表せるため、$\text{Span}\{\boldsymbol{u}_1, \boldsymbol{u}_2\} \subset \text{Span}\{\boldsymbol{v}_1, \boldsymbol{v}_2\}$ が成り立ちます。これにより、$\text{Span}\{\boldsymbol{u}_1, \boldsymbol{u}_2\} = \text{Span}\{\boldsymbol{v}_1, \boldsymbol{v}_2\} = W$ であることが確認できます。</p>
-            <p>以上より、求めた直交基底 $\boldsymbol{u}_1$、$\boldsymbol{u}_2$ は元の部分空間 $W$ を張り、かつ互いに直交するため、$W$ の直交基底であることが確認できました。</p>
+            <p>これにより、$\boldsymbol{q}_1$ と $\boldsymbol{q}_2$ がそれぞれ固有値 $5$ と $10$ に対応する固有ベクトルであることが確認できました。</p>
+            
+            <p>最後に、対角化の結果 ${}^tPAP = \begin{pmatrix} 5 & 0 \\ 0 & 10 \end{pmatrix}$ が正しいことを、逆変換 $P({}^tPAP){}^tP = A$ を計算して確認します。</p>
+            <div class="calculation">
+                $$P({}^tPAP){}^tP = \begin{pmatrix}
+                \frac{1}{\sqrt{5}} & -\frac{2}{\sqrt{5}} \\
+                \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                5 & 0 \\
+                0 & 10
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}} \\
+                -\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+                $$= \begin{pmatrix}
+                \frac{5}{\sqrt{5}} & -\frac{20}{\sqrt{5}} \\
+                \frac{10}{\sqrt{5}} & \frac{10}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                \frac{1}{\sqrt{5}} & \frac{2}{\sqrt{5}} \\
+                -\frac{2}{\sqrt{5}} & \frac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+                $$= \begin{pmatrix}
+                \frac{5 + 40}{5} & \frac{10 - 20}{5} \\
+                \frac{10 - 20}{5} & \frac{20 + 10}{5}
+                \end{pmatrix} = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix} = A$$
+            </div>
+            <p>これにより、対角化の結果が正しく、元の行列 $A$ に戻ることが確認できました。</p>
+            
             <p>以上より求めた結果の正しさを確認しました。</p>
         </div>
     </div>
