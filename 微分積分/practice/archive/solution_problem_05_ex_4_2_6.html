@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 05 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 05 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の関数について、原点 $(0,0)$ において連続かどうかを調べよ。</p>
+            <p>（1）$f(x,y)=\begin{cases}\frac{xy}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$</p>
+            <p>（2）$f(x,y)=\begin{cases}\frac{x^{3}+y^{3}}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>連続性の定義</strong>：2変数関数 $f(x,y)$ が点 $(a,b)$ で連続であるとは、$\lim_{(x,y) \to (a,b)} f(x,y) = f(a,b)$ が成り立つことをいいます。すなわち、関数の極限値がその点での関数値と一致する必要があります。</li>
+                    <li><strong>極限の存在性</strong>：連続性を判定するには、まず極限が存在するかを確認する必要があります。極限が存在しない場合、連続ではありません。</li>
+                    <li><strong>既知の結果の利用</strong>：この問題では、前の問題（4.2.3）で計算した極限の結果を利用します。問題（1）の関数は 4.2.3 の問題（2）と同じ関数であり、問題（2）の関数は 4.2.3 の問題（3）と同じ関数です。</li>
+                    <li><strong>極限が存在しないことの証明</strong>：異なる経路から $(0,0)$ に近づけたときに異なる極限値が得られることを示すことで、極限が存在しないことを証明できます。</li>
+                    <li><strong>極限が存在する場合の連続性判定</strong>：極限が存在し、かつその値が $f(0,0)$ と一致する場合、関数は連続です。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    各関数について、原点での連続性を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（1）</div>
+                    4.2.3 (2) の結果を参照し、極限が存在しないことを確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    極限が存在するか？
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">存在しない場合</div>
+                    連続でないことを結論づける
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（2）</div>
+                    4.2.3 (3) の結果を参照し、極限が $0$ であることを確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    極限値が $f(0,0)$ と一致するか？
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">一致する場合</div>
+                    連続であることを結論づける
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    各関数の連続性の結果をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、2つの関数について、原点 $(0,0)$ における連続性を調べます。連続性を判定するには、$\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0)$ が成り立つかを確認します。問題（1）の関数は前の問題（4.2.3）の問題（2）と同じ関数であり、問題（2）の関数は 4.2.3 の問題（3）と同じ関数です。したがって、前の問題で計算した極限の結果を利用します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）関数 $f(x,y)=\begin{cases}\frac{xy}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$ について</div>
+            <p>この関数は、前の問題（4.2.3）の問題（2）で扱った関数と同じです。</p>
+            
+            <p>4.2.3 の問題（2）の結果より、$\lim_{(x,y) \to (0,0)} \frac{xy}{x^{2}+y^{2}}$ は存在しません。これは、極座標変換を行ったとき、$\lim_{r \to 0} \cos\theta \sin\theta = \cos\theta \sin\theta$ となり、$\theta$ の値によって極限値が変わるためです。例えば、$\theta = \frac{\pi}{4}$ のとき $\frac{1}{2}$、$\theta = 0$ のとき $0$ となり、方向によって値が変わるため、極限は存在しません。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 4.2.3 の問題（2）では、極座標変換 $x=r\cos\theta$、$y=r\sin\theta$ を行い、$\lim_{r \to 0} \frac{xy}{x^{2}+y^{2}} = \lim_{r \to 0} \cos\theta \sin\theta = \cos\theta \sin\theta$ となりました。この値は $\theta$ に依存するため、極限は存在しません。
+            </div>
+            
+            <p>連続性の定義より、関数 $f$ が点 $(0,0)$ で連続であるためには、$\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0)$ が成り立つ必要があります。しかし、$\lim_{(x,y) \to (0,0)} f(x,y)$ が存在しないため、この条件を満たすことができません。</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y) \to (0,0)} f(x,y) \text{ が存在しない } \implies f \text{ は } (0,0) \text{ で連続でない}$$
+            </div>
+            
+            <p>したがって、関数 $f$ は原点 $(0,0)$ において連続ではありません。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）関数 $f(x,y)=\begin{cases}\frac{x^{3}+y^{3}}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$ について</div>
+            <p>この関数は、前の問題（4.2.3）の問題（3）で扱った関数と同じです。</p>
+            
+            <p>4.2.3 の問題（3）の結果より、$\lim_{(x,y) \to (0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}} = 0$ です。これは、極座標変換を行い、はさみうちの原理を用いて証明されました。すなわち、$\lim_{r \to 0} r(\cos^{3}\theta+\sin^{3}\theta) = 0$ が成り立ちます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 4.2.3 の問題（3）では、極座標変換を行い、$|r(\cos^{3}\theta+\sin^{3}\theta)| \le 2r$ かつ $\lim_{r \to 0} 2r = 0$ であることから、はさみうちの原理により極限が $0$ であることが示されました。
+            </div>
+            
+            <p>ここで、$f(0,0) = 0$ です（関数の定義より）。したがって、</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y) \to (0,0)} f(x,y) = 0 = f(0,0)$$
+            </div>
+            
+            <p>が成り立ちます。</p>
+            
+            <p>連続性の定義より、関数 $f$ が点 $(0,0)$ で連続であるとは、$\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0)$ が成り立つことをいいます。上で示したように、この条件が満たされています。</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0) \iff f \text{ は } (0,0) \text{ で連続}$$
+            </div>
+            
+            <p>したがって、関数 $f$ は原点 $(0,0)$ において連続です。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>証明した内容を検証します。</p>
+            
+            <p>まず、問題（1）の結果を確認します。4.2.3 の問題（2）の結果を利用し、$\lim_{(x,y) \to (0,0)} \frac{xy}{x^{2}+y^{2}}$ が存在しないことを確認しました。極限が存在しない場合、連続性の定義 $\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0)$ を満たすことができないため、関数は連続ではありません。この論理は正しいです。</p>
+            
+            <p>次に、問題（2）の結果を確認します。4.2.3 の問題（3）の結果を利用し、$\lim_{(x,y) \to (0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}} = 0$ であることを確認しました。また、$f(0,0) = 0$ であるため、$\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0)$ が成り立ちます。これは連続性の定義そのものであるため、関数は連続です。この論理は正しいです。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）関数 $f(x,y)=\begin{cases}\frac{xy}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$ について：</p>
+            <p>4.2.3 の問題（2）の結果より、$\lim_{(x,y) \to (0,0)} \frac{xy}{x^{2}+y^{2}}$ は存在しません。極限が存在しないため、連続性の定義 $\lim_{(x,y) \to (0,0)} f(x,y) = f(0,0)$ を満たすことができません。したがって、関数 $f$ は原点 $(0,0)$ において連続ではありません。</p>
+            
+            <p>（2）関数 $f(x,y)=\begin{cases}\frac{x^{3}+y^{3}}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$ について：</p>
+            <p>4.2.3 の問題（3）の結果より、$\lim_{(x,y) \to (0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}} = 0$ です。また、$f(0,0) = 0$ であるため、$\lim_{(x,y) \to (0,0)} f(x,y) = 0 = f(0,0)$ が成り立ちます。したがって、連続性の定義より、関数 $f$ は原点 $(0,0)$ において連続です。</p>
+        </div>
+    </div>
+</body>
+</html>

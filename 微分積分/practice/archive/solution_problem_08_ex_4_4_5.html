@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 08 Ex 4 4 5 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 08 Ex 4 4 5 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の関数について、原点 $(0,0)$ において偏微分可能か、全微分可能かを調べよ。</p>
+            <p>（1）$f(x,y)=\begin{cases}\frac{x^{3}-y^{3}}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$</p>
+            <p>（2）$f(x,y)=\sqrt{|xy|}$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>偏微分の定義</strong>：2変数関数 $f(x,y)$ の点 $(a,b)$ における $x$ に関する偏微分係数は、$f_{x}(a,b) = \lim_{h \to 0} \frac{f(a+h,b)-f(a,b)}{h}$ で定義されます。同様に、$y$ に関する偏微分係数は $f_{y}(a,b) = \lim_{h \to 0} \frac{f(a,b+h)-f(a,b)}{h}$ で定義されます。この極限が存在するとき、その点で偏微分可能であるといいます。</li>
+                    <li><strong>全微分の定義</strong>：2変数関数 $f(x,y)$ が点 $(a,b)$ で全微分可能であるとは、$\lim_{(h,k) \to (0,0)} \frac{f(a+h,b+k)-f(a,b)-f_{x}(a,b)h-f_{y}(a,b)k}{\sqrt{h^{2}+k^{2}}} = 0$ が成り立つことをいいます。この条件が満たされない場合、全微分不可能です。</li>
+                    <li><strong>極限の計算</strong>：偏微分や全微分の判定では、極限の計算が必要です。特に、原点での偏微分可能性を調べる際は、定義に従って極限を計算します。</li>
+                    <li><strong>全微分不可能の証明</strong>：全微分可能性を否定するには、特定の経路 $(h,k) \to (0,0)$ を選んで、極限が $0$ にならないことを示します。例えば、$h=k$ や $h=-k$ などの特殊な経路を選ぶことで、極限が $0$ でない値を取ることを示せます。</li>
+                    <li><strong>場合分けによる関数の扱い</strong>：関数が場合分けで定義されている場合、原点での値とそれ以外の点での値が異なるため、定義に従って慎重に計算する必要があります。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を理解し、各関数について偏微分可能性と全微分可能性を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    関数（1）について、$x$ に関する偏微分係数を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    関数（1）について、$y$ に関する偏微分係数を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    関数（1）について、全微分可能性の定義式を計算し、特定の経路で極限が0でないことを示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    関数（2）について、$x$ と $y$ に関する偏微分係数を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ5</div>
+                    関数（2）について、全微分可能性の定義式を計算し、特定の経路で極限が0でないことを示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    各関数の偏微分可能性と全微分可能性の結果をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、2つの関数について、原点 $(0,0)$ における偏微分可能性と全微分可能性を調べます。まず、各関数について偏微分係数を定義に従って計算し、次に全微分可能性の定義式を計算します。全微分可能性を否定するには、特定の経路 $(h,k) \to (0,0)$ を選んで、極限が $0$ にならないことを示します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）関数 $f(x,y)=\begin{cases}\frac{x^{3}-y^{3}}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$ について</div>
+            
+            <h3 style="margin-top: 20px; margin-bottom: 15px; font-size: 1.1em;">偏微分可能性の判定</h3>
+            
+            <p>まず、$x$ に関する偏微分係数を計算します。偏微分の定義より、</p>
+            
+            <div class="formula">
+                $$f_{x}(0,0) = \lim_{h \to 0} \frac{f(0+h,0)-f(0,0)}{h}$$
+            </div>
+            
+            <p>ここで、$f(0+h,0) = f(h,0)$ です。$(h,0) \ne (0,0)$（$h \ne 0$ のとき）であるため、関数の定義より、</p>
+            
+            <div class="formula">
+                $$f(h,0) = \frac{h^{3}-0^{3}}{h^{2}+0^{2}} = \frac{h^{3}}{h^{2}} = h$$
+            </div>
+            
+            <p>また、$f(0,0) = 0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(0,0) = \lim_{h \to 0} \frac{f(h,0)-f(0,0)}{h} = \lim_{h \to 0} \frac{\frac{h^{3}-0^{3}}{h^{2}+0^{2}}-0}{h} = \lim_{h \to 0} \frac{h}{h} = \lim_{h \to 0} 1 = 1$$
+            </div>
+            
+            <p>この極限は存在し、値は $1$ です。したがって、$x$ に関して偏微分可能で、$f_{x}(0,0)=1$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 偏微分の定義では、$y$ を固定して $x$ だけを変化させます。ここでは、$y=0$ を固定し、$x$ を $h$ だけ変化させたときの変化率を考えています。
+            </div>
+            
+            <p>次に、$y$ に関する偏微分係数を計算します。偏微分の定義より、</p>
+            
+            <div class="formula">
+                $$f_{y}(0,0) = \lim_{h \to 0} \frac{f(0,0+h)-f(0,0)}{h}$$
+            </div>
+            
+            <p>ここで、$f(0,0+h) = f(0,h)$ です。$(0,h) \ne (0,0)$（$h \ne 0$ のとき）であるため、関数の定義より、</p>
+            
+            <div class="formula">
+                $$f(0,h) = \frac{0^{3}-h^{3}}{0^{2}+h^{2}} = \frac{-h^{3}}{h^{2}} = -h$$
+            </div>
+            
+            <p>また、$f(0,0) = 0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{y}(0,0) = \lim_{h \to 0} \frac{f(0,h)-f(0,0)}{h} = \lim_{h \to 0} \frac{\frac{0^{3}-h^{3}}{0^{2}+h^{2}}-0}{h} = \lim_{h \to 0} \frac{-h}{h} = \lim_{h \to 0} (-1) = -1$$
+            </div>
+            
+            <p>この極限は存在し、値は $-1$ です。したがって、$y$ に関して偏微分可能で、$f_{y}(0,0)=-1$ です。</p>
+            
+            <h3 style="margin-top: 30px; margin-bottom: 15px; font-size: 1.1em;">全微分可能性の判定</h3>
+            
+            <p>全微分可能性を判定するため、全微分の定義式を計算します。全微分の定義より、</p>
+            
+            <div class="formula">
+                $$\lim_{(h,k) \to (0,0)} \frac{f(h,k)-f(0,0)-f_{x}(0,0)h-f_{y}(0,0)k}{\sqrt{h^{2}+k^{2}}}$$
+            </div>
+            
+            <p>ここで、$f(0,0)=0$、$f_{x}(0,0)=1$、$f_{y}(0,0)=-1$ であるため、</p>
+            
+            <div class="formula">
+                $$\lim_{(h,k) \to (0,0)} \frac{\frac{h^{3}-k^{3}}{h^{2}+k^{2}}-0-1 \cdot h-(-1) \cdot k}{\sqrt{h^{2}+k^{2}}} = \lim_{(h,k) \to (0,0)} \frac{\frac{h^{3}-k^{3}}{h^{2}+k^{2}}-h+k}{\sqrt{h^{2}+k^{2}}}$$
+            </div>
+            
+            <p>分子を通分します。$h-k$ を因数分解すると、$h^{3}-k^{3} = (h-k)(h^{2}+hk+k^{2})$ です。また、$h-k = (h-k) \cdot 1 = (h-k) \cdot \frac{h^{2}+k^{2}}{h^{2}+k^{2}}$ と変形できます。したがって、</p>
+            
+            <div class="formula">
+                $$\frac{h^{3}-k^{3}}{h^{2}+k^{2}} - (h-k) = \frac{h^{3}-k^{3}-(h-k)(h^{2}+k^{2})}{h^{2}+k^{2}}$$
+            </div>
+            
+            <p>分子を展開します。$(h-k)(h^{2}+k^{2}) = h^{3} + hk^{2} - kh^{2} - k^{3} = h^{3} + hk^{2} - h^{2}k - k^{3}$ です。したがって、</p>
+            
+            <div class="formula">
+                $$h^{3}-k^{3}-(h^{3}+hk^{2}-h^{2}k-k^{3}) = h^{3}-k^{3}-h^{3}-hk^{2}+h^{2}k+k^{3} = -hk^{2}+h^{2}k = hk(h-k)$$
+            </div>
+            
+            <p>したがって、</p>
+            
+            <div class="formula">
+                $$\lim_{(h,k) \to (0,0)} \frac{\frac{h^{3}-k^{3}-(h-k)(h^{2}+k^{2})}{h^{2}+k^{2}}}{\sqrt{h^{2}+k^{2}}} = \lim_{(h,k) \to (0,0)} \frac{hk(h-k)}{(h^{2}+k^{2})^{\frac{3}{2}}}$$
+            </div>
+            
+            <p>この極限が $0$ になるかどうかを調べます。特定の経路を選んで極限を計算します。$h=-k$ として $(h,k) \to (0,0)$ に近づけると、</p>
+            
+            <div class="formula">
+                $$\frac{(-k)k(k-(-k))}{(k^{2}+(-k)^{2})^{\frac{3}{2}}} = \frac{(-k)k(2k)}{(k^{2}+k^{2})^{\frac{3}{2}}} = \frac{-2k^{3}}{(2k^{2})^{\frac{3}{2}}} = \frac{-2k^{3}}{2^{\frac{3}{2}}k^{3}} = \frac{-2k^{3}}{2\sqrt{2}k^{3}} = -\frac{1}{\sqrt{2}}$$
+            </div>
+            
+            <p>ここで、$k \to 0$ のとき、この値は $-\frac{1}{\sqrt{2}}$ に収束します。これは $0$ ではありません。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 全微分可能性を否定するには、少なくとも1つの経路で極限が $0$ でないことを示せば十分です。ここでは、$h=-k$ という経路を選ぶことで、極限が $-\frac{1}{\sqrt{2}} \ne 0$ であることを示しました。
+            </div>
+            
+            <p>したがって、全微分の定義式の極限は $0$ になりません。これは、関数 $f$ が原点で全微分不可能であることを意味します。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）関数 $f(x,y)=\sqrt{|xy|}$ について</div>
+            
+            <h3 style="margin-top: 20px; margin-bottom: 15px; font-size: 1.1em;">偏微分可能性の判定</h3>
+            
+            <p>まず、$x$ に関する偏微分係数を計算します。偏微分の定義より、</p>
+            
+            <div class="formula">
+                $$f_{x}(0,0) = \lim_{h \to 0} \frac{f(0+h,0)-f(0,0)}{h}$$
+            </div>
+            
+            <p>ここで、$f(0+h,0) = f(h,0) = \sqrt{|h \cdot 0|} = \sqrt{0} = 0$ です。また、$f(0,0) = \sqrt{|0 \cdot 0|} = 0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(0,0) = \lim_{h \to 0} \frac{\sqrt{|h \cdot 0|}-\sqrt{|0 \cdot 0|}}{h} = \lim_{h \to 0} \frac{0}{h} = \lim_{h \to 0} 0 = 0$$
+            </div>
+            
+            <p>この極限は存在し、値は $0$ です。したがって、$x$ に関して偏微分可能で、$f_{x}(0,0)=0$ です。</p>
+            
+            <p>次に、$y$ に関する偏微分係数を計算します。偏微分の定義より、</p>
+            
+            <div class="formula">
+                $$f_{y}(0,0) = \lim_{h \to 0} \frac{f(0,0+h)-f(0,0)}{h}$$
+            </div>
+            
+            <p>ここで、$f(0,0+h) = f(0,h) = \sqrt{|0 \cdot h|} = \sqrt{0} = 0$ です。また、$f(0,0) = 0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{y}(0,0) = \lim_{h \to 0} \frac{\sqrt{|0 \cdot h|}-\sqrt{|0 \cdot 0|}}{h} = \lim_{h \to 0} \frac{0}{h} = \lim_{h \to 0} 0 = 0$$
+            </div>
+            
+            <p>この極限は存在し、値は $0$ です。したがって、$y$ に関して偏微分可能で、$f_{y}(0,0)=0$ です。</p>
+            
+            <h3 style="margin-top: 30px; margin-bottom: 15px; font-size: 1.1em;">全微分可能性の判定</h3>
+            
+            <p>全微分可能性を判定するため、全微分の定義式を計算します。全微分の定義より、</p>
+            
+            <div class="formula">
+                $$\lim_{(h,k) \to (0,0)} \frac{f(0+h,0+k)-f(0,0)-f_{x}(0,0)h-f_{y}(0,0)k}{\sqrt{h^{2}+k^{2}}}$$
+            </div>
+            
+            <p>ここで、$f(0,0)=0$、$f_{x}(0,0)=0$、$f_{y}(0,0)=0$ であるため、</p>
+            
+            <div class="formula">
+                $$\lim_{(h,k) \to (0,0)} \frac{\sqrt{|hk|}-0-0 \cdot h-0 \cdot k}{\sqrt{h^{2}+k^{2}}} = \lim_{(h,k) \to (0,0)} \frac{\sqrt{|hk|}}{\sqrt{h^{2}+k^{2}}}$$
+            </div>
+            
+            <p>この極限が $0$ になるかどうかを調べます。特定の経路を選んで極限を計算します。$h=k$ として $(h,k) \to (0,0)$ に近づけると、</p>
+            
+            <div class="formula">
+                $$\frac{\sqrt{|k^{2}|}}{\sqrt{k^{2}+k^{2}}} = \frac{|k|}{\sqrt{2k^{2}}} = \frac{|k|}{\sqrt{2}|k|} = \frac{1}{\sqrt{2}}$$
+            </div>
+            
+            <p>ここで、$k \to 0$ のとき、この値は $\frac{1}{\sqrt{2}}$ に収束します。これは $0$ ではありません。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $|k^{2}| = k^{2}$ であり、$k^{2} \ge 0$ であるため、$\sqrt{|k^{2}|} = |k|$ です。また、$k^{2}+k^{2} = 2k^{2}$ であるため、$\sqrt{k^{2}+k^{2}} = \sqrt{2}|k|$ です（$k \ne 0$ のとき）。
+            </div>
+            
+            <p>したがって、全微分の定義式の極限は $0$ になりません。これは、関数 $f$ が原点で全微分不可能であることを意味します。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>証明した内容を検証します。</p>
+            
+            <p>まず、偏微分係数の計算を確認します。関数（1）について、$f_{x}(0,0)$ と $f_{y}(0,0)$ の計算では、定義に従って極限を計算し、それぞれ $1$ と $-1$ という値が得られました。関数（2）についても、定義に従って計算し、両方とも $0$ という値が得られました。これらの計算は、偏微分の定義に基づいて正しく行われています。</p>
+            
+            <p>次に、全微分不可能性の証明を確認します。両方の関数について、全微分の定義式を計算し、特定の経路（関数（1）では $h=-k$、関数（2）では $h=k$）を選ぶことで、極限が $0$ でない値を取ることを示しました。これは、全微分可能性を否定する標準的な方法です。全微分可能であるためには、すべての経路で極限が $0$ になる必要がありますが、1つの経路でも $0$ でない値が得られれば、全微分不可能であることが示されます。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）関数 $f(x,y)=\begin{cases}\frac{x^{3}-y^{3}}{x^{2}+y^{2}} & (x,y) \ne (0,0) \\ 0 & (x,y)=(0,0)\end{cases}$ について：</p>
+            <ul style="margin-left: 30px; margin-top: 10px; margin-bottom: 10px;">
+                <li>偏微分可能：$f_{x}(0,0)=1$、$f_{y}(0,0)=-1$</li>
+                <li>全微分不可能：$h=-k$ として $(h,k) \to (0,0)$ に近づけると、全微分の定義式の極限が $-\frac{1}{\sqrt{2}} \ne 0$ となるため</li>
+            </ul>
+            
+            <p>（2）関数 $f(x,y)=\sqrt{|xy|}$ について：</p>
+            <ul style="margin-left: 30px; margin-top: 10px; margin-bottom: 10px;">
+                <li>偏微分可能：$f_{x}(0,0)=0$、$f_{y}(0,0)=0$</li>
+                <li>全微分不可能：$h=k$ として $(h,k) \to (0,0)$ に近づけると、全微分の定義式の極限が $\frac{1}{\sqrt{2}} \ne 0$ となるため</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 問2 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 問2 解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>制約条件 $φ(x,y) = x^3 + y^3 + 2x + 2y - 6 = 0$ の下で、関数 $f(x,y)=2xy$ の最大値、最小値を調べよ。</p>
+        </div>
+
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>ラグランジュの未定乗数法</strong>：制約条件の下で関数の極値を求める際に使用する方法です。目的関数 $f(x,y)$ と制約条件 $g(x,y)=0$ に対して、ラグランジュ関数 $L(x,y,\lambda) = f(x,y) - \lambda g(x,y)$ を定義し、その偏導関数がすべて $0$ となる点を求めます。ここで、$\lambda$ はラグランジュ乗数（未定乗数）と呼ばれます。</li>
+                    <li><strong>制約条件</strong>：問題では、$(x,y)$ が $φ(x,y) = x^3 + y^3 + 2x + 2y - 6 = 0$ を満たす必要があります。この制約条件を満たす点の集合（曲線）上で、目的関数 $f(x,y)$ の最大値・最小値を求めます。</li>
+                    <li><strong>停留点の必要条件</strong>：制約条件の下での極値候補点は、ラグランジュ関数の偏導関数がすべて $0$ となる点です。すなわち、$\frac{\partial L}{\partial x} = 0$、$\frac{\partial L}{\partial y} = 0$、$\frac{\partial L}{\partial \lambda} = 0$ を満たす点が候補となります。</li>
+                    <li><strong>最大値・最小値の判定</strong>：停留点における関数値を比較し、最大値・最小値を決定します。また、制約曲線が有界でない場合は、無限遠での関数の挙動も調べる必要があります。</li>
+                </ul>
+            </div>
+
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を読み、求める内容を理解する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    ラグランジュ関数 $L(x,y,\lambda) = f(x,y) - \lambda g(x,y)$ を定義する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    ラグランジュ関数の偏導関数 $\frac{\partial L}{\partial x}$、$\frac{\partial L}{\partial y}$、$\frac{\partial L}{\partial \lambda}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    連立方程式 $\frac{\partial L}{\partial x} = 0$、$\frac{\partial L}{\partial y} = 0$、$\frac{\partial L}{\partial \lambda} = 0$ を解く
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    各停留点における関数値を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ5</div>
+                    制約曲線が有界かどうかを確認し、無限遠での挙動を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    最大値・最小値を決定する
+                </div>
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+        <p>この問題では、ラグランジュの未定乗数法を用いて、制約条件 $φ(x,y) = x^3 + y^3 + 2x + 2y - 6 = 0$ の下で関数 $f(x,y) = 2xy$ の最大値・最小値を求めます。まず、ラグランジュ関数を定義し、その偏導関数を計算して停留点を求めます。次に、各停留点における関数値を比較し、制約曲線の有界性を確認して最大値・最小値を決定します。</p>
+
+        <div class="step">
+            <div class="step-title">（1）ラグランジュ関数の定義</div>
+            
+            <p>制約条件 $φ(x,y) = x^3 + y^3 + 2x + 2y - 6 = 0$ の下で、目的関数 $f(x,y) = 2xy$ の極値を求めるために、ラグランジュ関数を定義します。</p>
+
+            <div class="formula">
+                $$L(x,y,\lambda) = f(x,y) - \lambda φ(x,y) = 2xy - \lambda(x^3 + y^3 + 2x + 2y - 6)$$
+            </div>
+
+            <p>ここで、$\lambda$ はラグランジュ乗数（未定乗数）と呼ばれる実数です。この関数の停留点を求めることで、制約条件の下での目的関数の極値候補点が得られます。</p>
+
+            <div class="note">
+                ラグランジュの未定乗数法は、制約条件付き最適化問題を解くための強力な方法です。制約条件を満たしながら目的関数を最大化・最小化する点では、目的関数の勾配と制約条件の勾配が平行になるという幾何学的な直観に基づいています。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）ラグランジュ関数の偏導関数の計算</div>
+            
+            <p>ラグランジュ関数 $L(x,y,\lambda) = 2xy - \lambda(x^3 + y^3 + 2x + 2y - 6)$ の各変数に関する偏導関数を計算します。</p>
+
+            <p>まず、$L$ を $x$ で偏微分します。$2xy$ の $x$ に関する偏導関数は $2y$（$y$ は定数として扱う）、$-\lambda(x^3 + y^3 + 2x + 2y - 6)$ の $x$ に関する偏導関数は $-\lambda(3x^2 + 2)$ となります。</p>
+
+            <div class="formula">
+                $$\frac{\partial L}{\partial x} = 2y - \lambda(3x^2 + 2)$$
+            </div>
+
+            <p>次に、$L$ を $y$ で偏微分します。$2xy$ の $y$ に関する偏導関数は $2x$（$x$ は定数として扱う）、$-\lambda(x^3 + y^3 + 2x + 2y - 6)$ の $y$ に関する偏導関数は $-\lambda(3y^2 + 2)$ となります。</p>
+
+            <div class="formula">
+                $$\frac{\partial L}{\partial y} = 2x - \lambda(3y^2 + 2)$$
+            </div>
+
+            <p>最後に、$L$ を $\lambda$ で偏微分します。$2xy$ は $\lambda$ を含まないため導関数は $0$、$-\lambda(x^3 + y^3 + 2x + 2y - 6)$ の $\lambda$ に関する偏導関数は $-(x^3 + y^3 + 2x + 2y - 6)$ となります。これは制約条件 $φ(x,y) = 0$ を表しています。</p>
+
+            <div class="formula">
+                $$\frac{\partial L}{\partial \lambda} = -(x^3 + y^3 + 2x + 2y - 6) = -φ(x,y)$$
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）連立方程式を解いて停留点を求める</div>
+            
+            <p>停留点を求めるため、すべての偏導関数が $0$ となる連立方程式を解きます。</p>
+
+            <div class="formula">
+                $$\begin{cases} \frac{\partial L}{\partial x} = 2y - \lambda(3x^2 + 2) = 0 \\ \frac{\partial L}{\partial y} = 2x - \lambda(3y^2 + 2) = 0 \\ \frac{\partial L}{\partial \lambda} = -(x^3 + y^3 + 2x + 2y - 6) = 0 \end{cases}$$
+            </div>
+
+            <p>第1式と第2式から、$\lambda$ について解きます。第1式より、$\lambda \neq 0$ の場合（$3x^2 + 2 \neq 0$ は常に成り立つ）、</p>
+
+            <div class="calculation">
+                $$\lambda = \frac{2y}{3x^2 + 2}$$
+            </div>
+
+            <p>第2式より、</p>
+
+            <div class="calculation">
+                $$\lambda = \frac{2x}{3y^2 + 2}$$
+            </div>
+
+            <p>これらが等しいことから、</p>
+
+            <div class="calculation">
+                $$\frac{2y}{3x^2 + 2} = \frac{2x}{3y^2 + 2}$$
+            </div>
+
+            <p>両辺に $(3x^2 + 2)(3y^2 + 2)$ をかけると、</p>
+
+            <div class="calculation">
+                $$2y(3y^2 + 2) = 2x(3x^2 + 2)$$
+                $$6y^3 + 4y = 6x^3 + 4x$$
+                $$6(y^3 - x^3) = 4(x - y)$$
+                $$6(y - x)(y^2 + xy + x^2) = 4(x - y)$$
+                $$6(y - x)(y^2 + xy + x^2) = -4(y - x)$$
+            </div>
+
+            <p>$y - x = 0$ または $6(y^2 + xy + x^2) = -4$ となります。</p>
+
+            <p>第2の可能性 $6(y^2 + xy + x^2) = -4$ について、左辺は $y^2 + xy + x^2 = (y + \frac{x}{2})^2 + \frac{3x^2}{4} \geq 0$ であるため、これは成り立ちません。</p>
+
+            <p>したがって、$y - x = 0$ すなわち $y = x$ が成り立ちます。</p>
+
+            <p>これを第3式（制約条件）に代入すると、</p>
+
+            <div class="calculation">
+                $$x^3 + x^3 + 2x + 2x - 6 = 0$$
+                $$2x^3 + 4x - 6 = 0$$
+                $$x^3 + 2x - 3 = 0$$
+            </div>
+
+            <p>この三次方程式を解きます。$x = 1$ を代入すると、$1 + 2 - 3 = 0$ となるため、$x = 1$ は解です。</p>
+
+            <p>因数定理により、$x^3 + 2x - 3 = (x - 1)(x^2 + x + 3)$ と因数分解できます。$x^2 + x + 3$ の判別式は $1 - 12 = -11 < 0$ であるため、実数解は $x = 1$ のみです。</p>
+
+            <p>したがって、停留点は $(x, y) = (1, 1)$ のみです。</p>
+
+            <p>このとき、$\lambda$ の値は、第1式より、</p>
+
+            <div class="calculation">
+                $$\lambda = \frac{2y}{3x^2 + 2} = \frac{2 \cdot 1}{3 \cdot 1^2 + 2} = \frac{2}{5}$$
+            </div>
+
+            <p>となります。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）停留点における関数値の計算</div>
+            
+            <p>停留点 $(1, 1)$ における目的関数 $f(x,y) = 2xy$ の値を計算します。</p>
+
+            <div class="calculation">
+                $$f(1, 1) = 2 \cdot 1 \cdot 1 = 2$$
+            </div>
+
+            <p>また、制約条件が満たされることを確認します。</p>
+
+            <div class="calculation">
+                $$φ(1, 1) = 1^3 + 1^3 + 2 \cdot 1 + 2 \cdot 1 - 6 = 1 + 1 + 2 + 2 - 6 = 0$$
+            </div>
+
+            <p>したがって、停留点 $(1, 1)$ において、$f(1, 1) = 2$ となります。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（5）制約曲線の有界性と無限遠での挙動</div>
+            
+            <p>制約条件 $φ(x,y) = x^3 + y^3 + 2x + 2y - 6 = 0$ について、$x \to +\infty$ や $x \to -\infty$ のときの挙動を調べます。</p>
+
+            <p>制約条件 $x^3 + y^3 + 2x + 2y - 6 = 0$ より、$y^3 = -x^3 - 2x - 2y + 6$ となります。$x$ が非常に大きいとき、$y^3 \approx -x^3$ となり、$y \approx -x$ となります（実数の3乗根を考えると）。</p>
+
+            <p>同様に、$x \to -\infty$ のときも、$y^3 \approx -x^3$ となり、$y \approx -x$ となります。</p>
+
+            <p>したがって、$x \to +\infty$ のとき $y \to -\infty$、$x \to -\infty$ のとき $y \to +\infty$ となります。制約曲線は有界ではありません。</p>
+
+            <p>制約条件を満たす点において、目的関数 $f(x,y) = 2xy$ について、$x \to +\infty$、$y \to -\infty$ のとき、$f(x,y) = 2xy \to -\infty$ となります。同様に、$x \to -\infty$、$y \to +\infty$ のときも、$f(x,y) = 2xy \to -\infty$ となります。</p>
+
+            <p>したがって、制約条件の下では関数 $f(x,y)$ には最大値も最小値も存在しません。停留点 $(1, 1)$ における関数値 $f(1, 1) = 2$ は、局所的な極値ではありますが、最大値でも最小値でもありません。</p>
+
+            <div class="note">
+                制約曲線が有界でない場合、停留点が存在しても、それよりも大きい（または小さい）関数値を持つ点が無限遠に存在する可能性があります。このような場合は、最大値または最小値が存在しないことがあります。
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            
+            <p>まず、求めた停留点が制約条件を満たすことを確認します。点 $(1, 1)$ について、制約条件 $φ(x,y) = x^3 + y^3 + 2x + 2y - 6$ に代入すると、$φ(1, 1) = 1^3 + 1^3 + 2 \cdot 1 + 2 \cdot 1 - 6 = 1 + 1 + 2 + 2 - 6 = 0$ となり、確かに制約条件を満たすことを確認できます。</p>
+
+            <p>次に、ラグランジュ関数の偏導関数が $0$ になることを確認します。点 $(1, 1)$ について、$\lambda = \frac{2}{5}$ とすると、$\frac{\partial L}{\partial x} = 2 \cdot 1 - \frac{2}{5}(3 \cdot 1^2 + 2) = 2 - \frac{2}{5} \cdot 5 = 2 - 2 = 0$、$\frac{\partial L}{\partial y} = 2 \cdot 1 - \frac{2}{5}(3 \cdot 1^2 + 2) = 2 - \frac{2}{5} \cdot 5 = 2 - 2 = 0$ となり、偏導関数が $0$ になることを確認できます。</p>
+
+            <p>最後に、無限遠での挙動を確認します。例えば、$x = 100$ のとき、制約条件より $y^3 \approx -x^3 = -10^6$ となるため、$y \approx -100$ となります。このとき、$f(100, -100) = 2 \cdot 100 \cdot (-100) = -20000$ となり、$f(1, 1) = 2$ よりも小さい値をとります。同様に、$x \to -\infty$ のときも $f(x,y) \to -\infty$ となるため、最小値は存在しないことを確認できます。</p>
+
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>制約条件 $φ(x,y) = x^3 + y^3 + 2x + 2y - 6 = 0$ の下で、関数 $f(x,y) = 2xy$ の極値は以下の通りです。</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li>停留点：$(1, 1)$ で $f(1, 1) = 2$</li>
+                <li>最大値：存在しない（$x \to \pm\infty$ のとき $f(x,y) \to -\infty$ となるため）</li>
+                <li>最小値：存在しない（$x \to \pm\infty$ のとき $f(x,y) \to -\infty$ となるため）</li>
+            </ul>
+            <p>停留点 $(1, 1)$ における関数値 $f(1, 1) = 2$ は局所的な極値ですが、制約曲線が有界でないため、最大値でも最小値でもありません。</p>
+        </div>
+
+    </div>
+</body>
+</html>

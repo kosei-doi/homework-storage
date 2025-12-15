@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問１３（２）解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>通常の座標系で次の2次曲線が与えられているとします。</p>
+            <div class="formula">
+                $$x^2 + 2xy - 3y^2 = 1$$
+            </div>
+            <p>座標系 $B = \left\{ \begin{pmatrix} \dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{pmatrix}, \begin{pmatrix} -\dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{pmatrix} \right\}$ を用いたとき、この2次曲線は $B$ 座標でどのような方程式で表されるかを求めます。</p>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">（1）通常座標での2次曲線を行列表現にします。</div>
+            <p>まず、通常座標 $(x, y)$ で与えられた2次曲線 $x^2 + 2xy - 3y^2 = 1$ を行列を用いて表します。</p>
+            <div class="formula">
+                $$x^2 + 2xy - 3y^2 = \begin{pmatrix} x & y \end{pmatrix} A \begin{pmatrix} x \\ y \end{pmatrix}$$
+            </div>
+            <p>ここで、2次形式の標準的な対応</p>
+            <div class="formula">
+                $$ax^2 + 2hxy + by^2 \longleftrightarrow \begin{pmatrix} a & h \\ h & b \end{pmatrix}$$
+            </div>
+            <p>を用いると、今回の行列 $A$ は</p>
+            <div class="formula">
+                $$A = \begin{pmatrix} 1 & 1 \\ 1 & -3 \end{pmatrix}$$
+            </div>
+            <p>となります。これは、$x^2$ の係数が $1$、$xy$ の係数が $2$（したがって $h = 1$）、$y^2$ の係数が $-3$ であることを反映しています。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）座標系 $B$ による座標との関係を確認します。</div>
+            <p>座標系 $B$ の基底ベクトルを次のようにおきます。</p>
+            <div class="formula">
+                $$\boldsymbol{b}_1 = \begin{pmatrix} \dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{pmatrix}, \quad \boldsymbol{b}_2 = \begin{pmatrix} -\dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \end{pmatrix}$$
+            </div>
+            <p>標準座標での位置ベクトル $\begin{pmatrix} x \\ y \end{pmatrix}$ と、基底 $B$ による座標 $\begin{pmatrix} x' \\ y' \end{pmatrix}$ の間には</p>
+            <div class="formula">
+                $$\begin{pmatrix} x \\ y \end{pmatrix} = P \begin{pmatrix} x' \\ y' \end{pmatrix}$$
+            </div>
+            <p>という関係があります。ここで $P$ は基底 $B$ のベクトルを列に並べた行列です。</p>
+            <div class="formula">
+                $$P = \begin{pmatrix}
+                \dfrac{1}{\sqrt{2}} & -\dfrac{1}{\sqrt{2}} \\
+                \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}}
+                \end{pmatrix}$$
+            </div>
+            <p>この行列 $P$ は直交行列になっており、${}^tP = P^{-1}$ が成り立ちます。したがって、$B$ 座標から標準座標への変換と、その逆変換は次のように書けます。</p>
+            <div class="formula">
+                $$\begin{pmatrix} x \\ y \end{pmatrix} = P \begin{pmatrix} x' \\ y' \end{pmatrix}, \quad \begin{pmatrix} x' \\ y' \end{pmatrix} = {}^tP \begin{pmatrix} x \\ y \end{pmatrix}$$
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）$B$ 座標での2次形式の行列を求めます。</div>
+            <p>通常座標での2次形式は $\begin{pmatrix} x & y \end{pmatrix} A \begin{pmatrix} x \\ y \end{pmatrix}$ と表されており、$\begin{pmatrix} x \\ y \end{pmatrix} = P \begin{pmatrix} x' \\ y' \end{pmatrix}$ という関係を用いると</p>
+            <div class="formula">
+                $$\begin{pmatrix} x & y \end{pmatrix} A \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x' & y' \end{pmatrix} {}^tP A P \begin{pmatrix} x' \\ y' \end{pmatrix}$$
+            </div>
+            <p>となります。したがって、$B$ 座標における2次形式の行列 $D$ は</p>
+            <div class="formula">
+                $$D = {}^tP A P$$
+            </div>
+            <p>で与えられます。実際に $D$ を計算します。</p>
+            <div class="calculation">
+                $${}^tP = \begin{pmatrix}
+                \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}} \\
+                -\dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}}
+                \end{pmatrix}$$
+            </div>
+            <div class="calculation">
+                $${}^tP A = \begin{pmatrix}
+                \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}} \\
+                -\dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}}
+                \end{pmatrix} \begin{pmatrix} 1 & 1 \\ 1 & -3 \end{pmatrix} = \begin{pmatrix}
+                \dfrac{2}{\sqrt{2}} & -\dfrac{2}{\sqrt{2}} \\
+                0 & -\dfrac{4}{\sqrt{2}}
+                \end{pmatrix}$$
+            </div>
+            <div class="calculation">
+                $$D = {}^tP A P = \begin{pmatrix}
+                \dfrac{2}{\sqrt{2}} & -\dfrac{2}{\sqrt{2}} \\
+                0 & -\dfrac{4}{\sqrt{2}}
+                \end{pmatrix} \begin{pmatrix}
+                \dfrac{1}{\sqrt{2}} & -\dfrac{1}{\sqrt{2}} \\
+                \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}}
+                \end{pmatrix} = \begin{pmatrix}
+                0 & -2 \\
+                -2 & -2
+                \end{pmatrix}$$
+            </div>
+            <p>したがって、$B$ 座標における2次形式は</p>
+            <div class="formula">
+                $$\begin{pmatrix} x' & y' \end{pmatrix} D \begin{pmatrix} x' \\ y' \end{pmatrix} = 1$$
+            </div>
+            <p>すなわち、成分で書き下ろすと次のようになります。</p>
+            <div class="calculation">
+                $$\begin{pmatrix} x' & y' \end{pmatrix} \begin{pmatrix}
+                0 & -2 \\
+                -2 & -2
+                \end{pmatrix} \begin{pmatrix} x' \\ y' \end{pmatrix} = 0 \cdot x'^2 + 2(-2)x'y' + (-2)y'^2$$
+                $$= -4x'y' - 2y'^2 = 1$$
+            </div>
+            <p>両辺に $-1$ をかけて整理すると、</p>
+            <div class="formula">
+                $$4x'y' + 2y'^2 = -1$$
+            </div>
+            <p>となります。右辺を $1$ にしたい場合は全体を $-1$ で割ることはできませんが、もともとの式と同じ図形を表していればよいので、このままでも正しい表現になっています。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）結果の意味を確認します。</div>
+            <p>もとの通常座標では $x^2 + 2xy - 3y^2 = 1$ という式で表されていた2次曲線が、座標系 $B$ では</p>
+            <div class="formula">
+                $$-4x'y' - 2y'^2 = 1$$
+            </div>
+            <p>あるいは同値な式 $4x'y' + 2y'^2 = -1$ で表されることがわかりました。これは、座標系を回転させることで、もとの2次曲線が新しい座標系でどのような形になるかを調べていることを意味します。</p>
+            <div class="answer-box">
+                <div class="answer-title">【答え】</div>
+                <p>座標系 $B$ において、与えられた2次曲線は</p>
+                <div class="formula">
+                    $$-4x'y' - 2y'^2 = 1$$
+                </div>
+                <p>という方程式で表されます（同値な式 $4x'y' + 2y'^2 = -1$ でも構いません）。</p>
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>最後に、求めた結果が正しいことを確認します。</p>
+            <p>まず、$B$ 座標での行列 $D = {}^tP A P$ が対称行列になっていることを確認します。計算された $D$ は</p>
+            <div class="calculation">
+                $$D = \begin{pmatrix}
+                0 & -2 \\
+                -2 & -2
+                \end{pmatrix}$$
+            </div>
+            <p>となり、成分が対称 $d_{12} = d_{21}$ になっているので、$D$ は確かに対称行列です。これは、直交行列 ${}^tP$ による変換で対称行列 $A$ から得られた行列が再び対称になるという理論と一致します。</p>
+            <p>次に、$B$ 座標で得られた式 $-4x'y' - 2y'^2 = 1$ から、もとの通常座標での式 $x^2 + 2xy - 3y^2 = 1$ が復元できることを確認します。そのために、座標変換</p>
+            <div class="formula">
+                $$\begin{pmatrix} x \\ y \end{pmatrix} = P \begin{pmatrix} x' \\ y' \end{pmatrix}$$
+            </div>
+            <p>を用いて $x, y$ を $x', y'$ で表し、$x^2 + 2xy - 3y^2$ に代入します。このとき、行列表現を用いれば</p>
+            <div class="calculation">
+                $$\begin{pmatrix} x & y \end{pmatrix} A \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x' & y' \end{pmatrix} {}^tP A P \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} x' & y' \end{pmatrix} D \begin{pmatrix} x' \\ y' \end{pmatrix}$$
+            </div>
+            <p>が成り立ちます。左辺が $1$ のとき右辺も $1$ になるので、両方の式は同じ2次曲線を表していることがわかります。</p>
+            <p>さらに、直交行列 $P$ による座標変換では距離や角度が保たれるため、もとの座標系と $B$ 座標系で表された2次曲線は、形が変わらない同じ図形であることが保証されます。つまり、座標系を変えても楕円・双曲線などの種類は変わらず、表現だけが変わっていることになります。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>

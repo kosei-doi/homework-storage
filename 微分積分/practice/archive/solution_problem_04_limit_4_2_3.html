@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 04 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 04 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の極限を求めよ。</p>
+            <p>（1）$\lim_{(x,y)\to(0,0)} \frac{xy}{\sqrt{x^{2}+y^{2}}}$</p>
+            <p>（2）$\lim_{(x,y)\to(0,0)} \frac{xy}{x^{2}+y^{2}}$</p>
+            <p>（3）$\lim_{(x,y)\to(0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}}$</p>
+            <p>（4）$\lim_{(x,y)\to(0,0)} \frac{xy^{2}}{x^{2}+y^{4}}$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>2変数関数の極限</strong>：2変数関数 $f(x,y)$ の $(x,y) \to (0,0)$ における極限は、$(x,y)$ が $(0,0)$ に近づくすべての経路で同じ値に収束する必要があります。1つの経路で異なる値になる、または発散する場合は極限は存在しません。</li>
+                    <li><strong>極座標変換</strong>：$x = r\cos\theta$、$y = r\sin\theta$ とおくことで、$(x,y) \to (0,0)$ は $r \to 0$ に対応します。この変換により、極限の計算が簡潔になる場合があります。</li>
+                    <li><strong>はさみうちの原理</strong>：関数 $f(x,y)$ に対して、$|f(x,y)| \le g(r)$ かつ $\lim_{r \to 0} g(r) = 0$ が成り立つとき、$\lim_{(x,y)\to(0,0)} f(x,y) = 0$ となります。これは極限が存在することを示す強力な方法です。</li>
+                    <li><strong>経路依存性による極限の非存在の証明</strong>：異なる経路（例えば、$y=kx$ や $y^{2}=kx$ など）で $(0,0)$ に近づけたとき、極限値が異なる値になることを示すことで、極限が存在しないことを証明できます。</li>
+                    <li><strong>三角関数の性質</strong>：$\cos^{2}\theta + \sin^{2}\theta = 1$ という恒等式を利用して、極座標変換後の式を簡約します。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    各極限について、極座標変換または経路依存性を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（1）</div>
+                    極座標変換を行い、はさみうちの原理を適用する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（2）</div>
+                    極座標変換を行い、経路依存性を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（3）</div>
+                    極座標変換を行い、はさみうちの原理を適用する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（4）</div>
+                    経路依存性を調べ、異なる経路で異なる極限値を示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    極限が存在するか、経路依存で存在しないか
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    各問題の結果をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、4つの2変数関数の極限を計算します。問題（1）と（3）では、極座標変換とはさみうちの原理を用いて極限が存在することを示します。問題（2）と（4）では、異なる経路で $(0,0)$ に近づけたときの極限値が異なることを示し、極限が存在しないことを証明します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）$\lim_{(x,y)\to(0,0)} \frac{xy}{\sqrt{x^{2}+y^{2}}}$ について</div>
+            <p>この極限を計算するために、極座標変換を用います。$x = r\cos\theta$、$y = r\sin\theta$ とおくと、$(x,y) \to (0,0)$ は $r \to 0$ に対応します。</p>
+            
+            <p>まず、分子と分母を極座標で表します。分子は、</p>
+            
+            <div class="formula">
+                $$xy = r\cos\theta \cdot r\sin\theta = r^{2}\cos\theta\sin\theta$$
+            </div>
+            
+            <p>です。次に、分母は、</p>
+            
+            <div class="formula">
+                $$\sqrt{x^{2}+y^{2}} = \sqrt{r^{2}\cos^{2}\theta + r^{2}\sin^{2}\theta} = \sqrt{r^{2}(\cos^{2}\theta + \sin^{2}\theta)} = \sqrt{r^{2}} = |r| = r$$
+            </div>
+            
+            <p>ここで、$r \ge 0$ として考えているため、$\sqrt{r^{2}} = r$ となります。また、$\cos^{2}\theta + \sin^{2}\theta = 1$ という三角関数の恒等式を用いました。</p>
+            
+            <p>したがって、極限は、</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{xy}{\sqrt{x^{2}+y^{2}}} = \lim_{r \to 0} \frac{r^{2}\cos\theta\sin\theta}{r} = \lim_{r \to 0} r\cos\theta\sin\theta$$
+            </div>
+            
+            <p>となります。ここで、$|\cos\theta\sin\theta| \le 1$ であることに注意します。したがって、</p>
+            
+            <div class="formula">
+                $$|r\cos\theta\sin\theta| \le |r| \cdot |\cos\theta\sin\theta| \le |r| = r$$
+            </div>
+            
+            <p>が成り立ちます。$g(r) = r$ とおくと、$|r\cos\theta\sin\theta| \le g(r)$ かつ $\lim_{r \to 0} g(r) = 0$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> はさみうちの原理により、$|f(x,y)| \le g(r)$ かつ $\lim_{r \to 0} g(r) = 0$ が成り立つとき、$\lim_{(x,y)\to(0,0)} f(x,y) = 0$ となります。ここでは、$f(x,y) = r\cos\theta\sin\theta$ と見なしています。
+            </div>
+            
+            <p>したがって、はさみうちの原理より、</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{xy}{\sqrt{x^{2}+y^{2}}} = \lim_{r \to 0} r\cos\theta\sin\theta = 0$$
+            </div>
+            
+            <p>となります。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）$\lim_{(x,y)\to(0,0)} \frac{xy}{x^{2}+y^{2}}$ について</div>
+            <p>この極限を計算するために、極座標変換を用います。$x = r\cos\theta$、$y = r\sin\theta$ とおくと、</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{xy}{x^{2}+y^{2}} = \lim_{r \to 0} \frac{r^{2}\cos\theta\sin\theta}{r^{2}(\cos^{2}\theta + \sin^{2}\theta)} = \lim_{r \to 0} \frac{r^{2}\cos\theta\sin\theta}{r^{2}} = \lim_{r \to 0} \cos\theta\sin\theta$$
+            </div>
+            
+            <p>となります。ここで、$\cos^{2}\theta + \sin^{2}\theta = 1$ を用いました。</p>
+            
+            <p>この極限は、$\theta$ の値に依存します。例えば、$\theta = \frac{\pi}{4}$ の方向から $(0,0)$ に近づけると、</p>
+            
+            <div class="formula">
+                $$\cos\frac{\pi}{4}\sin\frac{\pi}{4} = \frac{1}{\sqrt{2}} \cdot \frac{1}{\sqrt{2}} = \frac{1}{2}$$
+            </div>
+            
+            <p>となります。一方、$\theta = 0$ の方向（$x$ 軸に沿って）から $(0,0)$ に近づけると、$\cos 0 \sin 0 = 1 \cdot 0 = 0$ となります。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 2変数関数の極限が存在するためには、$(x,y)$ が $(0,0)$ に近づくすべての経路で同じ値に収束する必要があります。ここでは、異なる方向（異なる $\theta$ の値）から近づけたときに異なる値になるため、極限は存在しません。
+            </div>
+            
+            <p>したがって、近づける方向によって値が変わるので、この極限は収束しません。すなわち、極限は存在しません。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（3）$\lim_{(x,y)\to(0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}}$ について</div>
+            <p>この極限を計算するために、極座標変換を用います。$x = r\cos\theta$、$y = r\sin\theta$ とおくと、</p>
+            
+            <div class="formula">
+                $$x^{3} + y^{3} = r^{3}\cos^{3}\theta + r^{3}\sin^{3}\theta = r^{3}(\cos^{3}\theta + \sin^{3}\theta)$$
+            </div>
+            
+            <p>であり、</p>
+            
+            <div class="formula">
+                $$x^{2} + y^{2} = r^{2}\cos^{2}\theta + r^{2}\sin^{2}\theta = r^{2}(\cos^{2}\theta + \sin^{2}\theta) = r^{2}$$
+            </div>
+            
+            <p>です。したがって、</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}} = \lim_{r \to 0} \frac{r^{3}(\cos^{3}\theta + \sin^{3}\theta)}{r^{2}} = \lim_{r \to 0} r(\cos^{3}\theta + \sin^{3}\theta)$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>ここで、$|\cos^{3}\theta + \sin^{3}\theta|$ の上界を求めます。$|\cos\theta| \le 1$、$|\sin\theta| \le 1$ であるため、</p>
+            
+            <div class="formula">
+                $$|\cos^{3}\theta + \sin^{3}\theta| \le |\cos^{3}\theta| + |\sin^{3}\theta| \le |\cos\theta|^{3} + |\sin\theta|^{3} \le 1 + 1 = 2$$
+            </div>
+            
+            <p>が成り立ちます。したがって、</p>
+            
+            <div class="formula">
+                $$|r(\cos^{3}\theta + \sin^{3}\theta)| = |r| \cdot |\cos^{3}\theta + \sin^{3}\theta| \le |r| \cdot 2 = 2r$$
+            </div>
+            
+            <p>となります。$g(r) = 2r$ とおくと、$|r(\cos^{3}\theta + \sin^{3}\theta)| \le g(r)$ かつ $\lim_{r \to 0} g(r) = 0$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> はさみうちの原理を適用するために、$|f(x,y)| \le g(r)$ となる関数 $g(r)$ を見つける必要があります。ここでは、$|\cos^{3}\theta + \sin^{3}\theta| \le 2$ という上界を用いて、$g(r) = 2r$ としました。
+            </div>
+            
+            <p>したがって、はさみうちの原理より、</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}} = \lim_{r \to 0} r(\cos^{3}\theta + \sin^{3}\theta) = 0$$
+            </div>
+            
+            <p>となります。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（4）$\lim_{(x,y)\to(0,0)} \frac{xy^{2}}{x^{2}+y^{4}}$ について</div>
+            <p>この極限が存在するかどうかを調べるために、異なる経路で $(0,0)$ に近づけたときの極限値を計算します。</p>
+            
+            <p>まず、$y = kx$（$k$ は定数）という経路で $(0,0)$ に近づける場合を考えます。このとき、$y = kx$ を代入すると、</p>
+            
+            <div class="formula">
+                $$\frac{xy^{2}}{x^{2}+y^{4}} = \frac{x(kx)^{2}}{x^{2}+(kx)^{4}} = \frac{k^{2}x^{3}}{x^{2}+k^{4}x^{4}} = \frac{k^{2}x^{3}}{x^{2}(1+k^{4}x^{2})} = \frac{k^{2}x}{1+k^{4}x^{2}}$$
+            </div>
+            
+            <p>となります。したがって、</p>
+            
+            <div class="formula">
+                $$\lim_{x \to 0} \frac{k^{2}x}{1+k^{4}x^{2}} = \frac{k^{2} \cdot 0}{1+k^{4} \cdot 0^{2}} = \frac{0}{1} = 0$$
+            </div>
+            
+            <p>となります。これはすべての $k$ に対して $0$ になるため、この経路だけでは極限の存在を判断できません。</p>
+            
+            <p>より適切な経路として、$y^{2} = kx$（$k$ は定数）という関係を考えます。このとき、$y = \sqrt{kx}$ または $y = -\sqrt{kx}$（$x \ge 0$ のとき）となります。このとき、</p>
+            
+            <div class="formula">
+                $$\frac{xy^{2}}{x^{2}+y^{4}} = \frac{x \cdot kx}{x^{2}+(kx)^{2}} = \frac{kx^{2}}{x^{2}+k^{2}x^{2}} = \frac{kx^{2}}{x^{2}(1+k^{2})} = \frac{k}{1+k^{2}}$$
+            </div>
+            
+            <p>となります。したがって、$y^{2} = kx$ という経路で $(0,0)$ に近づけると、極限値は $\frac{k}{1+k^{2}}$ となります。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $y^{2} = kx$ という関係は、$y = \sqrt{kx}$ または $y = -\sqrt{kx}$ と表せますが、$y^{2}$ が現れるため、どちらの符号でも同じ結果になります。この経路は、分母の $x^{2}$ と $y^{4}$ の次数の関係を考慮したものです。$y^{2} = kx$ とすると、$y^{4} = (kx)^{2} = k^{2}x^{2}$ となり、分母は $x^{2}+k^{2}x^{2} = x^{2}(1+k^{2})$ となります。
+            </div>
+            
+            <p>ここで、$k$ の値によって極限値が異なることを確認します。$k = 0$ のとき、$\frac{0}{1+0} = 0$ となります。$k = 1$ のとき、$\frac{1}{1+1} = \frac{1}{2}$ となります。</p>
+            
+            <p>したがって、$k = 0$ の方向から近づけると極限値は $0$ となり、$k = 1$ の方向から近づけると極限値は $\frac{1}{2}$ となります。近づける方向によって値が変わるので、この極限は収束しません。すなわち、極限は存在しません。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>計算した内容を検証します。</p>
+            
+            <p>まず、問題（1）の計算を確認します。極座標変換 $x = r\cos\theta$、$y = r\sin\theta$ を用いて、$\frac{xy}{\sqrt{x^{2}+y^{2}}} = r\cos\theta\sin\theta$ となりました。$|\cos\theta\sin\theta| \le 1$ であるため、$|r\cos\theta\sin\theta| \le r$ が成り立ちます。$g(r) = r$ とおくと、$\lim_{r \to 0} g(r) = 0$ であるため、はさみうちの原理より極限は $0$ となります。この計算は正しいです。</p>
+            
+            <p>次に、問題（2）の計算を確認します。極座標変換により、$\frac{xy}{x^{2}+y^{2}} = \cos\theta\sin\theta$ となりました。これは $\theta$ に依存するため、異なる方向から $(0,0)$ に近づけると異なる値になります。例えば、$\theta = 0$ のとき $0$、$\theta = \frac{\pi}{4}$ のとき $\frac{1}{2}$ となります。したがって、極限は存在しません。この結論は正しいです。</p>
+            
+            <p>問題（3）の計算を確認します。極座標変換により、$\frac{x^{3}+y^{3}}{x^{2}+y^{2}} = r(\cos^{3}\theta + \sin^{3}\theta)$ となりました。$|\cos^{3}\theta + \sin^{3}\theta| \le 2$ であるため、$|r(\cos^{3}\theta + \sin^{3}\theta)| \le 2r$ が成り立ちます。$g(r) = 2r$ とおくと、$\lim_{r \to 0} g(r) = 0$ であるため、はさみうちの原理より極限は $0$ となります。この計算は正しいです。</p>
+            
+            <p>問題（4）の計算を確認します。$y = kx$ という経路では極限値は $0$ となりますが、$y^{2} = kx$ という経路では極限値は $\frac{k}{1+k^{2}}$ となります。$k = 0$ のとき $0$、$k = 1$ のとき $\frac{1}{2}$ となり、異なる経路で異なる極限値が得られます。したがって、極限は存在しません。この結論は正しいです。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）$\lim_{(x,y)\to(0,0)} \frac{xy}{\sqrt{x^{2}+y^{2}}} = 0$</p>
+            <p>極座標変換 $x = r\cos\theta$、$y = r\sin\theta$ を用いると、$\frac{xy}{\sqrt{x^{2}+y^{2}}} = r\cos\theta\sin\theta$ となります。$|r\cos\theta\sin\theta| \le r$ かつ $\lim_{r \to 0} r = 0$ であるため、はさみうちの原理より極限は $0$ となります。</p>
+            
+            <p>（2）極限は存在しない</p>
+            <p>極座標変換により、$\frac{xy}{x^{2}+y^{2}} = \cos\theta\sin\theta$ となり、これは $\theta$ に依存します。異なる方向から $(0,0)$ に近づけると異なる値になるため、極限は存在しません。</p>
+            
+            <p>（3）$\lim_{(x,y)\to(0,0)} \frac{x^{3}+y^{3}}{x^{2}+y^{2}} = 0$</p>
+            <p>極座標変換により、$\frac{x^{3}+y^{3}}{x^{2}+y^{2}} = r(\cos^{3}\theta + \sin^{3}\theta)$ となります。$|r(\cos^{3}\theta + \sin^{3}\theta)| \le 2r$ かつ $\lim_{r \to 0} 2r = 0$ であるため、はさみうちの原理より極限は $0$ となります。</p>
+            
+            <p>（4）極限は存在しない</p>
+            <p>$y = kx$ という経路では極限値は $0$ となりますが、$y^{2} = kx$ という経路では極限値は $\frac{k}{1+k^{2}}$ となります。$k = 0$ のとき $0$、$k = 1$ のとき $\frac{1}{2}$ となり、異なる経路で異なる極限値が得られるため、極限は存在しません。</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問１２（５）解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の対称行列を直交行列によって対角化します。</p>
+            <div class="formula">
+                $$A = \begin{pmatrix}
+                4 & -1 & 1 \\
+                -1 & 4 & -1 \\
+                1 & -1 & 4
+                \end{pmatrix}$$
+            </div>
+            <p>ここで $A$ は $3 \times 3$ の実対称行列です。この行列を直交行列 $P$ を用いて $^tPAP$ が対角行列となるように対角化します。</p>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">（1）固有値を求めます。</div>
+            <p>まず、行列 $A$ の固有値を求めるために特性方程式 $\det(A - \lambda I) = 0$ を解きます。</p>
+            <div class="formula">
+                $$A - \lambda I = \begin{pmatrix}
+                4 - \lambda & -1 & 1 \\
+                -1 & 4 - \lambda & -1 \\
+                1 & -1 & 4 - \lambda
+                \end{pmatrix}$$
+            </div>
+            <p>この行列の行列式を直接計算して特性方程式を求めます。</p>
+            <div class="calculation">
+                $$\det(A - \lambda I) = \begin{vmatrix}
+                4 - \lambda & -1 & 1 \\
+                -1 & 4 - \lambda & -1 \\
+                1 & -1 & 4 - \lambda
+                \end{vmatrix}$$
+                $$= (4 - \lambda)\bigl((4 - \lambda)^2 - 1\bigr) + (\lambda - 3) + (\lambda - 3)$$
+                $$= (4 - \lambda)\bigl((4 - \lambda)^2 - 1\bigr) + 2(\lambda - 3)$$
+                $$= -\lambda^3 + 12\lambda^2 - 45\lambda + 54$$
+                $$= \lambda^3 - 12\lambda^2 + 45\lambda - 54 = 0$$
+            </div>
+            <p>この三次方程式の解を調べるために、まず $\lambda = 3$ を代入してみます。</p>
+            <div class="calculation">
+                $$3^3 - 12 \cdot 3^2 + 45 \cdot 3 - 54 = 27 - 108 + 135 - 54 = 0$$
+            </div>
+            <p>したがって $\lambda = 3$ は確かに解となり、特性多項式は $(\lambda - 3)$ で割り切れます。</p>
+            <div class="calculation">
+                $$\lambda^3 - 12\lambda^2 + 45\lambda - 54 = (\lambda - 3)(\lambda^2 - 9\lambda + 18)$$
+                $$\lambda^2 - 9\lambda + 18 = 0 \quad \Rightarrow \quad \lambda = \dfrac{9 \pm 3}{2} = 6,\ 3$$
+            </div>
+            <p>よって、固有値は</p>
+            <div class="formula">
+                $$\lambda_1 = 6, \quad \lambda_2 = 3, \quad \lambda_3 = 3$$
+            </div>
+            <p>となります。固有値 $3$ は代数的重複度が $2$ の重解ですが、対称行列の性質から、対応する固有空間の中に互いに直交する固有ベクトルを2本とることができるとわかります。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）各固有値に対応する固有ベクトルを求めます。</div>
+            <p>次に、各固有値に対応する固有ベクトルを求めます。</p>
+            <p>まず、固有値 $\lambda_1 = 6$ に対応する固有ベクトルを求めます。</p>
+            <div class="formula">
+                $$(A - 6I)\boldsymbol{v}_1 = \boldsymbol{0}$$
+            </div>
+            <p>行列 $A - 6I$ は次のようになります。</p>
+            <div class="calculation">
+                $$A - 6I = \begin{pmatrix}
+                -2 & -1 & 1 \\
+                -1 & -2 & -1 \\
+                1 & -1 & -2
+                \end{pmatrix}$$
+            </div>
+            <p>未知ベクトル $\boldsymbol{v}_1 = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$ について連立一次方程式を立てます。</p>
+            <div class="calculation">
+                $$\begin{pmatrix}
+                -2 & -1 & 1 \\
+                -1 & -2 & -1 \\
+                1 & -1 & -2
+                \end{pmatrix}\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}$$
+                $$\Rightarrow \begin{cases}
+                -2x - y + z = 0 \\\n                -x - 2y - z = 0 \\\n                x - y - 2z = 0
+                \end{cases}$$
+            </div>
+            <p>第1式から $z = 2x + y$ と表せます。これを第2式に代入すると $-x - 2y - (2x + y) = 0$ となり、$-3x - 3y = 0$ から $x + y = 0$、すなわち $y = -x$ が得られます。このとき $z = 2x + y = 2x - x = x$ となります。</p>
+            <p>したがって、固有値 $6$ に対応する固有ベクトルとして、$x = 1$ とおくと</p>
+            <div class="formula">
+                $$\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ -1 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>をとることができます。</p>
+            <p>次に、固有値 $\lambda_2 = 3$ に対応する固有ベクトルを求めます。この固有値は重解なので、対応する固有空間から互いに直交する2本の固有ベクトルを作ります。</p>
+            <div class="formula">
+                $$(A - 3I)\boldsymbol{v} = \boldsymbol{0}$$
+            </div>
+            <p>行列 $A - 3I$ は次のようになります。</p>
+            <div class="calculation">
+                $$A - 3I = \begin{pmatrix}
+                1 & -1 & 1 \\
+                -1 & 1 & -1 \\
+                1 & -1 & 1
+                \end{pmatrix}$$
+            </div>
+            <p>未知ベクトル $\boldsymbol{v} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}$ について、代表的な2本の独立な解を求めます。</p>
+            <p>まず1本目として、第3成分に $0$ をとり、$x = y$ となるような解を探します。$z = 0$ とおいて式 $x - y + z = 0$ を考えると $x - y = 0$ なので $x = y$ となります。$x = 1$ とおくと</p>
+            <div class="formula">
+                $$\boldsymbol{v}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>を固有値 $3$ に対応する1本目の固有ベクトルとしてとることができます。</p>
+            <p>次に2本目として、第1成分と第3成分の符号が異なるような解をとります。$z = 1$ とおき、式 $x - y + z = 0$ から $x - y + 1 = 0$ すなわち $x = y - 1$ を得ます。$y = 0$ とおくと $x = -1$ となるので、</p>
+            <div class="formula">
+                $$\boldsymbol{v}_3 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>を固有値 $3$ に対応する2本目の固有ベクトルとしてとることができます。</p>
+            <div class="note">
+                固有ベクトル $\boldsymbol{v}_2$ と $\boldsymbol{v}_3$ の内積を計算すると、$\boldsymbol{v}_2 \cdot \boldsymbol{v}_3 = 1 \cdot (-1) + 1 \cdot 0 + 0 \cdot 1 = -1$ となり、このままでは直交していません。しかし、直交化の手続きを用いることで、この固有空間の中から互いに直交する固有ベクトルを取り直すことができます。</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）固有ベクトルを正規直交基底にして直交行列を構成します。</div>
+            <p>次に、得られた固有ベクトルを直交化・正規化して、正規直交基底を作ります。この基底を列に並べた行列が直交行列になります。</p>
+            <p>まず、固有値 $6$ に対応する固有ベクトル $\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ -1 \\ 1 \end{pmatrix}$ の長さを求めます。</p>
+            <div class="calculation">
+                $$\lVert \boldsymbol{v}_1 \rVert = \sqrt{1^2 + (-1)^2 + 1^2} = \sqrt{3}$$
+            </div>
+            <p>したがって、$\boldsymbol{v}_1$ を正規化したベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_1 = \frac{1}{\sqrt{3}}\begin{pmatrix} 1 \\ -1 \\ 1 \end{pmatrix} = \begin{pmatrix} \dfrac{1}{\sqrt{3}} \\ -\dfrac{1}{\sqrt{3}} \\ \dfrac{1}{\sqrt{3}} \end{pmatrix}$$
+            </div>
+            <p>次に、固有値 $3$ に対応する2本の固有ベクトル $\boldsymbol{v}_2, \boldsymbol{v}_3$ を用いて、固有空間の中で互いに直交する基底を作ります。</p>
+            <p>まず $\boldsymbol{v}_2 = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$ をそのまま用い、その長さを求めます。</p>
+            <div class="calculation">
+                $$\lVert \boldsymbol{v}_2 \rVert = \sqrt{1^2 + 1^2 + 0^2} = \sqrt{2}$$
+            </div>
+            <p>したがって、$\boldsymbol{v}_2$ を正規化したベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{u}_2 = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} = \begin{pmatrix} \dfrac{1}{\sqrt{2}} \\ \dfrac{1}{\sqrt{2}} \\ 0 \end{pmatrix}$$
+            </div>
+            <p>次に、$\boldsymbol{v}_3 = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}$ から、$\boldsymbol{u}_2$ 方向の成分を取り除いて直交化します。内積と長さを用いて射影を計算します。</p>
+            <div class="calculation">
+                $$\boldsymbol{v}_3 \cdot \boldsymbol{u}_2 = -1 \cdot \dfrac{1}{\sqrt{2}} + 0 \cdot \dfrac{1}{\sqrt{2}} + 1 \cdot 0 = -\dfrac{1}{\sqrt{2}}$$
+                $$\lVert \boldsymbol{u}_2 \rVert^2 = 1$$
+                $$\operatorname{proj}_{\boldsymbol{u}_2}(\boldsymbol{v}_3) = (\boldsymbol{v}_3 \cdot \boldsymbol{u}_2)\,\boldsymbol{u}_2 = -\dfrac{1}{\sqrt{2}} \cdot \boldsymbol{u}_2 = -\dfrac{1}{2}\begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>したがって、$\boldsymbol{v}_3$ からこの射影を引いたベクトル</p>
+            <div class="calculation">
+                $$\boldsymbol{w}_3 = \boldsymbol{v}_3 - \operatorname{proj}_{\boldsymbol{u}_2}(\boldsymbol{v}_3) = \begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix} - \begin{pmatrix} -\dfrac{1}{2} \\ -\dfrac{1}{2} \\ 0 \end{pmatrix} = \begin{pmatrix} -\dfrac{1}{2} \\ \dfrac{1}{2} \\ 1 \end{pmatrix}$$
+            </div>
+            <p>を考えると、$\boldsymbol{w}_3$ は $\boldsymbol{u}_2$ と直交していることがわかります。計算を簡単にするために $2$ 倍して</p>
+            <div class="formula">
+                $$\boldsymbol{u}_3 = 2\boldsymbol{w}_3 = \begin{pmatrix} -1 \\ 1 \\ 2 \end{pmatrix}$$
+            </div>
+            <p>とおきます。このベクトルの長さを求めます。</p>
+            <div class="calculation">
+                $$\lVert \boldsymbol{u}_3 \rVert = \sqrt{(-1)^2 + 1^2 + 2^2} = \sqrt{1 + 1 + 4} = \sqrt{6}$$
+            </div>
+            <p>したがって、$\boldsymbol{u}_3$ を正規化したベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_2 = \boldsymbol{u}_2, \quad \boldsymbol{q}_3 = \frac{1}{\sqrt{6}}\begin{pmatrix} -1 \\ 1 \\ 2 \end{pmatrix} = \begin{pmatrix} -\dfrac{1}{\sqrt{6}} \\ \dfrac{1}{\sqrt{6}} \\ \dfrac{2}{\sqrt{6}} \end{pmatrix}$$
+            </div>
+            <p>$\boldsymbol{q}_1, \boldsymbol{q}_2, \boldsymbol{q}_3$ は互いに直交し、いずれも長さ1なので正規直交基底になっています。この3本の正規直交ベクトルを列に並べた行列が直交行列 $P$ になります。</p>
+            <div class="formula">
+                $$P = \begin{pmatrix}
+                \dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & -\dfrac{1}{\sqrt{6}} \\
+                -\dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{6}} \\
+                \dfrac{1}{\sqrt{3}} & 0 & \dfrac{2}{\sqrt{6}}
+                \end{pmatrix}$$
+            </div>
+            <div class="explanation">
+                行列 $P$ の列ベクトルは固有値 $6,3,3$ に対応する正規直交基底を与えており、互いに直交して長さ1です。そのため $P$ は直交行列になっており、$^tP = P^{-1}$ が成り立ちます。</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）直交行列による対角化を確認します。</div>
+            <p>最後に、直交行列 $P$ を用いて $^tPAP$ を計算し、本当に対角行列になるか確認します。</p>
+            <p>固有値と正規直交固有ベクトルの対応関係から、$A\boldsymbol{q}_1 = 6\boldsymbol{q}_1$、$A\boldsymbol{q}_2 = 3\boldsymbol{q}_2$、$A\boldsymbol{q}_3 = 3\boldsymbol{q}_3$ が成り立ちます。したがって、$AP$ は</p>
+            <div class="calculation">
+                $$AP = A\begin{pmatrix}
+                \boldsymbol{q}_1 & \boldsymbol{q}_2 & \boldsymbol{q}_3
+                \end{pmatrix} = \begin{pmatrix}
+                6\boldsymbol{q}_1 & 3\boldsymbol{q}_2 & 3\boldsymbol{q}_3
+                \end{pmatrix}$$
+            </div>
+            <p>と書けます。これを用いると、$^tPAP$ は次のように表されます。</p>
+            <div class="calculation">
+                $${}^tPAP = {}^tP(AP) = {}^tP\begin{pmatrix}
+                6\boldsymbol{q}_1 & 3\boldsymbol{q}_2 & 3\boldsymbol{q}_3
+                \end{pmatrix} = \begin{pmatrix}
+                6 & 0 & 0 \\
+                0 & 3 & 0 \\
+                0 & 0 & 3
+                \end{pmatrix} = D$$
+            </div>
+            <p>このように、$^tPAP$ は固有値 $6,3,3$ を対角成分にもつ対角行列 $D$ になっています。したがって、直交行列 $P$ によって $A$ が対角化されていることがわかります。</p>
+            <div class="answer-box">
+                <div class="answer-title">【答え】</div>
+                <p>直交行列</p>
+                <div class="formula">
+                    $$P = \begin{pmatrix}
+                    \dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & -\dfrac{1}{\sqrt{6}} \\
+                    -\dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{6}} \\
+                    \dfrac{1}{\sqrt{3}} & 0 & \dfrac{2}{\sqrt{6}}
+                    \end{pmatrix}$$
+                </div>
+                <p>によって、</p>
+                <div class="formula">
+                    $${}^tPAP = \begin{pmatrix}
+                    6 & 0 & 0 \\
+                    0 & 3 & 0 \\
+                    0 & 0 & 3
+                    \end{pmatrix}$$
+                </div>
+                <p>と対角化されます。</p>
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>最後に、求めた直交行列 $P$ と対角行列 $D$ が正しく $A$ を対角化していることを、いくつかの観点から確認します。</p>
+            <p>まず、$P$ が本当に直交行列であることを確認するために、$^tPP = I$ が成り立つかどうかを調べます。計算すると次のようになります。</p>
+            <div class="calculation">
+                $${}^tPP = \begin{pmatrix}
+                \dfrac{1}{\sqrt{3}} & -\dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{3}} \\
+                \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{2}} & 0 \\
+                -\dfrac{1}{\sqrt{6}} & \dfrac{1}{\sqrt{6}} & \dfrac{2}{\sqrt{6}}
+                \end{pmatrix}\begin{pmatrix}
+                \dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & -\dfrac{1}{\sqrt{6}} \\
+                -\dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{6}} \\
+                \dfrac{1}{\sqrt{3}} & 0 & \dfrac{2}{\sqrt{6}}
+                \end{pmatrix} = \begin{pmatrix}
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 1
+                \end{pmatrix} = I$$
+            </div>
+            <p>この計算により、$P$ の列ベクトルが正規直交基底をなしているので、$P$ は確かに直交行列であることがわかります。</p>
+            <p>次に、対角化の等式 $A = PD{}^tP$ が成り立つかどうかを確認します。まず $PD$ を計算します。</p>
+            <div class="calculation">
+                $$PD = \begin{pmatrix}
+                \dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & -\dfrac{1}{\sqrt{6}} \\
+                -\dfrac{1}{\sqrt{3}} & \dfrac{1}{\sqrt{2}} & \dfrac{1}{\sqrt{6}} \\
+                \dfrac{1}{\sqrt{3}} & 0 & \dfrac{2}{\sqrt{6}}
+                \end{pmatrix}\begin{pmatrix}
+                6 & 0 & 0 \\
+                0 & 3 & 0 \\
+                0 & 0 & 3
+                \end{pmatrix}$$
+            </div>
+            <p>この積を計算すると、$PD$ の各列はそれぞれ $6\boldsymbol{q}_1, 3\boldsymbol{q}_2, 3\boldsymbol{q}_3$ になります。さらに $(PD){}^tP$ を計算すると、</p>
+            <div class="calculation">
+                $$(PD){}^tP = \begin{pmatrix}
+                4 & -1 & 1 \\
+                -1 & 4 & -1 \\
+                1 & -1 & 4
+                \end{pmatrix} = A$$
+            </div>
+            <p>となり、元の行列 $A$ が正しく復元されることがわかります。したがって、$A$ は直交行列 $P$ によって正しく対角化されていると言えます。</p>
+            <p>さらに、対称行列は必ず直交行列で対角化できるという定理と、異なる固有値に属する固有ベクトルは直交し、重解に対応する固有空間の中からも直交基底をとることができるという性質も、この具体例で確認できました。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問１４（３）解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の2次曲線を標準化して図示します。</p>
+            <div class="formula">
+                $$4x^2 + 6xy - 4y^2 = 5$$
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">（1）2次式を行列で表します。</div>
+            <p>まず、与えられた2次曲線 $4x^2 + 6xy - 4y^2 = 5$ を行列を用いて表します。</p>
+            <p>2次形式 $ax^2 + 2hxy + by^2$ は、対称行列を用いて次のように表すことができます。</p>
+            <div class="formula">
+                $$ax^2 + 2hxy + by^2 = \begin{pmatrix} x & y \end{pmatrix} \begin{pmatrix} a & h \\ h & b \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}$$
+            </div>
+            <p>与えられた式 $4x^2 + 6xy - 4y^2$ において、$x^2$ の係数は $a = 4$、$xy$ の係数は $2h = 6$ より $h = 3$、$y^2$ の係数は $b = -4$ です。したがって、対応する対称行列 $A$ は</p>
+            <div class="formula">
+                $$A = \begin{pmatrix} 4 & 3 \\ 3 & -4 \end{pmatrix}$$
+            </div>
+            <p>となります。これにより、与えられた2次曲線は</p>
+            <div class="formula">
+                $$\begin{pmatrix} x & y \end{pmatrix} \begin{pmatrix} 4 & 3 \\ 3 & -4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = 5$$
+            </div>
+            <p>と表されます。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）行列 $A$ の固有値と固有ベクトルを求めます。</div>
+            <p>行列 $A$ を対角化するために、まず固有値を求めます。固有値 $\lambda$ は特性方程式 $\det(A - \lambda I) = 0$ を解くことで求められます。</p>
+            <div class="calculation">
+                $$\det(A - \lambda I) = \det\begin{pmatrix} 4-\lambda & 3 \\ 3 & -4-\lambda \end{pmatrix} = (4-\lambda)(-4-\lambda) - 9$$
+            </div>
+            <p>この式を展開すると、</p>
+            <div class="calculation">
+                $$(4-\lambda)(-4-\lambda) - 9 = -16 - 4\lambda + 4\lambda + \lambda^2 - 9 = \lambda^2 - 25$$
+            </div>
+            <p>となります。この2次方程式を因数分解すると</p>
+            <div class="formula">
+                $$\lambda^2 - 25 = (\lambda - 5)(\lambda + 5) = 0$$
+            </div>
+            <p>となるので、固有値は $\lambda_1 = 5$、$\lambda_2 = -5$ です。</p>
+            <p>次に、各固有値に対応する固有ベクトルを求めます。</p>
+            <p>固有値 $\lambda_1 = 5$ に対応する固有ベクトル $\boldsymbol{v}_1 = \begin{pmatrix} v_{11} \\ v_{12} \end{pmatrix}$ は、$(A - 5I)\boldsymbol{v}_1 = \boldsymbol{0}$ を満たします。</p>
+            <div class="calculation">
+                $$(A - 5I)\boldsymbol{v}_1 = \begin{pmatrix} 4-5 & 3 \\ 3 & -4-5 \end{pmatrix}\begin{pmatrix} v_{11} \\ v_{12} \end{pmatrix} = \begin{pmatrix} -1 & 3 \\ 3 & -9 \end{pmatrix}\begin{pmatrix} v_{11} \\ v_{12} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>この連立方程式を解くと、第1行から $-v_{11} + 3v_{12} = 0$ となるので、$v_{11} = 3v_{12}$ です。したがって、$\boldsymbol{v}_1 = \begin{pmatrix} 3 \\ 1 \end{pmatrix}$ が固有ベクトルとなります（定数倍を除いて）。</p>
+            <p>固有値 $\lambda_2 = -5$ に対応する固有ベクトル $\boldsymbol{v}_2 = \begin{pmatrix} v_{21} \\ v_{22} \end{pmatrix}$ は、$(A + 5I)\boldsymbol{v}_2 = \boldsymbol{0}$ を満たします。</p>
+            <div class="calculation">
+                $$(A + 5I)\boldsymbol{v}_2 = \begin{pmatrix} 4+5 & 3 \\ 3 & -4+5 \end{pmatrix}\begin{pmatrix} v_{21} \\ v_{22} \end{pmatrix} = \begin{pmatrix} 9 & 3 \\ 3 & 1 \end{pmatrix}\begin{pmatrix} v_{21} \\ v_{22} \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+            </div>
+            <p>この連立方程式を解くと、第1行から $9v_{21} + 3v_{22} = 0$ となるので、$v_{22} = -3v_{21}$ です。したがって、$\boldsymbol{v}_2 = \begin{pmatrix} 1 \\ -3 \end{pmatrix}$ が固有ベクトルとなります（定数倍を除いて）。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）固有ベクトルを正規化して直交行列を作ります。</div>
+            <p>固有ベクトルを正規化して、直交行列 $P$ を構成します。正規化とは、ベクトルの長さを $1$ にすることです。</p>
+            <p>まず、$\boldsymbol{v}_1 = \begin{pmatrix} 3 \\ 1 \end{pmatrix}$ の長さ（ノルム）を計算します。</p>
+            <div class="calculation">
+                $$\|\boldsymbol{v}_1\| = \sqrt{3^2 + 1^2} = \sqrt{9 + 1} = \sqrt{10}$$
+            </div>
+            <p>したがって、正規化されたベクトルは</p>
+            <div class="formula">
+                $$\boldsymbol{q}_1 = \frac{1}{\sqrt{10}}\begin{pmatrix} 3 \\ 1 \end{pmatrix} = \begin{pmatrix} \dfrac{3}{\sqrt{10}} \\ \dfrac{1}{\sqrt{10}} \end{pmatrix}$$
+            </div>
+            <p>となります。次に、$\boldsymbol{v}_2 = \begin{pmatrix} 1 \\ -3 \end{pmatrix}$ の長さを計算します。</p>
+            <div class="calculation">
+                $$\|\boldsymbol{v}_2\| = \sqrt{1^2 + (-3)^2} = \sqrt{1 + 9} = \sqrt{10}$$
+            </div>
+            <p>したがって、正規化されたベクトルは</p>
+            <div class="formula">
+                $$\boldsymbol{q}_2 = \frac{1}{\sqrt{10}}\begin{pmatrix} 1 \\ -3 \end{pmatrix} = \begin{pmatrix} \dfrac{1}{\sqrt{10}} \\ -\dfrac{3}{\sqrt{10}} \end{pmatrix}$$
+            </div>
+            <p>となります。これらの正規化された固有ベクトルを列ベクトルとして並べた行列</p>
+            <div class="formula">
+                $$P = \begin{pmatrix} \boldsymbol{q}_1 & \boldsymbol{q}_2 \end{pmatrix} = \begin{pmatrix}
+                \dfrac{3}{\sqrt{10}} & \dfrac{1}{\sqrt{10}} \\
+                \dfrac{1}{\sqrt{10}} & -\dfrac{3}{\sqrt{10}}
+                \end{pmatrix}$$
+            </div>
+            <p>は直交行列となります。これは、$P$ の列ベクトルが正規直交基底をなしているためです。</p>
+            <div class="note">
+                <p>対称行列の異なる固有値に属する固有ベクトルは自動的に直交するため、正規化すれば正規直交基底が得られます。これにより、直交行列による対角化が可能になります。</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）座標変換を行って標準形を得ます。</div>
+            <p>直交行列 $P$ を用いて、$A$ は対角化されます。すなわち、</p>
+            <div class="formula">
+                $$A = P\begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix}{}^tP$$
+            </div>
+            <p>が成り立ちます。ここで、${}^tP$ は $P$ の転置行列であり、直交行列の性質 ${}^tP = P^{-1}$ を用いています。</p>
+            <p>座標変換 $\begin{pmatrix} x \\ y \end{pmatrix} = P\begin{pmatrix} x' \\ y' \end{pmatrix}$ を適用すると、元の2次形式は</p>
+            <div class="formula">
+                $$\begin{pmatrix} x & y \end{pmatrix} A \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x' & y' \end{pmatrix} {}^tP A P \begin{pmatrix} x' \\ y' \end{pmatrix}$$
+            </div>
+            <p>と変形されます。ここで、${}^tP A P$ を計算します。$A = P\begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix}{}^tP$ であることから、</p>
+            <div class="calculation">
+                $${}^tP A P = {}^tP \cdot P\begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix}{}^tP \cdot P$$
+            </div>
+            <p>直交行列の性質 ${}^tP P = I$（単位行列）を用いると、</p>
+            <div class="calculation">
+                $${}^tP A P = I \begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix} I = \begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix}$$
+            </div>
+            <p>となります。したがって、座標変換後の2次形式は</p>
+            <div class="formula">
+                $$\begin{pmatrix} x' & y' \end{pmatrix} \begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix} \begin{pmatrix} x' \\ y' \end{pmatrix} = 5x'^2 - 5y'^2 = 5$$
+            </div>
+            <p>となります。両辺を $5$ で割ると、標準形</p>
+            <div class="formula">
+                $$x'^2 - y'^2 = 1$$
+            </div>
+            <p>が得られます。これは、$x'$ 軸方向の実半軸長が $1$、$y'$ 軸方向の虚半軸長が $1$ の双曲線を表します。双曲線 $x'^2 - y'^2 = 1$ は、$x'$ 軸を実軸とする標準的な双曲線です。</p>
+            <div class="answer-box">
+                <div class="answer-title">【答え】</div>
+                <p>標準化された2次曲線は</p>
+                <div class="formula">
+                    $$x'^2 - y'^2 = 1$$
+                </div>
+                <p>で表され、これは双曲線です。座標変換は直交行列</p>
+                <div class="formula">
+                    $$P = \begin{pmatrix}
+                    \dfrac{3}{\sqrt{10}} & \dfrac{1}{\sqrt{10}} \\
+                    \dfrac{1}{\sqrt{10}} & -\dfrac{3}{\sqrt{10}}
+                    \end{pmatrix}$$
+                </div>
+                <p>によって行われ、$x'$ 軸は固有ベクトル $\begin{pmatrix} 3 \\ 1 \end{pmatrix}$ の方向、$y'$ 軸は固有ベクトル $\begin{pmatrix} 1 \\ -3 \end{pmatrix}$ の方向に対応します。双曲線の実軸は $x'$ 軸方向、虚軸は $y'$ 軸方向です。</p>
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>最後に、求めた結果が正しいことを確認します。</p>
+            <p>まず、直交行列 $P$ が正しく構成されていることを確認します。$P$ の列ベクトル $\boldsymbol{q}_1$ と $\boldsymbol{q}_2$ の内積を計算すると、</p>
+            <div class="calculation">
+                $$\boldsymbol{q}_1 \cdot \boldsymbol{q}_2 = \begin{pmatrix} \dfrac{3}{\sqrt{10}} \\ \dfrac{1}{\sqrt{10}} \end{pmatrix} \cdot \begin{pmatrix} \dfrac{1}{\sqrt{10}} \\ -\dfrac{3}{\sqrt{10}} \end{pmatrix} = \frac{3}{\sqrt{10}} \cdot \frac{1}{\sqrt{10}} + \frac{1}{\sqrt{10}} \cdot \left(-\frac{3}{\sqrt{10}}\right) = \frac{3}{10} - \frac{3}{10} = 0$$
+            </div>
+            <p>となり、直交していることが確認できます。また、各列ベクトルの長さは</p>
+            <div class="calculation">
+                $$\|\boldsymbol{q}_1\| = \sqrt{\left(\frac{3}{\sqrt{10}}\right)^2 + \left(\frac{1}{\sqrt{10}}\right)^2} = \sqrt{\frac{9}{10} + \frac{1}{10}} = \sqrt{\frac{10}{10}} = \sqrt{1} = 1$$
+            </div>
+            <div class="calculation">
+                $$\|\boldsymbol{q}_2\| = \sqrt{\left(\frac{1}{\sqrt{10}}\right)^2 + \left(-\frac{3}{\sqrt{10}}\right)^2} = \sqrt{\frac{1}{10} + \frac{9}{10}} = \sqrt{\frac{10}{10}} = \sqrt{1} = 1$$
+            </div>
+            <p>となり、正規化されていることが確認できます。したがって、$P$ は確かに直交行列です。</p>
+            <p>次に、対角化の等式 ${}^tP A P = \begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix}$ が成り立つことを確認します。まず、${}^tP$ を計算すると、</p>
+            <div class="calculation">
+                $${}^tP = \begin{pmatrix}
+                \dfrac{3}{\sqrt{10}} & \dfrac{1}{\sqrt{10}} \\
+                \dfrac{1}{\sqrt{10}} & -\dfrac{3}{\sqrt{10}}
+                \end{pmatrix}$$
+            </div>
+            <p>次に、${}^tP A$ を計算します。行列の積を成分ごとに計算すると、</p>
+            <div class="calculation">
+                $${}^tP A = \begin{pmatrix}
+                \dfrac{3}{\sqrt{10}} & \dfrac{1}{\sqrt{10}} \\
+                \dfrac{1}{\sqrt{10}} & -\dfrac{3}{\sqrt{10}}
+                \end{pmatrix} \begin{pmatrix} 4 & 3 \\ 3 & -4 \end{pmatrix}$$
+            </div>
+            <p>第1行第1列の成分は $\dfrac{3}{\sqrt{10}} \cdot 4 + \dfrac{1}{\sqrt{10}} \cdot 3 = \dfrac{12+3}{\sqrt{10}} = \dfrac{15}{\sqrt{10}}$、第1行第2列の成分は $\dfrac{3}{\sqrt{10}} \cdot 3 + \dfrac{1}{\sqrt{10}} \cdot (-4) = \dfrac{9-4}{\sqrt{10}} = \dfrac{5}{\sqrt{10}}$ です。同様に計算すると、</p>
+            <div class="calculation">
+                $${}^tP A = \begin{pmatrix}
+                \dfrac{15}{\sqrt{10}} & \dfrac{5}{\sqrt{10}} \\
+                \dfrac{4-9}{\sqrt{10}} & \dfrac{3+12}{\sqrt{10}}
+                \end{pmatrix} = \begin{pmatrix}
+                \dfrac{15}{\sqrt{10}} & \dfrac{5}{\sqrt{10}} \\
+                -\dfrac{5}{\sqrt{10}} & \dfrac{15}{\sqrt{10}}
+                \end{pmatrix}$$
+            </div>
+            <p>最後に、$({}^tP A) P$ を計算します。行列の積を成分ごとに計算すると、</p>
+            <div class="calculation">
+                $$({}^tP A) P = \begin{pmatrix}
+                \dfrac{15}{\sqrt{10}} & \dfrac{5}{\sqrt{10}} \\
+                -\dfrac{5}{\sqrt{10}} & \dfrac{15}{\sqrt{10}}
+                \end{pmatrix} \begin{pmatrix}
+                \dfrac{3}{\sqrt{10}} & \dfrac{1}{\sqrt{10}} \\
+                \dfrac{1}{\sqrt{10}} & -\dfrac{3}{\sqrt{10}}
+                \end{pmatrix}$$
+            </div>
+            <p>第1行第1列の成分は</p>
+            <div class="calculation">
+                $$\frac{15}{\sqrt{10}} \cdot \frac{3}{\sqrt{10}} + \frac{5}{\sqrt{10}} \cdot \frac{1}{\sqrt{10}} = \frac{45}{10} + \frac{5}{10} = \frac{50}{10} = 5$$
+            </div>
+            <p>第1行第2列の成分は</p>
+            <div class="calculation">
+                $$\frac{15}{\sqrt{10}} \cdot \frac{1}{\sqrt{10}} + \frac{5}{\sqrt{10}} \cdot \left(-\frac{3}{\sqrt{10}}\right) = \frac{15}{10} - \frac{15}{10} = 0$$
+            </div>
+            <p>第2行第1列の成分は</p>
+            <div class="calculation">
+                $$-\frac{5}{\sqrt{10}} \cdot \frac{3}{\sqrt{10}} + \frac{15}{\sqrt{10}} \cdot \frac{1}{\sqrt{10}} = -\frac{15}{10} + \frac{15}{10} = 0$$
+            </div>
+            <p>第2行第2列の成分は</p>
+            <div class="calculation">
+                $$-\frac{5}{\sqrt{10}} \cdot \frac{1}{\sqrt{10}} + \frac{15}{\sqrt{10}} \cdot \left(-\frac{3}{\sqrt{10}}\right) = -\frac{5}{10} - \frac{45}{10} = -\frac{50}{10} = -5$$
+            </div>
+            <p>したがって、</p>
+            <div class="formula">
+                $$({}^tP A) P = \begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix}$$
+            </div>
+            <p>となり、確かに対角行列になっています。したがって、座標変換後の2次形式が $5x'^2 - 5y'^2 = 5$ となることが確認できました。</p>
+            <p>さらに、元の式 $4x^2 + 6xy - 4y^2 = 5$ に座標変換を適用した結果が、標準形 $x'^2 - y'^2 = 1$ と一致することを確認します。座標変換 $\begin{pmatrix} x \\ y \end{pmatrix} = P\begin{pmatrix} x' \\ y' \end{pmatrix}$ を元の式に代入すると、</p>
+            <div class="calculation">
+                $$4x^2 + 6xy - 4y^2 = \begin{pmatrix} x & y \end{pmatrix} A \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x' & y' \end{pmatrix} {}^tP A P \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} x' & y' \end{pmatrix} \begin{pmatrix} 5 & 0 \\ 0 & -5 \end{pmatrix} \begin{pmatrix} x' \\ y' \end{pmatrix} = 5x'^2 - 5y'^2 = 5$$
+            </div>
+            <p>となり、両辺を $5$ で割ると標準形 $x'^2 - y'^2 = 1$ が得られます。これにより、標準形と一致することが確認できます。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 12 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 12 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>制約条件 $\phi(x,y)=0$ の下での $f(x,y)$ の最大最小を求めよ。</p>
+            <p>（1）$\phi(x,y)=xy-1$、$f(x,y)=x^{2}+y^{2}$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>ラグランジュの未定乗数法</strong>：制約条件 $\phi(x,y) = 0$ の下で関数 $f(x,y)$ の極値を求める方法です。ラグランジュ関数 $F(x,y,\lambda) = f(x,y) - \lambda \phi(x,y)$ を定義し、$F_{x} = 0$、$F_{y} = 0$、$F_{\lambda} = 0$ を満たす点を求めます。ここで、$\lambda$ はラグランジュ乗数と呼ばれる未定乗数です。</li>
+                    <li><strong>偏微分</strong>：2変数関数 $F(x,y,\lambda)$ の $x$ に関する偏微分 $F_{x}$ は、$y$ と $\lambda$ を定数として $x$ で微分したものです。同様に、$F_{y}$ は $x$ と $\lambda$ を定数として $y$ で微分したものです。$F_{\lambda}$ は $x$ と $y$ を定数として $\lambda$ で微分したものです。</li>
+                    <li><strong>連立方程式の解法</strong>：$F_{x} = 0$、$F_{y} = 0$、$F_{\lambda} = 0$ の連立方程式を解くことで、極値候補点を求めます。通常、$\lambda$ を消去して $x$ と $y$ の関係式を導き、制約条件と組み合わせて解を求めます。</li>
+                    <li><strong>最大値・最小値の判定</strong>：候補点での関数値を計算し、さらに制約条件を代入した関数の極限を調べることで、最大値・最小値の存在を判定します。極限が無限大に発散する場合は最大値が存在しない可能性があります。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    制約条件付き最適化問題を解く
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    ラグランジュ関数 $F(x,y,\lambda) = f(x,y) - \lambda \phi(x,y)$ を定義する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    $F_{x}$、$F_{y}$、$F_{\lambda}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    $F_{x} = 0$、$F_{y} = 0$、$F_{\lambda} = 0$ の連立方程式を解く
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    候補点での関数値 $f(x,y)$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ5</div>
+                    制約条件を代入した関数の極限を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    最大値・最小値の存在を判定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    結果をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、ラグランジュの未定乗数法を用いて、制約条件 $\phi(x,y) = 0$ の下で関数 $f(x,y)$ の最大値・最小値を求めます。まず、ラグランジュ関数を定義し、その偏導関数を計算して連立方程式を解くことで極値候補点を求めます。次に、候補点での関数値を計算し、制約条件を代入した関数の極限を調べることで、最大値・最小値の存在を判定します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）$\phi(x,y)=xy-1$、$f(x,y)=x^{2}+y^{2}$ について</div>
+            <p>まず、ラグランジュの未定乗数法を用いるため、ラグランジュ関数 $F(x,y,\lambda)$ を定義します。ラグランジュ関数は、目的関数 $f(x,y)$ から制約条件 $\phi(x,y)$ にラグランジュ乗数 $\lambda$ を掛けたものを引いたものです。</p>
+            
+            <div class="formula">
+                $$F(x,y,\lambda) = f(x,y) - \lambda \phi(x,y) = x^{2} + y^{2} - \lambda(xy - 1)$$
+            </div>
+            
+            <p>となります。ここで、$\lambda$ はラグランジュ乗数と呼ばれる未定乗数です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> ラグランジュの未定乗数法では、制約条件 $\phi(x,y) = 0$ の下で $f(x,y)$ の極値を求めるために、ラグランジュ関数 $F(x,y,\lambda) = f(x,y) - \lambda \phi(x,y)$ を定義します。この関数の停留点を求めることで、制約条件を満たす $f(x,y)$ の極値候補点が得られます。
+            </div>
+            
+            <p>次に、ラグランジュ関数 $F(x,y,\lambda)$ の偏導関数を計算します。まず、$x$ に関する偏微分 $F_{x}(x,y,\lambda)$ を計算します。$y$ と $\lambda$ を定数として $x$ で微分します。</p>
+            
+            <p>$x^{2}$ を $x$ で偏微分すると $2x$ です。$y^{2}$ は $x$ を含まないため、$x$ で偏微分すると $0$ です。$-\lambda(xy - 1) = -\lambda xy + \lambda$ について、$-\lambda xy$ を $x$ で偏微分すると $-\lambda y$ です。$\lambda$ は $x$ を含まないため、$x$ で偏微分すると $0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$F_{x}(x,y,\lambda) = 2x - \lambda y$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$y$ に関する偏微分 $F_{y}(x,y,\lambda)$ を計算します。$x$ と $\lambda$ を定数として $y$ で微分します。</p>
+            
+            <p>$x^{2}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$y^{2}$ を $y$ で偏微分すると $2y$ です。$-\lambda(xy - 1) = -\lambda xy + \lambda$ について、$-\lambda xy$ を $y$ で偏微分すると $-\lambda x$ です。$\lambda$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$F_{y}(x,y,\lambda) = 2y - \lambda x$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$\lambda$ に関する偏微分 $F_{\lambda}(x,y,\lambda)$ を計算します。$x$ と $y$ を定数として $\lambda$ で微分します。</p>
+            
+            <p>$x^{2}$ は $\lambda$ を含まないため、$\lambda$ で偏微分すると $0$ です。$y^{2}$ は $\lambda$ を含まないため、$\lambda$ で偏微分すると $0$ です。$-\lambda(xy - 1) = -\lambda xy + \lambda$ について、$-\lambda xy$ を $\lambda$ で偏微分すると $-xy$ です。$\lambda$ を $\lambda$ で偏微分すると $1$ です。したがって、</p>
+            
+            <div class="formula">
+                $$F_{\lambda}(x,y,\lambda) = -xy + 1$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、ラグランジュの未定乗数法により、$F_{x} = 0$、$F_{y} = 0$、$F_{\lambda} = 0$ を満たす点を求めます。したがって、連立方程式</p>
+            
+            <div class="formula">
+                $$\begin{cases} F_{x} = 2x - \lambda y = 0 \\ F_{y} = 2y - \lambda x = 0 \\ F_{\lambda} = -xy + 1 = 0 \end{cases}$$
+            </div>
+            
+            <p>を解きます。</p>
+            
+            <p>まず、$F_{\lambda} = 0$ より、</p>
+            
+            <div class="formula">
+                $$-xy + 1 = 0$$
+            </div>
+            
+            <p>すなわち、</p>
+            
+            <div class="formula">
+                $$xy = 1$$
+            </div>
+            
+            <p>となります。したがって、$x \ne 0$ かつ $y \ne 0$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $xy = 1$ であるため、$x = 0$ または $y = 0$ のとき $xy = 0 \ne 1$ となり、制約条件を満たしません。したがって、$x \ne 0$ かつ $y \ne 0$ です。
+            </div>
+            
+            <p>次に、$F_{x} = 0$ より、</p>
+            
+            <div class="formula">
+                $$2x - \lambda y = 0$$
+            </div>
+            
+            <p>すなわち、</p>
+            
+            <div class="formula">
+                $$2x = \lambda y$$
+            </div>
+            
+            <p>となります。$y \ne 0$ であるため、両辺を $y$ で割ると、</p>
+            
+            <div class="formula">
+                $$\lambda = \frac{2x}{y}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>同様に、$F_{y} = 0$ より、</p>
+            
+            <div class="formula">
+                $$2y - \lambda x = 0$$
+            </div>
+            
+            <p>すなわち、</p>
+            
+            <div class="formula">
+                $$2y = \lambda x$$
+            </div>
+            
+            <p>となります。$x \ne 0$ であるため、両辺を $x$ で割ると、</p>
+            
+            <div class="formula">
+                $$\lambda = \frac{2y}{x}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>したがって、$\lambda = \frac{2x}{y}$ と $\lambda = \frac{2y}{x}$ が同時に成り立つため、</p>
+            
+            <div class="formula">
+                $$\frac{2x}{y} = \frac{2y}{x}$$
+            </div>
+            
+            <p>となります。両辺に $xy$ を掛けると、</p>
+            
+            <div class="formula">
+                $$2x^{2} = 2y^{2}$$
+            </div>
+            
+            <p>となります。両辺を $2$ で割ると、</p>
+            
+            <div class="formula">
+                $$x^{2} = y^{2}$$
+            </div>
+            
+            <p>となります。したがって、</p>
+            
+            <div class="formula">
+                $$y = \pm x$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $x^{2} = y^{2}$ より、$y^{2} - x^{2} = 0$ すなわち $(y-x)(y+x) = 0$ となります。したがって、$y = x$ または $y = -x$ です。すなわち、$y = \pm x$ です。
+            </div>
+            
+            <p>次に、$xy = 1$ と $y = \pm x$ を組み合わせます。$y = x$ の場合、$xy = x \cdot x = x^{2} = 1$ より、$x = \pm 1$ です。$y = -x$ の場合、$xy = x \cdot (-x) = -x^{2} = 1$ より、$x^{2} = -1$ となりますが、これは実数解を持ちません。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $x^{2} = -1$ の実数解は存在しません。複素数解は存在しますが、ここでは実数解のみを考えます。
+            </div>
+            
+            <p>したがって、$x = 1$ のとき $y = 1$、$x = -1$ のとき $y = -1$ です。</p>
+            
+            <p>極値候補点は、$(x,y) = (1,1)$、$(-1,-1)$ です。</p>
+            
+            <p>次に、各候補点での関数値 $f(x,y)$ を計算します。</p>
+            
+            <p>$(x,y) = (1,1)$ のとき、</p>
+            
+            <div class="formula">
+                $$f(1,1) = 1^{2} + 1^{2} = 1 + 1 = 2$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>$(x,y) = (-1,-1)$ のとき、</p>
+            
+            <div class="formula">
+                $$f(-1,-1) = (-1)^{2} + (-1)^{2} = 1 + 1 = 2$$
+            </div>
+            
+            <p>となります。ここで、$(-1)^{2} = 1$ であることを用いました。</p>
+            
+            <p>次に、最大値・最小値の存在を判定するため、制約条件 $xy = 1$ すなわち $y = \frac{1}{x}$ を $f(x,y)$ に代入して、関数の挙動を調べます。</p>
+            
+            <p>$y = \frac{1}{x}$ を $f(x,y) = x^{2} + y^{2}$ に代入すると、</p>
+            
+            <div class="formula">
+                $$f\left(x, \frac{1}{x}\right) = x^{2} + \left(\frac{1}{x}\right)^{2} = x^{2} + \frac{1}{x^{2}}$$
+            </div>
+            
+            <p>となります。ここで、$\left(\frac{1}{x}\right)^{2} = \frac{1}{x^{2}}$ であることを用いました。</p>
+            
+            <p>次に、$x \to \pm \infty$ のときの極限を調べます。</p>
+            
+            <div class="formula">
+                $$\lim_{x \to \pm \infty} f\left(x, \frac{1}{x}\right) = \lim_{x \to \pm \infty} \left(x^{2} + \frac{1}{x^{2}}\right) = \infty$$
+            </div>
+            
+            <p>となります。ここで、$x \to \pm \infty$ のとき $x^{2} \to \infty$、$\frac{1}{x^{2}} \to 0$ であるため、$x^{2} + \frac{1}{x^{2}} \to \infty$ です。</p>
+            
+            <p>次に、$x \to 0$ のときの極限を調べます。</p>
+            
+            <div class="formula">
+                $$\lim_{x \to 0} f\left(x, \frac{1}{x}\right) = \lim_{x \to 0} \left(x^{2} + \frac{1}{x^{2}}\right) = \infty$$
+            </div>
+            
+            <p>となります。ここで、$x \to 0$ のとき $x^{2} \to 0$、$\frac{1}{x^{2}} \to \infty$ であるため、$x^{2} + \frac{1}{x^{2}} \to \infty$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $x \to \pm \infty$ のときも $x \to 0$ のときも、$f\left(x, \frac{1}{x}\right) = x^{2} + \frac{1}{x^{2}}$ は無限大に発散します。したがって、制約条件 $xy = 1$ の下で $f(x,y)$ は上に有界ではなく、最大値は存在しません。一方、$f(1,1) = f(-1,-1) = 2$ が最小値となります。
+            </div>
+            
+            <p>したがって、$(x,y) = (1,1)$、$(-1,-1)$ のとき最小値 $2$ をとり、最大値は存在しません。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>計算した内容を検証します。</p>
+            
+            <p>まず、ラグランジュ関数の計算を確認します。$F(x,y,\lambda) = x^{2} + y^{2} - \lambda(xy - 1)$ について、$F_{x} = 2x - \lambda y$、$F_{y} = 2y - \lambda x$、$F_{\lambda} = -xy + 1$ は正しいです。</p>
+            
+            <p>次に、連立方程式の解法を確認します。$F_{x} = 0$ より $\lambda = \frac{2x}{y}$、$F_{y} = 0$ より $\lambda = \frac{2y}{x}$ です。これらが等しいことから $\frac{2x}{y} = \frac{2y}{x}$ すなわち $x^{2} = y^{2}$ より $y = \pm x$ です。$xy = 1$ と組み合わせると、$y = x$ のとき $x^{2} = 1$ より $x = \pm 1$、$y = -x$ のとき $-x^{2} = 1$ より実数解なしです。したがって、候補点は $(1,1)$、$(-1,-1)$ です。この計算は正しいです。</p>
+            
+            <p>関数値の計算を確認します。$f(1,1) = 1 + 1 = 2$、$f(-1,-1) = 1 + 1 = 2$ は正しいです。制約条件 $y = \frac{1}{x}$ を代入すると、$f\left(x, \frac{1}{x}\right) = x^{2} + \frac{1}{x^{2}}$ となり、$x \to \pm \infty$ のとき $\infty$、$x \to 0$ のとき $\infty$ に発散するため、最大値は存在せず、最小値は $2$ です。この判定は正しいです。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）$\phi(x,y)=xy-1$、$f(x,y)=x^{2}+y^{2}$ について：</p>
+            <p>ラグランジュの未定乗数法により、極値候補点は $(x,y) = (1,1)$、$(-1,-1)$ です。</p>
+            <p>$f(1,1) = f(-1,-1) = 2$ です。</p>
+            <p>制約条件 $y = \frac{1}{x}$ を代入すると、$f\left(x, \frac{1}{x}\right) = x^{2} + \frac{1}{x^{2}}$ となり、$\lim_{x \to \pm \infty} f\left(x, \frac{1}{x}\right) = \infty$、$\lim_{x \to 0} f\left(x, \frac{1}{x}\right) = \infty$ であるため、最大値は存在しません。</p>
+            <p>したがって、$(x,y) = (1,1)$、$(-1,-1)$ のとき最小値 $2$ をとり、最大値は存在しません。</p>
+        </div>
+    </div>
+</body>
+</html>

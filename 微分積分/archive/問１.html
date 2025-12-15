@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 問1 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 問1 解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>関数 $f(x,y)=x^{4}+y^{4}-x^{2}-2xy-y^{2}+3$ の極値を調べよ。</p>
+        </div>
+
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を読み、求める内容を理解する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    一次偏導関数 $f_x$, $f_y$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    $f_x=0$ かつ $f_y=0$ を満たす停留点を求める
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    二次偏導関数 $f_{xx}$, $f_{yy}$, $f_{xy}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    各停留点でヘッセ行列の判別式 $D=f_{xx}f_{yy}-(f_{xy})^2$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    判別式が $0$ か？
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">Yesの場合</div>
+                    異なる方向に沿って関数値の変化を調べ、極値の定義により判定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">Noの場合</div>
+                    判別式と $f_{xx}$ の符号から極大・極小・鞍点を判定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    結果をまとめる
+                </div>
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+        <p>この問題では、まず一次偏導関数を計算して停留点（極値の候補点）を求めます。次に、二次偏導関数からヘッセ行列の判別式を計算し、その値によって極値の判定を行います。判別式が $0$ になる点については、極値の定義に基づいて異なる方向からの関数値の変化を調べることで判定します。</p>
+
+        <div class="step">
+            <div class="step-title">（1）一次偏導関数の計算と停留点の決定</div>
+            
+            <p>極値の候補となる点は、勾配 $\nabla f = (f_x, f_y)$ がゼロベクトルになる点、すなわち停留点です。まず、$x$ と $y$ について偏微分を計算します。</p>
+
+            <p>$f(x,y) = x^4 + y^4 - x^2 - 2xy - y^2 + 3$ を $x$ で偏微分するときは、$y$ を定数として扱います。したがって、$x^4$ の導関数は $4x^3$、$-x^2$ の導関数は $-2x$、$-2xy$ の導関数は $-2y$（$y$ は定数なので）、$y^4$、$-y^2$、$3$ は $x$ を含まないため導関数は $0$ になります。</p>
+
+            <div class="formula">
+                $$f_x = \frac{\partial f}{\partial x} = 4x^3 - 2x - 2y$$
+            </div>
+
+            <p>同様に、$f(x,y)$ を $y$ で偏微分するときは、$x$ を定数として扱います。したがって、$y^4$ の導関数は $4y^3$、$-y^2$ の導関数は $-2y$、$-2xy$ の導関数は $-2x$（$x$ は定数なので）になります。</p>
+
+            <div class="formula">
+                $$f_y = \frac{\partial f}{\partial y} = 4y^3 - 2y - 2x$$
+            </div>
+
+            <p>停留点を求めるため、$f_x = 0$ かつ $f_y = 0$ となる連立方程式を解きます。</p>
+
+            <div class="formula">
+                $$\begin{cases} 4x^3 - 2x - 2y = 0 \\ 4y^3 - 2y - 2x = 0 \end{cases}$$
+            </div>
+
+            <p>この連立方程式は左右対称な形をしています。対称性から $x = y$ の場合を考えます。第1式に $x = y$ を代入すると、</p>
+
+            <div class="calculation">
+                $$4x^3 - 2x - 2x = 4x^3 - 4x = 0$$
+            </div>
+
+            <p>この式を因数分解すると、</p>
+
+            <div class="calculation">
+                $$4x^3 - 4x = 4x(x^2 - 1) = 4x(x-1)(x+1) = 0$$
+            </div>
+
+            <p>したがって $x = 0, 1, -1$ が得られます。$x = y$ より、停留点の候補は $(0,0)$, $(1,1)$, $(-1,-1)$ となります。</p>
+
+            <div class="note">
+                偏導関数とは、多変数関数において一つの変数だけを変化させたときの変化率を表すものです。例えば $f_x$ は、$y$ を固定した状態で $x$ だけを変化させたときの $f$ の変化率を表します。停留点は、すべての方向への変化率が $0$ になる点であり、極値の候補となります。
+            </div>
+
+            <div class="note">
+                この問題では、連立方程式の対称性から $x = y$ の場合のみが解となることが分かります。対称性がない場合は、代入法や消去法を用いて全ての解を調べる必要があります。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）二次偏導関数の計算とヘッセ行列の判別式</div>
+            
+            <p>停留点が極値かどうかを判定するため、二次偏導関数を計算してヘッセ行列の判別式 $D = f_{xx}f_{yy} - (f_{xy})^2$ を求めます。判別式 $D$ と $f_{xx}$ の符号によって、極大・極小・鞍点を判定できます。</p>
+
+            <p>まず、一次偏導関数 $f_x = 4x^3 - 2x - 2y$ を $x$ で偏微分すると、</p>
+
+            <div class="formula">
+                $$f_{xx} = \frac{\partial^2 f}{\partial x^2} = \frac{\partial}{\partial x}(4x^3 - 2x - 2y) = 12x^2 - 2$$
+            </div>
+
+            <p>$4x^3$ の導関数は $12x^2$、$-2x$ の導関数は $-2$、$-2y$ は $x$ を含まないため導関数は $0$ になります。</p>
+
+            <p>次に、$f_x$ を $y$ で偏微分すると、</p>
+
+            <div class="formula">
+                $$f_{xy} = \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial}{\partial y}(4x^3 - 2x - 2y) = -2$$
+            </div>
+
+            <p>$4x^3 - 2x$ は $y$ を含まないため導関数は $0$、$-2y$ の導関数は $-2$ になります。</p>
+
+            <p>同様に、$f_y = 4y^3 - 2y - 2x$ を $y$ で偏微分すると、</p>
+
+            <div class="formula">
+                $$f_{yy} = \frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y}(4y^3 - 2y - 2x) = 12y^2 - 2$$
+            </div>
+
+            <p>$4y^3$ の導関数は $12y^2$、$-2y$ の導関数は $-2$、$-2x$ は $y$ を含まないため導関数は $0$ になります。</p>
+
+            <div class="note">
+                二次偏導関数は、一次偏導関数をさらに偏微分したものです。$f_{xx}$ は $x$ 方向の曲率、$f_{yy}$ は $y$ 方向の曲率を表し、$f_{xy}$ は $x$ 方向と $y$ 方向の相互作用を表します。混合偏導関数 $f_{xy}$ と $f_{yx}$ は通常等しくなります（クレローの定理）。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）停留点 $(1,1)$ と $(-1,-1)$ の判定</div>
+            
+            <p>点 $(1,1)$ における各二次偏導関数の値を計算します。</p>
+
+            <div class="calculation">
+                $$f_{xx}(1,1) = 12 \times 1^2 - 2 = 12 - 2 = 10$$
+                $$f_{yy}(1,1) = 12 \times 1^2 - 2 = 12 - 2 = 10$$
+                $$f_{xy}(1,1) = -2$$
+            </div>
+
+            <p>判別式 $D(1,1)$ を計算します。</p>
+
+            <div class="calculation">
+                $$D(1,1) = f_{xx}(1,1) \times f_{yy}(1,1) - (f_{xy}(1,1))^2 = 10 \times 10 - (-2)^2 = 100 - 4 = 96 > 0$$
+            </div>
+
+            <p>判別式が正（$D > 0$）で、かつ $f_{xx}(1,1) = 10 > 0$ であるため、$(1,1)$ は極小値をとります。</p>
+
+            <p>極小値の値を計算します。$(1,1)$ における関数値を求めると、</p>
+
+            <div class="calculation">
+                $$f(1,1) = 1^4 + 1^4 - 1^2 - 2 \times 1 \times 1 - 1^2 + 3 = 1 + 1 - 1 - 2 - 1 + 3 = 1$$
+            </div>
+
+            <p>同様に、点 $(-1,-1)$ における各二次偏導関数の値を計算します。</p>
+
+            <div class="calculation">
+                $$f_{xx}(-1,-1) = 12 \times (-1)^2 - 2 = 12 - 2 = 10$$
+                $$f_{yy}(-1,-1) = 12 \times (-1)^2 - 2 = 12 - 2 = 10$$
+                $$f_{xy}(-1,-1) = -2$$
+            </div>
+
+            <p>判別式 $D(-1,-1)$ を計算します。</p>
+
+            <div class="calculation">
+                $$D(-1,-1) = 10 \times 10 - (-2)^2 = 100 - 4 = 96 > 0$$
+            </div>
+
+            <p>判別式が正（$D > 0$）で、かつ $f_{xx}(-1,-1) = 10 > 0$ であるため、$(-1,-1)$ も極小値をとります。</p>
+
+            <p>極小値の値を計算します。$f(-1,-1) = 1$ となります（計算過程は $(1,1)$ の場合と同様です）。</p>
+
+            <div class="note">
+                判別式 $D$ と $f_{xx}$ の符号による判定基準は以下の通りです。$D > 0$ かつ $f_{xx} > 0$ なら極小値、$D > 0$ かつ $f_{xx} < 0$ なら極大値、$D < 0$ なら鞍点（極値ではない）、$D = 0$ の場合は判定保留となり、別の方法で調べる必要があります。この判定基準は、二次近似による極値の判定法に基づいています。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）停留点 $(0,0)$ の個別判定</div>
+            
+            <p>点 $(0,0)$ における各二次偏導関数の値を計算します。</p>
+
+            <div class="calculation">
+                $$f_{xx}(0,0) = 12 \times 0^2 - 2 = -2$$
+                $$f_{yy}(0,0) = 12 \times 0^2 - 2 = -2$$
+                $$f_{xy}(0,0) = -2$$
+            </div>
+
+            <p>判別式 $D(0,0)$ を計算します。</p>
+
+            <div class="calculation">
+                $$D(0,0) = f_{xx}(0,0) \times f_{yy}(0,0) - (f_{xy}(0,0))^2 = (-2) \times (-2) - (-2)^2 = 4 - 4 = 0$$
+            </div>
+
+            <p>判別式が $0$ のため、ヘッセ行列による判定では極値かどうかを判断できません。この場合、極値の定義に基づいて、異なる方向に沿って関数値の変化を直接調べる必要があります。</p>
+
+            <p>極値の定義により、点 $(0,0)$ が極値であるためには、$(0,0)$ の近くのすべての点 $(x,y)$ において、$f(x,y) \geq f(0,0)$（極小値の場合）または $f(x,y) \leq f(0,0)$（極大値の場合）が成り立つ必要があります。</p>
+
+            <p>まず、$f(0,0)$ の値を計算します。</p>
+
+            <div class="calculation">
+                $$f(0,0) = 0^4 + 0^4 - 0^2 - 2 \times 0 \times 0 - 0^2 + 3 = 3$$
+            </div>
+
+            <p>次に、$y = 0$（$x$ 軸上）に沿って $(0,0)$ に近づく場合を調べます。このとき関数は $f(x,0)$ となります。</p>
+
+            <div class="formula">
+                $$f(x,0) = x^4 + 0^4 - x^2 - 2x \times 0 - 0^2 + 3 = x^4 - x^2 + 3$$
+            </div>
+
+            <p>この式を因数分解の形に変形します。</p>
+
+            <div class="formula">
+                $$f(x,0) = x^4 - x^2 + 3 = x^2(x^2 - 1) + 3$$
+            </div>
+
+            <p>$|x|$ が十分小さいとき（例えば $0 < |x| < 1$ のとき）、$x^2 > 0$ かつ $x^2 - 1 < 0$ となるため、$x^2(x^2 - 1) < 0$ が成り立ちます。したがって、$f(x,0) = x^2(x^2 - 1) + 3 < 3 = f(0,0)$ となります。つまり、$(0,0)$ の近くに、$(0,0)$ より関数値が小さい点が存在します。</p>
+
+            <p>次に、$y = -x$ に沿って $(0,0)$ に近づく場合を調べます。このとき関数は $f(x,-x)$ となります。</p>
+
+            <div class="formula">
+                $$f(x,-x) = x^4 + (-x)^4 - x^2 - 2x(-x) - (-x)^2 + 3$$
+            </div>
+
+            <p>計算を進めます。</p>
+
+            <div class="calculation">
+                $$f(x,-x) = x^4 + x^4 - x^2 + 2x^2 - x^2 + 3 = 2x^4 + 3$$
+            </div>
+
+            <p>$x \neq 0$ のとき、$2x^4 > 0$ であるため、$f(x,-x) = 2x^4 + 3 > 3 = f(0,0)$ が成り立ちます。つまり、$(0,0)$ の近くに、$(0,0)$ より関数値が大きい点が存在します。</p>
+
+            <p>以上より、$(0,0)$ のどんなに近くにも、$f(x,y) < f(0,0)$ となる点と $f(x,y) > f(0,0)$ となる点の両方が存在します。したがって、$(0,0)$ は極値ではなく、鞍点であることが分かります。</p>
+
+            <div class="note">
+                判別式が $0$ のときは、ヘッセ行列による判定だけでは不十分です。異なる方向に沿った制限関数を評価して、極値かどうかを確かめる必要があります。一方向だけを見ると誤判定につながるため、複数の方向を調べることが重要です。この場合、$x$ 軸方向では関数値が小さくなり、$y = -x$ 方向では関数値が大きくなるため、$(0,0)$ は極値ではないと結論できます。
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            
+            <p>まず、求めた3点すべてで勾配がゼロになることを確認します。勾配の条件 $f_x = 0$ かつ $f_y = 0$ に各点を代入して検証します。</p>
+
+            <p>点 $(1,1)$ では、$f_x(1,1) = 4 \times 1^3 - 2 \times 1 - 2 \times 1 = 4 - 2 - 2 = 0$、$f_y(1,1) = 4 \times 1^3 - 2 \times 1 - 2 \times 1 = 4 - 2 - 2 = 0$ となり、勾配がゼロであることを確認できます。</p>
+
+            <p>点 $(-1,-1)$ では、$f_x(-1,-1) = 4 \times (-1)^3 - 2 \times (-1) - 2 \times (-1) = -4 + 2 + 2 = 0$、$f_y(-1,-1) = 4 \times (-1)^3 - 2 \times (-1) - 2 \times (-1) = -4 + 2 + 2 = 0$ となり、勾配がゼロであることを確認できます。</p>
+
+            <p>点 $(0,0)$ では、$f_x(0,0) = 4 \times 0^3 - 2 \times 0 - 2 \times 0 = 0$、$f_y(0,0) = 4 \times 0^3 - 2 \times 0 - 2 \times 0 = 0$ となり、勾配がゼロであることを確認できます。</p>
+
+            <p>次に、$(0,0)$ が鞍点であることを再確認します。$y = 0$ の方向では、$x = 0.5$ のとき $f(0.5, 0) = 0.5^4 - 0.5^2 + 3 = 0.0625 - 0.25 + 3 = 2.8125 < 3 = f(0,0)$ となり、$f(0,0)$ より小さい値が存在します。一方、$y = -x$ の方向では、$x = 0.5$ のとき $f(0.5, -0.5) = 2 \times 0.5^4 + 3 = 2 \times 0.0625 + 3 = 3.125 > 3 = f(0,0)$ となり、$f(0,0)$ より大きい値が存在します。これにより、$(0,0)$ の近傍に上下両方向の値が存在することが確認でき、鞍点であることが確かめられます。</p>
+
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>極値は以下の通りです。</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li>点 $(1,1)$ で極小値 $1$ をとる</li>
+                <li>点 $(-1,-1)$ で極小値 $1$ をとる</li>
+                <li>点 $(0,0)$ は極値ではない（鞍点）</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

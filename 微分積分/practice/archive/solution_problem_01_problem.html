@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 01 Problem 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 01 Problem 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>$X=\mathbb{R}^{2}$ とし、関数 $d: X \times X \to \mathbb{R}$ を次のように定義します。</p>
+            <div class="formula">
+                $$d(x,y)=\begin{cases}1 & x \ne y \\ 0 & x=y\end{cases}$$
+            </div>
+            <p>この $d$ は $X(=\mathbb{R}^{2})$ 上の距離であることを示せ。</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>距離関数の定義</strong>：集合 $X$ 上の距離関数 $d: X \times X \to \mathbb{R}$ は、以下の3つの条件を満たす必要があります。
+                        <ul>
+                            <li><strong>非負性と同一性</strong>：任意の $x, y \in X$ に対して $d(x,y) \ge 0$ であり、$d(x,y)=0$ となるのは $x=y$ のとき、かつそのときに限ります。</li>
+                            <li><strong>対称性</strong>：任意の $x, y \in X$ に対して $d(x,y)=d(y,x)$ が成り立ちます。</li>
+                            <li><strong>三角不等式</strong>：任意の $x, y, z \in X$ に対して $d(x,z) \le d(x,y)+d(y,z)$ が成り立ちます。</li>
+                        </ul>
+                    </li>
+                    <li><strong>場合分けによる証明</strong>：定義が場合分けで与えられているため、各場合について個別に検証する必要があります。特に三角不等式の証明では、$x, y, z$ の関係（等しいか異なるか）によって複数の場合を考慮します。</li>
+                    <li><strong>同値関係の証明</strong>：$d(x,y)=0 \iff x=y$ を示すには、両方向の含意（$\implies$ と $\impliedby$）を証明する必要があります。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を理解し、距離関数の3つの条件を確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    非負性と同一性 $d(x,y) \ge 0$ かつ $d(x,y)=0 \iff x=y$ を証明する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    対称性 $d(x,y)=d(y,x)$ を証明する（$x=y$ と $x \ne y$ の場合に分ける）
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    三角不等式 $d(x,z) \le d(x,y)+d(y,z)$ を証明する（4つの場合に分ける）
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    3つの条件すべてが満たされたことを確認し、結論を述べる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、与えられた関数 $d$ が距離関数の3つの条件（非負性と同一性、対称性、三角不等式）をすべて満たすことを、定義に基づいて場合分けしながら順に証明します。各条件について、$x=y$ の場合と $x \ne y$ の場合を分けて検証することで、すべての場合で条件が成り立つことを確認します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）非負性と同一性の証明</div>
+            <p>まず、$d(x,y) \ge 0$ かつ $d(x,y)=0 \iff x=y$ を示します。</p>
+            
+            <p>関数 $d$ の定義より、任意の $x, y \in X$ に対して、$d(x,y)$ の値は $0$ または $1$ のいずれかです。したがって、常に $1 \ge d(x,y) \ge 0$ が成り立ちます。これにより、非負性 $d(x,y) \ge 0$ が証明されました。</p>
+            
+            <div class="formula">
+                $$1 \ge d(x,y) \ge 0$$
+            </div>
+            
+            <p>次に、$d(x,y)=0 \iff x=y$ を示します。これは同値関係なので、両方向の含意を証明する必要があります。</p>
+            
+            <div class="explanation">
+                <p><strong>（$\impliedby$ の証明）</strong> $x=y$ のとき、定義より $d(x,y)=0$ です。</p>
+                <p><strong>（$\implies$ の証明）</strong> $d(x,y)=0$ のとき、定義より $x=y$ でなければなりません。なぜなら、$x \ne y$ のときは $d(x,y)=1$ となるからです。</p>
+            </div>
+            
+            <p>以上より、$d(x,y)=0 \iff x=y$ が成り立ちます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 同値関係 $P \iff Q$ を証明するには、$P \implies Q$ と $Q \implies P$ の両方を示す必要があります。この問題では、定義から直接導かれるため、比較的簡単に証明できます。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）対称性の証明</div>
+            <p>次に、$d(x,y)=d(y,x)$ を示します。定義が場合分けで与えられているため、$x=y$ の場合と $x \ne y$ の場合に分けて検証します。</p>
+            
+            <div class="explanation">
+                <p><strong>場合1：</strong> $x \ne y$ のとき</p>
+                <p>$x \ne y$ ならば $y \ne x$ も成り立つため、定義より $d(x,y)=1$ かつ $d(y,x)=1$ です。したがって、$d(x,y)=1=d(y,x)$ が成り立ちます。</p>
+                
+                <div class="formula">
+                    $$d(x,y)=1=d(y,x)$$
+                </div>
+                
+                <p><strong>場合2：</strong> $x=y$ のとき</p>
+                <p>$x=y$ ならば $y=x$ も成り立つため、定義より $d(x,y)=0$ かつ $d(y,x)=0$ です。したがって、$d(x,y)=0=d(y,x)$ が成り立ちます。</p>
+                
+                <div class="formula">
+                    $$d(x,y)=0=d(y,x)$$
+                </div>
+            </div>
+            
+            <p>いずれの場合も $d(x,y)=d(y,x)$ が成り立つため、対称性が証明されました。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（3）三角不等式の証明</div>
+            <p>最後に、三角不等式 $d(x,z) \le d(x,y)+d(y,z)$ を示します。これは最も複雑な部分で、$x, y, z$ の関係によって複数の場合を考慮する必要があります。</p>
+            
+            <p>考えられる場合を体系的に分類します。$x, y, z$ の関係は以下の4つの場合に分けられます：</p>
+            
+            <div class="explanation">
+                <p><strong>場合A：</strong> $x=y=z$ のとき</p>
+                <p>すべての点が等しい場合、定義より $d(x,z)=0$、$d(x,y)=0$、$d(y,z)=0$ です。したがって、</p>
+                
+                <div class="formula">
+                    $$d(x,z)=0 = 0+0 = d(x,y)+d(y,z)$$
+                </div>
+                
+                <p>となり、等号で三角不等式が成り立ちます。</p>
+                
+                <p><strong>場合B：</strong> $x=y$ かつ $y \ne z$ のとき</p>
+                <p>$x=y$ より $d(x,y)=0$ です。また、$y \ne z$ より $d(y,z)=1$ です。さらに、$x=y$ かつ $y \ne z$ より $x \ne z$ であるため、$d(x,z)=1$ です。したがって、</p>
+                
+                <div class="formula">
+                    $$d(x,z)=1 \le 0+1 = d(x,y)+d(y,z)$$
+                </div>
+                
+                <p>となり、三角不等式が成り立ちます。</p>
+                
+                <p><strong>場合C：</strong> $x \ne y$ かつ $x \ne z$ かつ $y \ne z$ のとき</p>
+                <p>すべての点が互いに異なる場合、定義より $d(x,y)=1$、$d(x,z)=1$、$d(y,z)=1$ です。したがって、</p>
+                
+                <div class="formula">
+                    $$d(x,z)=1 \le 1+1 = d(x,y)+d(y,z)$$
+                </div>
+                
+                <p>となり、三角不等式が成り立ちます。</p>
+                
+                <p><strong>場合D：</strong> $x=z$ かつ $x \ne y$ のとき</p>
+                <p>$x=z$ より $d(x,z)=0$ です。また、$x \ne y$ より $d(x,y)=1$ です。さらに、$x=z$ かつ $x \ne y$ より $z \ne y$ であるため、$d(z,y)=1$ です。したがって、</p>
+                
+                <div class="formula">
+                    $$d(x,z)=0 \le 1+1 = d(x,y)+d(y,z)$$
+                </div>
+                
+                <p>となり、三角不等式が成り立ちます。</p>
+            </div>
+            
+            <div class="note">
+                <strong>補足：</strong> 場合Dでは、$x=z$ かつ $x \ne y$ という条件から、$z \ne y$ が導かれます。これは、$z=y$ と仮定すると $x=z=y$ となり、$x \ne y$ に矛盾するためです。このような論理的な推論を丁寧に追うことが重要です。
+            </div>
+            
+            <p>以上、4つの場合すべてで三角不等式 $d(x,z) \le d(x,y)+d(y,z)$ が成り立つことが確認されました。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>証明した内容を検証します。</p>
+            
+            <p>まず、定義の確認を行います。関数 $d$ は $x=y$ のとき $0$、$x \ne y$ のとき $1$ を返す関数として定義されています。この定義は明確で、すべての $x, y \in \mathbb{R}^{2}$ に対して一意に値を定めています。</p>
+            
+            <p>次に、証明の完全性を確認します。非負性と同一性については、定義から直接導かれるため、問題ありません。対称性については、$x=y$ と $x \ne y$ の2つの場合を検証し、すべての場合を網羅しています。三角不等式については、$x, y, z$ の関係を体系的に分類し、4つの場合すべてを検証しました。これら4つの場合で、$x, y, z$ のすべての可能な関係が網羅されていることを確認できます。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）非負性と同一性：定義より $d(x,y)$ は $0$ または $1$ のいずれかであるため、$d(x,y) \ge 0$ が成り立ちます。また、$x=y$ のとき $d(x,y)=0$ であり、$d(x,y)=0$ のとき $x=y$ であるため、$d(x,y)=0 \iff x=y$ が成り立ちます。</p>
+            
+            <p>（2）対称性：$x \ne y$ のとき $d(x,y)=1=d(y,x)$、$x=y$ のとき $d(x,y)=0=d(y,x)$ であるため、$d(x,y)=d(y,x)$ が成り立ちます。</p>
+            
+            <p>（3）三角不等式：$x, y, z$ の関係を4つの場合に分けて検証した結果、すべての場合で $d(x,z) \le d(x,y)+d(y,z)$ が成り立つことが確認されました。</p>
+            
+            <p>したがって、関数 $d$ は $\mathbb{R}^{2}$ 上の距離関数です。</p>
+        </div>
+    </div>
+</body>
+</html>

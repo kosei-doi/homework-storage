@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 10 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 10 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の関数の極値を調べよ。</p>
+            <p>（2）$f(x,y)=x^{3}+y^{3}-3xy$</p>
+            <p>（3）$f(x,y)=x^{4}+y^{4}$</p>
+            <p>（4）$f(x,y)=2x^{4}-3x^{2}y+y^{2}$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>偏微分</strong>：2変数関数 $f(x,y)$ の $x$ に関する偏微分 $f_{x}(x,y)$ は、$y$ を定数として $x$ で微分したものです。同様に、$y$ に関する偏微分 $f_{y}(x,y)$ は、$x$ を定数として $y$ で微分したものです。</li>
+                    <li><strong>停留点</strong>：$f_{x}(x,y) = 0$ かつ $f_{y}(x,y) = 0$ を満たす点 $(x,y)$ を停留点といいます。極値は停留点でのみ現れる可能性がありますが、すべての停留点が極値であるとは限りません。</li>
+                    <li><strong>2階偏導関数</strong>：$f_{xx} = \frac{\partial^{2}f}{\partial x^{2}}$、$f_{yy} = \frac{\partial^{2}f}{\partial y^{2}}$、$f_{xy} = \frac{\partial^{2}f}{\partial x \partial y}$ を2階偏導関数といいます。$f_{xy} = f_{yx}$ が成り立ちます（連続な場合）。</li>
+                    <li><strong>ヘッセ行列の判別式</strong>：$D = (f_{xy})^{2} - f_{xx}f_{yy}$ を判別式といいます。停留点 $(a,b)$ において、$D(a,b) < 0$ のとき極値の可能性があり、$D(a,b) > 0$ のとき極値ではありません（鞍点）。$D(a,b) = 0$ のときは判別式だけでは判定できません。</li>
+                    <li><strong>極値の判定</strong>：停留点 $(a,b)$ において、$D(a,b) < 0$ かつ $f_{xx}(a,b) > 0$ のとき極小、$D(a,b) < 0$ かつ $f_{xx}(a,b) < 0$ のとき極大となります。</li>
+                    <li><strong>判別式が0の場合の判定</strong>：判別式が0の場合は、判別式だけでは判定できません。極値の定義に基づいて、$(a,b)$ の近傍で $f(x,y) \ge f(a,b)$（極小）または $f(x,y) \le f(a,b)$（極大）が成り立つか、または異なる経路で $(a,b)$ に近づけたときの関数値の変化を調べます。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    各関数の極値を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    1階偏導関数 $f_{x}$、$f_{y}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    $f_{x} = 0$、$f_{y} = 0$ を解き、停留点を求める
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    2階偏導関数 $f_{xx}$、$f_{yy}$、$f_{xy}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    判別式 $D = (f_{xy})^{2} - f_{xx}f_{yy}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    各停留点で判別式の符号を調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">$D > 0$ の場合</div>
+                    極値でない（鞍点）
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">$D < 0$ の場合</div>
+                    $f_{xx}$ の符号から極大・極小を判定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">$D = 0$ の場合</div>
+                    極値の定義に基づいて個別に調べる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    各関数の極値の結果をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、3つの関数について、まず1階偏導関数を計算して停留点を求め、次に2階偏導関数とヘッセ行列の判別式を用いて各停留点での極値の判定を行います。判別式が正の場合は鞍点、負の場合は $f_{xx}$ の符号から極大・極小を判定します。判別式が0の場合は、極値の定義に基づいて個別に調べます。</p>
+        
+        <div class="step">
+            <div class="step-title">（2）関数 $f(x,y)=x^{3}+y^{3}-3xy$ について</div>
+            <p>まず、1階偏導関数を計算します。$f(x,y) = x^{3} + y^{3} - 3xy$ について、$x$ に関する偏微分 $f_{x}(x,y)$ を計算します。$y$ を定数として $x$ で微分します。</p>
+            
+            <p>$x^{3}$ を $x$ で偏微分すると $3x^{2}$ です。$y^{3}$ は $x$ を含まないため、$x$ で偏微分すると $0$ です。$-3xy$ を $x$ で偏微分すると $-3y$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = 3x^{2} - 3y$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$y$ に関する偏微分 $f_{y}(x,y)$ を計算します。$x$ を定数として $y$ で微分します。</p>
+            
+            <p>$x^{3}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$y^{3}$ を $y$ で偏微分すると $3y^{2}$ です。$-3xy$ を $y$ で偏微分すると $-3x$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = 3y^{2} - 3x$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、停留点を求めます。停留点は $f_{x}(x,y) = 0$ かつ $f_{y}(x,y) = 0$ を満たす点です。したがって、連立方程式</p>
+            
+            <div class="formula">
+                $$\begin{cases} f_{x}(x,y) = 3x^{2} - 3y = 0 \\ f_{y}(x,y) = 3y^{2} - 3x = 0 \end{cases}$$
+            </div>
+            
+            <p>を解きます。</p>
+            
+            <p>まず、$f_{x}(x,y) = 0$ より、</p>
+            
+            <div class="formula">
+                $$3x^{2} - 3y = 0$$
+            </div>
+            
+            <p>となります。両辺を $3$ で割ると、</p>
+            
+            <div class="formula">
+                $$x^{2} - y = 0$$
+            </div>
+            
+            <p>すなわち、</p>
+            
+            <div class="formula">
+                $$y = x^{2}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$f_{y}(x,y) = 0$ より、</p>
+            
+            <div class="formula">
+                $$3y^{2} - 3x = 0$$
+            </div>
+            
+            <p>となります。両辺を $3$ で割ると、</p>
+            
+            <div class="formula">
+                $$y^{2} - x = 0$$
+            </div>
+            
+            <p>すなわち、</p>
+            
+            <div class="formula">
+                $$x = y^{2}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>したがって、$y = x^{2}$ と $x = y^{2}$ を同時に満たす点を求めます。$x = y^{2}$ に $y = x^{2}$ を代入すると、</p>
+            
+            <div class="formula">
+                $$x = (x^{2})^{2} = x^{4}$$
+            </div>
+            
+            <p>となります。したがって、</p>
+            
+            <div class="formula">
+                $$x^{4} - x = 0$$
+            </div>
+            
+            <p>となります。左辺を因数分解すると、</p>
+            
+            <div class="formula">
+                $$x(x^{3} - 1) = 0$$
+            </div>
+            
+            <p>となります。したがって、$x = 0$ または $x^{3} - 1 = 0$ すなわち $x^{3} = 1$ です。$x^{3} = 1$ の実数解は $x = 1$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $x^{3} - 1 = 0$ は $x^{3} = 1$ となり、実数解は $x = 1$ のみです。複素数解もありますが、ここでは実数解のみを考えます。
+            </div>
+            
+            <p>$x = 0$ のとき、$y = x^{2} = 0^{2} = 0$ です。$x = 1$ のとき、$y = x^{2} = 1^{2} = 1$ です。</p>
+            
+            <p>したがって、極値候補（停留点）は、$(0,0)$、$(1,1)$ です。</p>
+            
+            <p>次に、2階偏導関数を計算します。まず、$f_{xx}(x,y)$ を計算します。$f_{x}(x,y) = 3x^{2} - 3y$ を $x$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{xx}(x,y) = \frac{\partial}{\partial x}(3x^{2} - 3y) = 6x - 0 = 6x$$
+            </div>
+            
+            <p>となります。ここで、$3x^{2}$ を $x$ で偏微分すると $6x$ です。$-3y$ は $x$ を含まないため、$x$ で偏微分すると $0$ です。</p>
+            
+            <p>次に、$f_{yy}(x,y)$ を計算します。$f_{y}(x,y) = 3y^{2} - 3x$ を $y$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{yy}(x,y) = \frac{\partial}{\partial y}(3y^{2} - 3x) = 6y - 0 = 6y$$
+            </div>
+            
+            <p>となります。ここで、$3y^{2}$ を $y$ で偏微分すると $6y$ です。$-3x$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。</p>
+            
+            <p>次に、$f_{xy}(x,y)$ を計算します。$f_{x}(x,y) = 3x^{2} - 3y$ を $y$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{xy}(x,y) = \frac{\partial}{\partial y}(3x^{2} - 3y) = 0 - 3 = -3$$
+            </div>
+            
+            <p>となります。ここで、$3x^{2}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$-3y$ を $y$ で偏微分すると $-3$ です。</p>
+            
+            <p>次に、ヘッセ行列の判別式 $D$ を計算します。判別式は、</p>
+            
+            <div class="formula">
+                $$D = (f_{xy})^{2} - f_{xx}f_{yy}$$
+            </div>
+            
+            <p>で定義されます。$f_{xx} = 6x$、$f_{yy} = 6y$、$f_{xy} = -3$ であるため、</p>
+            
+            <div class="formula">
+                $$D = (-3)^{2} - (6x)(6y) = 9 - 36xy$$
+            </div>
+            
+            <p>となります。ここで、$(-3)^{2} = 9$、$(6x)(6y) = 36xy$ であることを用いました。</p>
+            
+            <p>各停留点での判別式の値と極値の判定を行います。</p>
+            
+            <p>まず、$(0,0)$ について、</p>
+            
+            <div class="formula">
+                $$D(0,0) = 9 - 36 \cdot 0 \cdot 0 = 9 - 0 = 9 > 0$$
+            </div>
+            
+            <p>となります。判別式が正であるため、$(0,0)$ は極値ではありません。この点は鞍点（saddle point）です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 鞍点とは、ある方向では極大、別の方向では極小となる点です。判別式が正の場合は、その停留点は極値ではありません。
+            </div>
+            
+            <p>次に、$(1,1)$ について、</p>
+            
+            <div class="formula">
+                $$D(1,1) = 9 - 36 \cdot 1 \cdot 1 = 9 - 36 = -27 < 0$$
+            </div>
+            
+            <p>となります。判別式が負であるため、$(1,1)$ は極値の可能性があります。次に、$f_{xx}(1,1)$ の符号を調べます。</p>
+            
+            <div class="formula">
+                $$f_{xx}(1,1) = 6 \cdot 1 = 6 > 0$$
+            </div>
+            
+            <p>となります。$f_{xx}(1,1) > 0$ であるため、$(1,1)$ は極小です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 判別式が負で $f_{xx} > 0$ のとき極小、$f_{xx} < 0$ のとき極大となります。これは、2次形式の符号から判定できます。
+            </div>
+            
+            <p>極小値は、</p>
+            
+            <div class="formula">
+                $$f(1,1) = 1^{3} + 1^{3} - 3(1)(1) = 1 + 1 - 3 = -1$$
+            </div>
+            
+            <p>となります。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（3）関数 $f(x,y)=x^{4}+y^{4}$ について</div>
+            <p>まず、1階偏導関数を計算します。$f(x,y) = x^{4} + y^{4}$ について、$x$ に関する偏微分 $f_{x}(x,y)$ を計算します。$y$ を定数として $x$ で微分します。</p>
+            
+            <p>$x^{4}$ を $x$ で偏微分すると $4x^{3}$ です。$y^{4}$ は $x$ を含まないため、$x$ で偏微分すると $0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = 4x^{3}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$y$ に関する偏微分 $f_{y}(x,y)$ を計算します。$x$ を定数として $y$ で微分します。</p>
+            
+            <p>$x^{4}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$y^{4}$ を $y$ で偏微分すると $4y^{3}$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = 4y^{3}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、停留点を求めます。停留点は $f_{x}(x,y) = 0$ かつ $f_{y}(x,y) = 0$ を満たす点です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = 4x^{3} = 0$$
+            </div>
+            
+            <p>および</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = 4y^{3} = 0$$
+            </div>
+            
+            <p>を解きます。$4x^{3} = 0$ より $x = 0$、$4y^{3} = 0$ より $y = 0$ です。</p>
+            
+            <p>したがって、極値候補（停留点）は、$(0,0)$ のみです。</p>
+            
+            <p>次に、2階偏導関数を計算します。まず、$f_{xx}(x,y)$ を計算します。$f_{x}(x,y) = 4x^{3}$ を $x$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{xx}(x,y) = \frac{\partial}{\partial x}(4x^{3}) = 12x^{2}$$
+            </div>
+            
+            <p>となります。ここで、$4x^{3}$ を $x$ で偏微分すると $12x^{2}$ です。</p>
+            
+            <p>次に、$f_{yy}(x,y)$ を計算します。$f_{y}(x,y) = 4y^{3}$ を $y$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{yy}(x,y) = \frac{\partial}{\partial y}(4y^{3}) = 12y^{2}$$
+            </div>
+            
+            <p>となります。ここで、$4y^{3}$ を $y$ で偏微分すると $12y^{2}$ です。</p>
+            
+            <p>次に、$f_{xy}(x,y)$ を計算します。$f_{x}(x,y) = 4x^{3}$ を $y$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{xy}(x,y) = \frac{\partial}{\partial y}(4x^{3}) = 0$$
+            </div>
+            
+            <p>となります。$4x^{3}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。</p>
+            
+            <p>次に、ヘッセ行列の判別式 $D$ を計算します。$f_{xx} = 12x^{2}$、$f_{yy} = 12y^{2}$、$f_{xy} = 0$ であるため、</p>
+            
+            <div class="formula">
+                $$D = 0^{2} - (12x^{2})(12y^{2}) = -144x^{2}y^{2}$$
+            </div>
+            
+            <p>となります。ここで、$0^{2} = 0$、$(12x^{2})(12y^{2}) = 144x^{2}y^{2}$ であることを用いました。</p>
+            
+            <p>停留点 $(0,0)$ での判別式の値を計算します。</p>
+            
+            <div class="formula">
+                $$D(0,0) = -144 \cdot 0^{2} \cdot 0^{2} = -144 \cdot 0 = 0$$
+            </div>
+            
+            <p>となります。判別式が $0$ であるため、判別式だけでは極値の判定ができません。極値の定義に基づいて調べます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 判別式が $0$ の場合は、判別式だけでは極値かどうかを判定できません。極値の定義に基づいて、$(0,0)$ の近傍で関数値の変化を調べる必要があります。
+            </div>
+            
+            <p>まず、$f(0,0) = 0^{4} + 0^{4} = 0$ です。</p>
+            
+            <p>次に、任意の $(x,y) \in \mathbb{R}^{2}$ について、$f(x,y) = x^{4} + y^{4}$ を考えます。$x^{4} \ge 0$、$y^{4} \ge 0$ であるため、</p>
+            
+            <div class="formula">
+                $$f(x,y) = x^{4} + y^{4} \ge 0$$
+            </div>
+            
+            <p>が成り立ちます。したがって、</p>
+            
+            <div class="formula">
+                $$f(0,0) = 0 \le f(x,y)$$
+            </div>
+            
+            <p>がすべての $(x,y) \in \mathbb{R}^{2}$ に対して成り立ちます。これは、$(0,0)$ の近傍で $f(x,y) \ge f(0,0)$ が成り立つことを意味します。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 極小の定義は、$(a,b)$ の近傍で $f(x,y) \ge f(a,b)$ が成り立つことです。ここでは、すべての $(x,y)$ に対して $f(x,y) \ge f(0,0) = 0$ が成り立つため、$(0,0)$ は極小です。
+            </div>
+            
+            <p>したがって、$(0,0)$ は極小で、極小値は $f(0,0) = 0$ です。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（4）関数 $f(x,y)=2x^{4}-3x^{2}y+y^{2}$ について</div>
+            <p>まず、1階偏導関数を計算します。$f(x,y) = 2x^{4} - 3x^{2}y + y^{2}$ について、$x$ に関する偏微分 $f_{x}(x,y)$ を計算します。$y$ を定数として $x$ で微分します。</p>
+            
+            <p>$2x^{4}$ を $x$ で偏微分すると $8x^{3}$ です。$-3x^{2}y$ を $x$ で偏微分すると $-6xy$ です。$y^{2}$ は $x$ を含まないため、$x$ で偏微分すると $0$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = 8x^{3} - 6xy$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$y$ に関する偏微分 $f_{y}(x,y)$ を計算します。$x$ を定数として $y$ で微分します。</p>
+            
+            <p>$2x^{4}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$-3x^{2}y$ を $y$ で偏微分すると $-3x^{2}$ です。$y^{2}$ を $y$ で偏微分すると $2y$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = -3x^{2} + 2y$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、停留点を求めます。停留点は $f_{x}(x,y) = 0$ かつ $f_{y}(x,y) = 0$ を満たす点です。したがって、連立方程式</p>
+            
+            <div class="formula">
+                $$\begin{cases} f_{x}(x,y) = 8x^{3} - 6xy = 0 \\ f_{y}(x,y) = -3x^{2} + 2y = 0 \end{cases}$$
+            </div>
+            
+            <p>を解きます。</p>
+            
+            <p>まず、$f_{y}(x,y) = 0$ より、</p>
+            
+            <div class="formula">
+                $$-3x^{2} + 2y = 0$$
+            </div>
+            
+            <p>となります。したがって、</p>
+            
+            <div class="formula">
+                $$2y = 3x^{2}$$
+            </div>
+            
+            <p>すなわち、</p>
+            
+            <div class="formula">
+                $$y = \frac{3}{2}x^{2}$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>次に、$f_{x}(x,y) = 0$ に $y = \frac{3}{2}x^{2}$ を代入します。したがって、</p>
+            
+            <div class="formula">
+                $$8x^{3} - 6x \cdot \frac{3}{2}x^{2} = 0$$
+            </div>
+            
+            <p>となります。計算すると、</p>
+            
+            <div class="formula">
+                $$8x^{3} - 6x \cdot \frac{3}{2}x^{2} = 8x^{3} - 9x^{3} = -x^{3} = 0$$
+            </div>
+            
+            <p>となります。ここで、$6 \cdot \frac{3}{2} = 9$、$x \cdot x^{2} = x^{3}$ であることを用いました。したがって、$x = 0$ です。</p>
+            
+            <p>$x = 0$ のとき、$y = \frac{3}{2} \cdot 0^{2} = 0$ です。</p>
+            
+            <p>したがって、極値候補（停留点）は、$(0,0)$ のみです。</p>
+            
+            <p>次に、2階偏導関数を計算します。まず、$f_{xx}(x,y)$ を計算します。$f_{x}(x,y) = 8x^{3} - 6xy$ を $x$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{xx}(x,y) = \frac{\partial}{\partial x}(8x^{3} - 6xy) = 24x^{2} - 6y$$
+            </div>
+            
+            <p>となります。ここで、$8x^{3}$ を $x$ で偏微分すると $24x^{2}$ です。$-6xy$ を $x$ で偏微分すると $-6y$ です。</p>
+            
+            <p>次に、$f_{yy}(x,y)$ を計算します。$f_{y}(x,y) = -3x^{2} + 2y$ を $y$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{yy}(x,y) = \frac{\partial}{\partial y}(-3x^{2} + 2y) = 0 + 2 = 2$$
+            </div>
+            
+            <p>となります。ここで、$-3x^{2}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$2y$ を $y$ で偏微分すると $2$ です。</p>
+            
+            <p>次に、$f_{xy}(x,y)$ を計算します。$f_{x}(x,y) = 8x^{3} - 6xy$ を $y$ で偏微分すると、</p>
+            
+            <div class="formula">
+                $$f_{xy}(x,y) = \frac{\partial}{\partial y}(8x^{3} - 6xy) = 0 - 6x = -6x$$
+            </div>
+            
+            <p>となります。ここで、$8x^{3}$ は $y$ を含まないため、$y$ で偏微分すると $0$ です。$-6xy$ を $y$ で偏微分すると $-6x$ です。</p>
+            
+            <p>次に、ヘッセ行列の判別式 $D$ を計算します。$f_{xx} = 24x^{2} - 6y$、$f_{yy} = 2$、$f_{xy} = -6x$ であるため、</p>
+            
+            <div class="formula">
+                $$D = (-6x)^{2} - (24x^{2} - 6y)(2) = 36x^{2} - 48x^{2} + 12y = -12x^{2} + 12y$$
+            </div>
+            
+            <p>となります。ここで、$(-6x)^{2} = 36x^{2}$、$(24x^{2} - 6y)(2) = 48x^{2} - 12y$ であることを用いました。したがって、$D = 36x^{2} - (48x^{2} - 12y) = 36x^{2} - 48x^{2} + 12y = -12x^{2} + 12y$ となります。</p>
+            
+            <p>停留点 $(0,0)$ での判別式の値を計算します。</p>
+            
+            <div class="formula">
+                $$D(0,0) = -12 \cdot 0^{2} + 12 \cdot 0 = 0 + 0 = 0$$
+            </div>
+            
+            <p>となります。判別式が $0$ であるため、判別式だけでは極値の判定ができません。極値の定義に基づいて調べます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 判別式が $0$ の場合は、判別式だけでは極値かどうかを判定できません。異なる経路で $(0,0)$ に近づけたときの関数値の変化を調べる必要があります。
+            </div>
+            
+            <p>まず、$f(0,0) = 2(0)^{4} - 3(0)^{2}(0) + (0)^{2} = 0$ です。</p>
+            
+            <p>次に、異なる経路で $(0,0)$ に近づけたときの関数値の変化を調べます。$y = mx^{2}$（$m$ は定数）という経路で $(0,0)$ に近づける場合を考えます。このとき、$y = mx^{2}$ を代入すると、</p>
+            
+            <div class="formula">
+                $$f(x,mx^{2}) = 2x^{4} - 3x^{2}(mx^{2}) + (mx^{2})^{2} = 2x^{4} - 3mx^{4} + m^{2}x^{4} = x^{4}(2 - 3m + m^{2})$$
+            </div>
+            
+            <p>となります。ここで、$-3x^{2}(mx^{2}) = -3mx^{4}$、$(mx^{2})^{2} = m^{2}x^{4}$ であることを用いました。</p>
+            
+            <p>$2 - 3m + m^{2}$ を因数分解すると、</p>
+            
+            <div class="formula">
+                $$2 - 3m + m^{2} = m^{2} - 3m + 2 = (m-1)(m-2)$$
+            </div>
+            
+            <p>となります。ここで、$m^{2} - 3m + 2 = (m-1)(m-2)$ という因数分解公式を用いました。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $m^{2} - 3m + 2$ の因数分解は、$m = 1$ のとき $1 - 3 + 2 = 0$、$m = 2$ のとき $4 - 6 + 2 = 0$ であることから、$(m-1)(m-2)$ と因数分解できます。
+            </div>
+            
+            <p>したがって、</p>
+            
+            <div class="formula">
+                $$f(x,mx^{2}) = x^{4}(m-1)(m-2)$$
+            </div>
+            
+            <p>となります。</p>
+            
+            <p>ここで、$m$ の値によって $f(x,mx^{2})$ の符号が異なることを確認します。</p>
+            
+            <p>例えば、$m = 3$ のとき、</p>
+            
+            <div class="formula">
+                $$f(x,3x^{2}) = x^{4}(3-1)(3-2) = x^{4} \cdot 2 \cdot 1 = 2x^{4} > 0 = f(0,0)$$
+            </div>
+            
+            <p>となります。ここで、$x \ne 0$ のとき $x^{4} > 0$ であるため、$f(x,3x^{2}) > 0 = f(0,0)$ です。</p>
+            
+            <p>また、$m = 0$ のとき、</p>
+            
+            <div class="formula">
+                $$f(x,0) = 2x^{4} - 3x^{2}(0) + 0^{2} = 2x^{4} > 0 = f(0,0)$$
+            </div>
+            
+            <p>となります。$x \ne 0$ のとき $x^{4} > 0$ であるため、$f(x,0) > 0 = f(0,0)$ です。</p>
+            
+            <p>一方、$m = \frac{3}{2}$ のとき、</p>
+            
+            <div class="formula">
+                $$f(x,\frac{3}{2}x^{2}) = x^{4}\left(\frac{3}{2}-1\right)\left(\frac{3}{2}-2\right) = x^{4} \cdot \frac{1}{2} \cdot \left(-\frac{1}{2}\right) = -\frac{1}{4}x^{4} < 0 = f(0,0)$$
+            </div>
+            
+            <p>となります。ここで、$\frac{3}{2} - 1 = \frac{1}{2}$、$\frac{3}{2} - 2 = -\frac{1}{2}$ であることを用いました。$x \ne 0$ のとき $x^{4} > 0$ であるため、$f(x,\frac{3}{2}x^{2}) < 0 = f(0,0)$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 極値の定義では、$(a,b)$ の近傍で $f(x,y) \ge f(a,b)$（極小）または $f(x,y) \le f(a,b)$（極大）が成り立つ必要があります。ここでは、$m = 3$ や $m = 0$ の経路では $f(x,mx^{2}) > f(0,0)$ となり、$m = \frac{3}{2}$ の経路では $f(x,mx^{2}) < f(0,0)$ となります。したがって、$(0,0)$ の近傍で、$f(0,0)$ より大きい値も小さい値も存在するため、$(0,0)$ は極値ではありません。
+            </div>
+            
+            <p>したがって、$(0,0)$ は極値ではありません。異なる経路で $(0,0)$ に近づけたとき、関数値が $f(0,0) = 0$ より大きくなる場合も小さくなる場合も存在するためです。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>計算した内容を検証します。</p>
+            
+            <p>まず、問題（2）の計算を確認します。$f(x,y) = x^{3} + y^{3} - 3xy$ について、$f_{x}(x,y) = 3x^{2} - 3y$、$f_{y}(x,y) = 3y^{2} - 3x$ は正しいです。停留点は $y = x^{2}$ と $x = y^{2}$ を同時に満たす点で、$x = x^{4}$ から $x = 0, 1$ が得られ、$(0,0)$、$(1,1)$ です。2階偏導関数について、$f_{xx} = 6x$、$f_{yy} = 6y$、$f_{xy} = -3$ も正しいです。判別式 $D = 9 - 36xy$ も正しく計算されています。$(0,0)$ では $D = 9 > 0$ であるため鞍点、$(1,1)$ では $D = -27 < 0$ かつ $f_{xx} = 6 > 0$ であるため極小で、$f(1,1) = -1$ です。すべての計算は正しいです。</p>
+            
+            <p>次に、問題（3）の計算を確認します。$f(x,y) = x^{4} + y^{4}$ について、$f_{x}(x,y) = 4x^{3}$、$f_{y}(x,y) = 4y^{3}$ は正しいです。停留点は $(0,0)$ のみです。2階偏導関数について、$f_{xx} = 12x^{2}$、$f_{yy} = 12y^{2}$、$f_{xy} = 0$ も正しいです。判別式 $D = -144x^{2}y^{2}$ も正しく計算されています。$D(0,0) = 0$ であるため、判別式だけでは判定できませんが、$f(x,y) = x^{4} + y^{4} \ge 0 = f(0,0)$ がすべての $(x,y)$ に対して成り立つため、$(0,0)$ は極小です。この計算は正しいです。</p>
+            
+            <p>問題（4）の計算を確認します。$f(x,y) = 2x^{4} - 3x^{2}y + y^{2}$ について、$f_{x}(x,y) = 8x^{3} - 6xy$、$f_{y}(x,y) = -3x^{2} + 2y$ は正しいです。停留点は $y = \frac{3}{2}x^{2}$ と $8x^{3} - 6x \cdot \frac{3}{2}x^{2} = -x^{3} = 0$ から $(0,0)$ のみです。2階偏導関数について、$f_{xx} = 24x^{2} - 6y$、$f_{yy} = 2$、$f_{xy} = -6x$ も正しいです。判別式 $D = -12x^{2} + 12y$ も正しく計算されています。$D(0,0) = 0$ であるため、判別式だけでは判定できませんが、$y = mx^{2}$ という経路で調べると、$m = 3$ や $m = 0$ のとき $f(x,mx^{2}) > 0 = f(0,0)$、$m = \frac{3}{2}$ のとき $f(x,mx^{2}) < 0 = f(0,0)$ となるため、$(0,0)$ は極値ではありません。この計算は正しいです。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（2）$f(x,y)=x^{3}+y^{3}-3xy$ について：</p>
+            <p>停留点は $(0,0)$、$(1,1)$ です。</p>
+            <p>$(0,0)$ は極値ではありません（鞍点）。判別式 $D(0,0) = 9 > 0$ であるためです。</p>
+            <p>$(1,1)$ は極小で、極小値は $f(1,1) = -1$ です。判別式 $D(1,1) = -27 < 0$ かつ $f_{xx}(1,1) = 6 > 0$ であるためです。</p>
+            
+            <p>（3）$f(x,y)=x^{4}+y^{4}$ について：</p>
+            <p>停留点は $(0,0)$ のみです。</p>
+            <p>$(0,0)$ は極小で、極小値は $f(0,0) = 0$ です。判別式 $D(0,0) = 0$ であるため判別式だけでは判定できませんが、すべての $(x,y) \in \mathbb{R}^{2}$ に対して $f(x,y) = x^{4} + y^{4} \ge 0 = f(0,0)$ が成り立つためです。</p>
+            
+            <p>（4）$f(x,y)=2x^{4}-3x^{2}y+y^{2}$ について：</p>
+            <p>停留点は $(0,0)$ のみです。</p>
+            <p>$(0,0)$ は極値ではありません。判別式 $D(0,0) = 0$ であるため判別式だけでは判定できませんが、$y = mx^{2}$ という経路で $(0,0)$ に近づけると、$m = 3$ や $m = 0$ のとき $f(x,mx^{2}) > 0 = f(0,0)$、$m = \frac{3}{2}$ のとき $f(x,mx^{2}) < 0 = f(0,0)$ となるためです。</p>
+        </div>
+    </div>
+</body>
+</html>

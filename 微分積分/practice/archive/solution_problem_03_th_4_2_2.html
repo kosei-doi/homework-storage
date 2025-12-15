@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 03 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 03 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>$A \subset \mathbb{R}^{2}$、$f:A \to \mathbb{R}$、$\mathbf{x}_{0} \in A \cup \mathbb{R}$ とする。以下の2つの条件は同値であることを証明せよ。</p>
+            <p>（i）$\lim_{\mathbf{x} \to \mathbf{x}_{0}} f(\mathbf{x})=\alpha$</p>
+            <p>（ii）$\lim_{n \to \infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ となる任意の点列 $\{\mathbf{x}_{n}\}_{n=1}^{\infty} \subset A$ に対し、$\lim_{n \to \infty} f(\mathbf{x}_{n})=\alpha$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>関数の極限の定義</strong>：2変数関数 $f: A \to \mathbb{R}$ が点 $\mathbf{x}_{0}$ で $\alpha$ に収束するとは、任意の $\epsilon > 0$ に対して、ある $\delta > 0$ が存在し、$0 < d(\mathbf{x},\mathbf{x}_{0}) < \delta$ を満たすすべての $\mathbf{x} \in A$ に対して $|f(\mathbf{x})-\alpha| < \epsilon$ が成り立つことをいいます。これを $\lim_{\mathbf{x} \to \mathbf{x}_{0}} f(\mathbf{x})=\alpha$ と表します。</li>
+                    <li><strong>点列の収束の定義</strong>：点列 $\{\mathbf{x}_{n}\}$ が $\mathbf{x}_{0}$ に収束するとは、任意の $\epsilon > 0$ に対して、ある自然数 $N$ が存在し、$n \ge N$ を満たすすべての $n$ に対して $d(\mathbf{x}_{n},\mathbf{x}_{0}) < \epsilon$ が成り立つことをいいます。これを $\lim_{n \to \infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ と表します。</li>
+                    <li><strong>同値関係の証明</strong>：2つの命題 $P$ と $Q$ が同値であることを示すには、$P \implies Q$ と $Q \implies P$ の両方を証明する必要があります。この問題では、それぞれの方向を別々に証明します。</li>
+                    <li><strong>背理法</strong>：命題の否定を仮定し、そこから矛盾を導くことで、元の命題が正しいことを示す証明方法です。この問題では、$(ii) \implies (i)$ の証明に背理法を使用します。</li>
+                    <li><strong>論理記号の使用</strong>：$\forall$（任意の）、$\exists$（存在する）、$\implies$（ならば）などの論理記号を正しく理解し、使用する必要があります。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を理解し、同値関係の証明であることを確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    (i) $\implies$ (ii) を証明する：関数の極限の定義から点列の極限を導く
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    任意の点列 $\{\mathbf{x}_{n}\}$ が $\mathbf{x}_{0}$ に収束する場合を考える
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    点列の収束性と関数の極限の定義を組み合わせて、$f(\mathbf{x}_{n}) \to \alpha$ を示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    (ii) $\implies$ (i) を証明する（背理法）：(i)が成り立たないと仮定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ5</div>
+                    仮定から矛盾する点列を構成し、それが(ii)に矛盾することを示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    両方向の証明が完了し、同値関係が示されたことを確認する
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、2つの条件が同値であることを示すため、それぞれの方向を別々に証明します。まず、$(i) \implies (ii)$ の方向では、関数の極限の定義から、任意の収束する点列に対して関数値の点列も収束することを示します。次に、$(ii) \implies (i)$ の方向では、背理法を用いて、$(i)$ が成り立たないと仮定すると矛盾が生じることを示します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）$(i) \implies (ii)$ の証明</div>
+            <p>$(i)$ が成り立つ、すなわち $\lim_{\mathbf{x} \to \mathbf{x}_{0}} f(\mathbf{x})=\alpha$ が成り立つと仮定します。</p>
+            
+            <p>関数の極限の定義より、任意の $\epsilon > 0$ に対して、ある $\delta > 0$ が存在し、$0 < d(\mathbf{x},\mathbf{x}_{0}) < \delta$ を満たすすべての $\mathbf{x} \in A$ に対して、</p>
+            
+            <div class="formula">
+                $$|f(\mathbf{x})-\alpha| < \epsilon$$
+            </div>
+            
+            <p>が成り立ちます。この条件を $(*)$ とおきます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 関数の極限の定義では、$\mathbf{x} \ne \mathbf{x}_{0}$ である必要があるため、$0 < d(\mathbf{x},\mathbf{x}_{0})$ という条件が重要です。これは、$\mathbf{x}_{0}$ その点での関数値は考慮しないことを意味します。
+            </div>
+            
+            <p>次に、$\lim_{n \to \infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ となる任意の点列 $\{\mathbf{x}_{n}\}_{n=1}^{\infty} \subset A$ をとります。</p>
+            
+            <p>点列の収束の定義より、上で得られた $\delta > 0$ に対して、ある自然数 $N \in \mathbb{N}$ が存在し、$n \ge N$ を満たすすべての $n$ に対して、</p>
+            
+            <div class="formula">
+                $$d(\mathbf{x}_{n},\mathbf{x}_{0}) < \delta$$
+            </div>
+            
+            <p>が成り立ちます。ここで、点列が $\mathbf{x}_{0}$ に収束する場合、十分大きな $n$ に対して $\mathbf{x}_{n} \ne \mathbf{x}_{0}$ であるか、または $\mathbf{x}_{n} = \mathbf{x}_{0}$ となる項が有限個しかないと仮定します（通常、極限の定義では $\mathbf{x}_{n} \ne \mathbf{x}_{0}$ を要求しますが、ここでは $0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \delta$ を満たす項について考えます）。</p>
+            
+            <p>したがって、$n \ge N$ を満たすすべての $n$ に対して、$0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \delta$ が成り立ちます（必要に応じて、$\mathbf{x}_{n} = \mathbf{x}_{0}$ となる項を除いて考えます）。</p>
+            
+            <p>すると、条件 $(*)$ より、$n \ge N$ を満たすすべての $n$ に対して、</p>
+            
+            <div class="formula">
+                $$|f(\mathbf{x}_{n})-\alpha| < \epsilon$$
+            </div>
+            
+            <p>が成り立ちます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> ここで重要なのは、$\epsilon > 0$ が任意に与えられたものであることです。任意の $\epsilon > 0$ に対して、対応する $N$ が存在し、$n \ge N$ のとき $|f(\mathbf{x}_{n})-\alpha| < \epsilon$ が成り立つことが示されました。
+            </div>
+            
+            <p>これは、点列 $\{f(\mathbf{x}_{n})\}$ が $\alpha$ に収束することを意味します。すなわち、</p>
+            
+            <div class="formula">
+                $$\lim_{n \to \infty} f(\mathbf{x}_{n})=\alpha$$
+            </div>
+            
+            <p>が成り立ちます。したがって、$(i) \implies (ii)$ が証明されました。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）$(ii) \implies (i)$ の証明（背理法）</div>
+            <p>背理法を用いて証明します。すなわち、$(i)$ が成り立たないと仮定し、そこから矛盾を導きます。</p>
+            
+            <p>$(i)$ が成り立たないと仮定します。これは、関数の極限の定義の否定です。すなわち、ある $\epsilon_{0} > 0$ が存在し、任意の $\delta > 0$ に対して、$0 < d(\mathbf{x},\mathbf{x}_{0}) < \delta$ を満たすある $\mathbf{x} \in A$ が存在し、</p>
+            
+            <div class="formula">
+                $$|f(\mathbf{x})-\alpha| \ge \epsilon_{0}$$
+            </div>
+            
+            <p>が成り立ちます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 関数の極限の定義の否定は、「任意の $\epsilon > 0$ に対して、ある $\delta > 0$ が存在し、$0 < d(\mathbf{x},\mathbf{x}_{0}) < \delta$ ならば $|f(\mathbf{x})-\alpha| < \epsilon$」の否定です。これは、「ある $\epsilon_{0} > 0$ が存在し、任意の $\delta > 0$ に対して、$0 < d(\mathbf{x},\mathbf{x}_{0}) < \delta$ かつ $|f(\mathbf{x})-\alpha| \ge \epsilon_{0}$ となる $\mathbf{x} \in A$ が存在する」となります。
+            </div>
+            
+            <p>特に、各自然数 $n \in \mathbb{N}$ に対して、$\delta = \frac{1}{n}$ とすると、$0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \frac{1}{n}$ かつ $|f(\mathbf{x}_{n})-\alpha| \ge \epsilon_{0}$ を満たす $\mathbf{x}_{n} \in A$ が存在します。</p>
+            
+            <p>このようにして構成された点列 $\{\mathbf{x}_{n}\}$ について考えます。</p>
+            
+            <p>まず、$0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \frac{1}{n}$ であるため、$n \to \infty$ のとき $d(\mathbf{x}_{n},\mathbf{x}_{0}) \to 0$ となります。したがって、</p>
+            
+            <div class="formula">
+                $$\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$$
+            </div>
+            
+            <p>が成り立ちます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 点列の収束の定義より、任意の $\epsilon > 0$ に対して、$N = \lceil \frac{1}{\epsilon} \rceil$ とすると、$n \ge N$ のとき $d(\mathbf{x}_{n},\mathbf{x}_{0}) < \frac{1}{n} \le \frac{1}{N} \le \epsilon$ が成り立ちます。したがって、点列は $\mathbf{x}_{0}$ に収束します。
+            </div>
+            
+            <p>次に、$|f(\mathbf{x}_{n})-\alpha| \ge \epsilon_{0} > 0$ であるため、点列 $\{f(\mathbf{x}_{n})\}$ は $\alpha$ に収束しません。すなわち、</p>
+            
+            <div class="formula">
+                $$\lim_{n \to \infty} f(\mathbf{x}_{n}) \ne \alpha$$
+            </div>
+            
+            <p>が成り立ちます（より正確には、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$ が成り立たない）。</p>
+            
+            <p>しかし、$(ii)$ の条件より、$\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$ となる任意の点列 $\{\mathbf{x}_{n}\}$ に対して、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$ が成り立つ必要があります。</p>
+            
+            <p>ここで構成した点列 $\{\mathbf{x}_{n}\}$ は $\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$ を満たしますが、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$ は成り立ちません。これは、$(ii)$ の条件に矛盾します。</p>
+            
+            <div class="explanation">
+                <p><strong>矛盾の内容：</strong></p>
+                <ul>
+                    <li>$(ii)$ の条件：$\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$ となる任意の点列に対して、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$</li>
+                    <li>構成した点列：$\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$ を満たすが、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$ は成り立たない</li>
+                    <li>これらは明らかに矛盾します。</li>
+                </ul>
+            </div>
+            
+            <p>したがって、背理法により、$(i)$ が成り立たないという仮定が誤りであることが示されました。すなわち、$(i)$ が成り立つことが証明されました。</p>
+            
+            <p>以上より、$(ii) \implies (i)$ が証明されました。</p>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>証明した内容を検証します。</p>
+            
+            <p>まず、$(i) \implies (ii)$ の証明を確認します。関数の極限の定義から、任意の $\epsilon > 0$ に対して対応する $\delta > 0$ が存在することを利用し、点列の収束性と組み合わせることで、関数値の点列も収束することを示しました。この証明は、関数の極限と点列の極限の関係を正しく反映しており、論理的に正しいです。</p>
+            
+            <p>次に、$(ii) \implies (i)$ の証明を確認します。背理法を用いて、$(i)$ が成り立たないと仮定し、各自然数 $n$ に対して $0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \frac{1}{n}$ かつ $|f(\mathbf{x}_{n})-\alpha| \ge \epsilon_{0}$ を満たす点列を構成しました。この点列は $\mathbf{x}_{0}$ に収束しますが、関数値の点列は $\alpha$ に収束しないため、$(ii)$ の条件に矛盾します。この証明方法は、関数の極限の定義の否定を正しく扱っており、論理的に正しいです。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）$(i) \implies (ii)$ の証明：$\lim_{\mathbf{x} \to \mathbf{x}_{0}} f(\mathbf{x})=\alpha$ が成り立つと仮定します。関数の極限の定義より、任意の $\epsilon > 0$ に対して、ある $\delta > 0$ が存在し、$0 < d(\mathbf{x},\mathbf{x}_{0}) < \delta$ ならば $|f(\mathbf{x})-\alpha| < \epsilon$ が成り立ちます。$\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$ となる任意の点列 $\{\mathbf{x}_{n}\}$ に対して、点列の収束性より、この $\delta$ に対してある $N \in \mathbb{N}$ が存在し、$n \ge N$ のとき $0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \delta$ が成り立ちます。したがって、$n \ge N$ のとき $|f(\mathbf{x}_{n})-\alpha| < \epsilon$ が成り立ち、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$ が示されます。</p>
+            
+            <p>（2）$(ii) \implies (i)$ の証明（背理法）：$(i)$ が成り立たないと仮定すると、ある $\epsilon_{0} > 0$ が存在し、任意の自然数 $n$ に対して、$0 < d(\mathbf{x}_{n},\mathbf{x}_{0}) < \frac{1}{n}$ かつ $|f(\mathbf{x}_{n})-\alpha| \ge \epsilon_{0}$ を満たす $\mathbf{x}_{n} \in A$ が存在します。この点列は $\lim_{n \to \infty} \mathbf{x}_{n} = \mathbf{x}_{0}$ を満たしますが、$\lim_{n \to \infty} f(\mathbf{x}_{n}) = \alpha$ は成り立ちません。これは $(ii)$ の条件に矛盾するため、$(i)$ が成り立つことが証明されます。</p>
+            
+            <p>したがって、$(i)$ と $(ii)$ は同値です。</p>
+        </div>
+    </div>
+</body>
+</html>

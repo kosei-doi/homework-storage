@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線形代数 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>線形代数 問１２（２）解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の対称行列を直交行列によって対角化します。</p>
+            <div class="formula">
+                $$A = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}$$
+            </div>
+            <p>ここで $A$ は $2 \times 2$ の実対称行列です。この行列を直交行列 $P$ を用いて $^tPAP$ が対角行列となるように対角化します。</p>
+        </div>
+
+        <h2>【解答】</h2>
+
+        <div class="step">
+            <div class="step-title">（1）固有値を求めます。</div>
+            <p>まず、行列 $A$ の固有値を求めるために特性方程式 $\det(A - \lambda I) = 0$ を解きます。</p>
+            <div class="formula">
+                $$A - \lambda I = \begin{pmatrix}
+                9 - \lambda & -2 \\
+                -2 & 6 - \lambda
+                \end{pmatrix}$$
+            </div>
+            <p>この行列の行列式を計算して特性方程式を立てます。</p>
+            <div class="calculation">
+                $$\det(A - \lambda I) = (9 - \lambda)(6 - \lambda) - (-2)(-2)$$
+                $$= (9 - \lambda)(6 - \lambda) - 4$$
+                $$= 54 - 9\lambda - 6\lambda + \lambda^2 - 4$$
+                $$= \lambda^2 - 15\lambda + 50$$
+            </div>
+            <p>したがって、特性方程式は次のようになります。</p>
+            <div class="formula">
+                $$\lambda^2 - 15\lambda + 50 = 0$$
+            </div>
+            <p>この二次方程式を因数分解します。</p>
+            <div class="calculation">
+                $$\lambda^2 - 15\lambda + 50 = (\lambda - 5)(\lambda - 10) = 0$$
+            </div>
+            <p>よって、固有値は $\lambda_1 = 5$、$\lambda_2 = 10$ となります。これらはどちらも実数で、互いに異なるので、対応する固有ベクトルは直交するはずだとわかります。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）各固有値に対応する固有ベクトルを求めます。</div>
+            <p>次に、固有値ごとに対応する固有ベクトルを求めます。まず $\lambda_1 = 5$ に対する固有ベクトルを求めます。</p>
+            <div class="formula">
+                $$(A - 5I)\boldsymbol{v}_1 = \boldsymbol{0}$$
+            </div>
+            <p>行列 $A - 5I$ を具体的に計算します。</p>
+            <div class="calculation">
+                $$A - 5I = \begin{pmatrix}
+                9 - 5 & -2 \\
+                -2 & 6 - 5
+                \end{pmatrix} = \begin{pmatrix}
+                4 & -2 \\
+                -2 & 1
+                \end{pmatrix}$$
+            </div>
+            <p>これに未知ベクトル $\boldsymbol{v}_1 = \begin{pmatrix} x \\ y \end{pmatrix}$ を掛けて、連立一次方程式に直します。</p>
+            <div class="calculation">
+                $$\begin{pmatrix}
+                4 & -2 \\
+                -2 & 1
+                \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+                $$\Rightarrow \begin{cases}
+                4x - 2y = 0 \\\
+                -2x + y = 0
+                \end{cases}$$
+            </div>
+            <p>第1式から $4x - 2y = 0$ より $y = 2x$ が得られます。第2式 $-2x + y = 0$ も同じ関係 $y = 2x$ を与えるので、方程式は整合的であることがわかります。</p>
+            <p>パラメータとして $x = 1$ とおくと $y = 2$ となるので、固有値 $5$ に対応する固有ベクトルとして</p>
+            <div class="formula">
+                $$\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$$
+            </div>
+            <p>をとることができます（定数倍は自由なので、簡単な整数比のベクトルを選びます）。</p>
+            <p>次に、$\lambda_2 = 10$ に対応する固有ベクトルを求めます。</p>
+            <div class="formula">
+                $$(A - 10I)\boldsymbol{v}_2 = \boldsymbol{0}$$
+            </div>
+            <p>同様に $A - 10I$ を計算します。</p>
+            <div class="calculation">
+                $$A - 10I = \begin{pmatrix}
+                9 - 10 & -2 \\
+                -2 & 6 - 10
+                \end{pmatrix} = \begin{pmatrix}
+                -1 & -2 \\
+                -2 & -4
+                \end{pmatrix}$$
+            </div>
+            <p>これより次の連立一次方程式を得ます。</p>
+            <div class="calculation">
+                $$\begin{pmatrix}
+                -1 & -2 \\
+                -2 & -4
+                \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+                $$\Rightarrow \begin{cases}
+                -x - 2y = 0 \\\
+                -2x - 4y = 0
+                \end{cases}$$
+            </div>
+            <p>第1式 $-x - 2y = 0$ より $x = -2y$ が得られます。第2式は第1式の2倍なので、新しい情報は与えません。</p>
+            <p>ここで $y = 1$ とおくと $x = -2$ となり、固有値 $10$ に対応する固有ベクトルとして</p>
+            <div class="formula">
+                $$\boldsymbol{v}_2 = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$$
+            </div>
+            <p>をとることができます。</p>
+            <div class="note">
+                固有ベクトル $\boldsymbol{v}_1$ と $\boldsymbol{v}_2$ の内積を計算すると、$\boldsymbol{v}_1 \cdot \boldsymbol{v}_2 = 1 \cdot (-2) + 2 \cdot 1 = 0$ となります。これは、異なる固有値に属する固有ベクトルが直交するという、対称行列に関する定理の具体例になっています。</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）固有ベクトルを正規直交基底にして直交行列を構成します。</div>
+            <p>次に、得られた固有ベクトルを長さ1に正規化して、正規直交基底を作ります。この基底を列に並べた行列が直交行列になります。</p>
+            <p>まず $\boldsymbol{v}_1 = \begin{pmatrix} 1 \\ 2 \end{pmatrix}$ の長さを求めます。</p>
+            <div class="calculation">
+                $$\lVert \boldsymbol{v}_1 \rVert = \sqrt{1^2 + 2^2} = \sqrt{5}$$
+            </div>
+            <p>したがって、$\boldsymbol{v}_1$ を正規化したベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_1 = \frac{1}{\sqrt{5}}\begin{pmatrix} 1 \\ 2 \end{pmatrix} = \begin{pmatrix} \dfrac{1}{\sqrt{5}} \\ \dfrac{2}{\sqrt{5}} \end{pmatrix}$$
+            </div>
+            <p>同様に $\boldsymbol{v}_2 = \begin{pmatrix} -2 \\ 1 \end{pmatrix}$ の長さを求めます。</p>
+            <div class="calculation">
+                $$\lVert \boldsymbol{v}_2 \rVert = \sqrt{(-2)^2 + 1^2} = \sqrt{4 + 1} = \sqrt{5}$$
+            </div>
+            <p>したがって、$\boldsymbol{v}_2$ を正規化したベクトルは次のようになります。</p>
+            <div class="formula">
+                $$\boldsymbol{q}_2 = \frac{1}{\sqrt{5}}\begin{pmatrix} -2 \\ 1 \end{pmatrix} = \begin{pmatrix} -\dfrac{2}{\sqrt{5}} \\ \dfrac{1}{\sqrt{5}} \end{pmatrix}$$
+            </div>
+            <p>この2つの正規直交ベクトルを列に並べた行列が直交行列 $P$ になります。</p>
+            <div class="formula">
+                $$P = \begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & -\dfrac{2}{\sqrt{5}} \\
+                \dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            <div class="explanation">
+                行列 $P$ の列ベクトルはともに長さ1で互いに直交しているので、$P$ は正規直交基底を与える直交行列になっています。したがって $^tP = P^{-1}$ が成り立ち、$^tPAP$ が対角行列になることが期待できます。</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）直交行列による対角化を確認します。</div>
+            <p>最後に、直交行列 $P$ を用いて $^tPAP$ を計算し、本当に対角行列になるか確認します。</p>
+            <p>まず、$P$ の転置行列 $^tP$ は次のようになります。</p>
+            <div class="formula">
+                $${}^tP = \begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & \dfrac{2}{\sqrt{5}} \\
+                -\dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            <p>対角化の式 $^tPAP = D$ を成分で確かめるために、まず $AP$ を計算し、そのあとで $^tP(AP)$ を計算します。</p>
+            <div class="calculation">
+                $$AP = A\begin{pmatrix}
+                \boldsymbol{q}_1 & \boldsymbol{q}_2
+                \end{pmatrix} = \begin{pmatrix}
+                A\boldsymbol{q}_1 & A\boldsymbol{q}_2
+                \end{pmatrix}$$
+            </div>
+            <p>$A\boldsymbol{q}_1$ は固有値 $5$ に対応するので $A\boldsymbol{q}_1 = 5\boldsymbol{q}_1$ が成り立ちます。同様に $A\boldsymbol{q}_2 = 10\boldsymbol{q}_2$ が成り立つことを順に確かめます。</p>
+            <div class="calculation">
+                $$A\boldsymbol{q}_1 = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} \\
+                \dfrac{2}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \dfrac{9 - 4}{\sqrt{5}} \\
+                \dfrac{-2 + 12}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \dfrac{5}{\sqrt{5}} \\
+                \dfrac{10}{\sqrt{5}}
+                \end{pmatrix} = 5\begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} \\
+                \dfrac{2}{\sqrt{5}}
+                \end{pmatrix} = 5\boldsymbol{q}_1$$
+            </div>
+            <p>同様に $\boldsymbol{q}_2$ についても計算します。</p>
+            <div class="calculation">
+                $$A\boldsymbol{q}_2 = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix}\begin{pmatrix}
+                -\dfrac{2}{\sqrt{5}} \\
+                \dfrac{1}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                \dfrac{-18 - 2}{\sqrt{5}} \\
+                \dfrac{4 + 6}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                -\dfrac{20}{\sqrt{5}} \\
+                \dfrac{10}{\sqrt{5}}
+                \end{pmatrix} = 10\begin{pmatrix}
+                -\dfrac{2}{\sqrt{5}} \\
+                \dfrac{1}{\sqrt{5}}
+                \end{pmatrix} = 10\boldsymbol{q}_2$$
+            </div>
+            <p>これより、$AP$ は次のように書けます。</p>
+            <div class="formula">
+                $$AP = \begin{pmatrix}
+                5\boldsymbol{q}_1 & 10\boldsymbol{q}_2
+                \end{pmatrix}$$
+            </div>
+            <p>次に $^tP(AP)$ を計算すると、対角行列が得られることがわかります。</p>
+            <div class="calculation">
+                $${}^tPAP = {}^tP(AP) = \begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & \dfrac{2}{\sqrt{5}} \\
+                -\dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                \dfrac{5}{\sqrt{5}} & -\dfrac{20}{\sqrt{5}} \\
+                \dfrac{10}{\sqrt{5}} & \dfrac{10}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            <p>各成分を具体的に計算します。</p>
+            <div class="calculation">
+                $(1,1)$成分: $\dfrac{1}{\sqrt{5}} \cdot \dfrac{5}{\sqrt{5}} + \dfrac{2}{\sqrt{5}} \cdot \dfrac{10}{\sqrt{5}} = \dfrac{5 + 20}{5} = 5$\\
+                $(1,2)$成分: $\dfrac{1}{\sqrt{5}} \cdot \left(-\dfrac{20}{\sqrt{5}}\right) + \dfrac{2}{\sqrt{5}} \cdot \dfrac{10}{\sqrt{5}} = \dfrac{-20 + 20}{5} = 0$\\
+                $(2,1)$成分: $-\dfrac{2}{\sqrt{5}} \cdot \dfrac{5}{\sqrt{5}} + \dfrac{1}{\sqrt{5}} \cdot \dfrac{10}{\sqrt{5}} = \dfrac{-10 + 10}{5} = 0$\\
+                $(2,2)$成分: $-\dfrac{2}{\sqrt{5}} \cdot \left(-\dfrac{20}{\sqrt{5}}\right) + \dfrac{1}{\sqrt{5}} \cdot \dfrac{10}{\sqrt{5}} = \dfrac{40 + 10}{5} = 10$
+            </div>
+            <p>したがって、次のように対角行列が得られます。</p>
+            <div class="formula">
+                $${}^tPAP = \begin{pmatrix}
+                5 & 0 \\
+                0 & 10
+                \end{pmatrix} = D$$
+            </div>
+            <p>この対角行列 $D$ の対角成分 $5, 10$ は、最初に求めた固有値に対応しており、直交行列 $P$ によって $A$ が対角化されていることが確認できます。</p>
+            <div class="answer-box">
+                <div class="answer-title">【答え】</div>
+                <p>直交行列</p>
+                <div class="formula">
+                    $$P = \begin{pmatrix}
+                    \dfrac{1}{\sqrt{5}} & -\dfrac{2}{\sqrt{5}} \\
+                    \dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                    \end{pmatrix}$$
+                </div>
+                <p>によって、</p>
+                <div class="formula">
+                    $${}^tPAP = \begin{pmatrix}
+                    5 & 0 \\
+                    0 & 10
+                    \end{pmatrix}$$
+                </div>
+                <p>と対角化されます。</p>
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>最後に、求めた直交行列 $P$ と対角行列 $D$ が正しく $A$ を対角化していることを、いくつかの観点から確認します。</p>
+            <p>まず、$P$ が本当に直交行列であることを確認するために、$^tPP = I$ が成り立つかどうかを調べます。計算すると次のようになります。</p>
+            <div class="calculation">
+                $${}^tPP = \begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & \dfrac{2}{\sqrt{5}} \\
+                -\dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & -\dfrac{2}{\sqrt{5}} \\
+                \dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix} = \begin{pmatrix}
+                1 & 0 \\
+                0 & 1
+                \end{pmatrix} = I$$
+            </div>
+            <p>この計算により、$P$ の列ベクトルが正規直交基底をなしているので、$P$ は確かに直交行列であることがわかります。</p>
+            <p>次に、対角化の等式 $A = PD{}^tP$ が成り立つかどうかを確認します。まず $PD$ を計算します。</p>
+            <div class="calculation">
+                $$PD = \begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & -\dfrac{2}{\sqrt{5}} \\
+                \dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                5 & 0 \\
+                0 & 10
+                \end{pmatrix} = \begin{pmatrix}
+                \dfrac{5}{\sqrt{5}} & -\dfrac{20}{\sqrt{5}} \\
+                \dfrac{10}{\sqrt{5}} & \dfrac{10}{\sqrt{5}}
+                \end{pmatrix}$$
+            </div>
+            <p>次に $(PD){}^tP$ を計算します。</p>
+            <div class="calculation">
+                $$(PD){}^tP = \begin{pmatrix}
+                \dfrac{5}{\sqrt{5}} & -\dfrac{20}{\sqrt{5}} \\
+                \dfrac{10}{\sqrt{5}} & \dfrac{10}{\sqrt{5}}
+                \end{pmatrix}\begin{pmatrix}
+                \dfrac{1}{\sqrt{5}} & \dfrac{2}{\sqrt{5}} \\
+                -\dfrac{2}{\sqrt{5}} & \dfrac{1}{\sqrt{5}}
+                \end{pmatrix}$$
+                $$= \begin{pmatrix}
+                \dfrac{5 \cdot 1 + (-20) \cdot (-2)}{5} & \dfrac{5 \cdot 2 + (-20) \cdot 1}{5} \\
+                \dfrac{10 \cdot 1 + 10 \cdot (-2)}{5} & \dfrac{10 \cdot 2 + 10 \cdot 1}{5}
+                \end{pmatrix} = \begin{pmatrix}
+                \dfrac{5 + 40}{5} & \dfrac{10 - 20}{5} \\
+                \dfrac{10 - 20}{5} & \dfrac{20 + 10}{5}
+                \end{pmatrix} = \begin{pmatrix}
+                9 & -2 \\
+                -2 & 6
+                \end{pmatrix} = A$$
+            </div>
+            <p>この計算により、$PD{}^tP = A$ が成り立つことが確認できました。したがって、$A$ は直交行列 $P$ によって正しく対角化されていると言えます。</p>
+            <p>さらに、対称行列は必ず直交行列で対角化できるという定理と、異なる固有値に属する固有ベクトルが直交するという性質も、この具体例で確認できました。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+    </div>
+</body>
+</html>

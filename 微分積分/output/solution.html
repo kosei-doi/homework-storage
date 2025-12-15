@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 問6 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 問6 解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>$(x,y) \to (t,s) = (2x+y, x-y) \to f(t(x,y),s(x,y))$ （$f$ は微分可能）とする。</p>
+            <p>(1) $f_x$, $f_y$ を $f_t$、$f_s$ で表せ。</p>
+            <p>(2) $f_t$, $f_s$ を $f_x$、$f_y$ で表せ。</p>
+        </div>
+
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>連鎖律（チェインルール）</strong>：多変数関数の合成関数を微分する際に使用する公式です。$f(t(x,y), s(x,y))$ のような合成関数において、$\frac{\partial f}{\partial x} = \frac{\partial f}{\partial t} \frac{\partial t}{\partial x} + \frac{\partial f}{\partial s} \frac{\partial s}{\partial x}$ の形で表されます。これは、$f$ の変化が $t$ 方向と $s$ 方向の変化の和として表されることを意味します。</li>
+                    <li><strong>変数変換</strong>：問題では、$(x,y) \to (t,s) = (2x+y, x-y)$ という変数変換が与えられています。この変換により、$t$ と $s$ は $x$ と $y$ の関数として表されます。逆に、$x$ と $y$ を $t$ と $s$ の関数として表すこともできます。</li>
+                    <li><strong>偏導関数の計算</strong>：変数変換 $t = 2x + y$、$s = x - y$ において、$t$ と $s$ を $x$ や $y$ で偏微分することで、$\frac{\partial t}{\partial x}$、$\frac{\partial t}{\partial y}$、$\frac{\partial s}{\partial x}$、$\frac{\partial s}{\partial y}$ を求めます。</li>
+                    <li><strong>逆変換</strong>：$(x,y)$ を $(t,s)$ で表すためには、連立方程式 $t = 2x + y$、$s = x - y$ を解く必要があります。これにより、$x$ と $y$ を $t$ と $s$ の関数として表すことができ、$\frac{\partial x}{\partial t}$、$\frac{\partial x}{\partial s}$、$\frac{\partial y}{\partial t}$、$\frac{\partial y}{\partial s}$ を計算できます。</li>
+                </ul>
+            </div>
+
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を読み、求める内容を理解する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">(1) ステップ1</div>
+                    変数変換 $t = 2x + y$、$s = x - y$ の偏導関数を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">(1) ステップ2</div>
+                    連鎖律を用いて $f_x$、$f_y$ を $f_t$、$f_s$ で表す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">(2) ステップ1</div>
+                    連立方程式 $t = 2x + y$、$s = x - y$ を解いて逆変換を求める
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">(2) ステップ2</div>
+                    逆変換の偏導関数を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">(2) ステップ3</div>
+                    連鎖律を用いて $f_t$、$f_s$ を $f_x$、$f_y$ で表す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    結果をまとめる
+                </div>
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+        <p>この問題では、変数変換 $(x,y) \to (t,s) = (2x+y, x-y)$ における偏導関数の関係を、連鎖律を用いて求めます。まず、(1)では $f_x$、$f_y$ を $f_t$、$f_s$ で表すため、変数変換の偏導関数を計算して連鎖律を適用します。次に、(2)では逆変換を求めて、同様に連鎖律を適用して $f_t$、$f_s$ を $f_x$、$f_y$ で表します。</p>
+
+        <div class="step">
+            <div class="step-title">(1) $f_x$、$f_y$ を $f_t$、$f_s$ で表す</div>
+            
+            <p>変数変換は $t = 2x + y$、$s = x - y$ です。まず、$t$ と $s$ の偏導関数を計算します。</p>
+
+            <p>$t = 2x + y$ を $x$ で偏微分すると、$y$ を定数として扱うため、$\frac{\partial t}{\partial x} = 2$ となります。同様に、$t$ を $y$ で偏微分すると、$x$ を定数として扱うため、$\frac{\partial t}{\partial y} = 1$ となります。</p>
+
+            <p>$s = x - y$ を $x$ で偏微分すると、$y$ を定数として扱うため、$\frac{\partial s}{\partial x} = 1$ となります。同様に、$s$ を $y$ で偏微分すると、$x$ を定数として扱うため、$\frac{\partial s}{\partial y} = -1$ となります。</p>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$\frac{\partial t}{\partial x} = 2, \quad \frac{\partial t}{\partial y} = 1, \quad \frac{\partial s}{\partial x} = 1, \quad \frac{\partial s}{\partial y} = -1$$
+            </div>
+
+            <p>次に、連鎖律を適用します。$f(t(x,y), s(x,y))$ を $x$ で偏微分するとき、連鎖律により、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial x} = \frac{\partial f}{\partial t} \frac{\partial t}{\partial x} + \frac{\partial f}{\partial s} \frac{\partial s}{\partial x}$$
+            </div>
+
+            <p>となります。計算した偏導関数を代入すると、</p>
+
+            <div class="calculation">
+                $$\frac{\partial f}{\partial x} = f_t \cdot 2 + f_s \cdot 1 = 2f_t + f_s$$
+            </div>
+
+            <p>同様に、$f(t(x,y), s(x,y))$ を $y$ で偏微分するとき、連鎖律により、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial y} = \frac{\partial f}{\partial t} \frac{\partial t}{\partial y} + \frac{\partial f}{\partial s} \frac{\partial s}{\partial y}$$
+            </div>
+
+            <p>となります。計算した偏導関数を代入すると、</p>
+
+            <div class="calculation">
+                $$\frac{\partial f}{\partial y} = f_t \cdot 1 + f_s \cdot (-1) = f_t - f_s$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$f_x = 2f_t + f_s, \quad f_y = f_t - f_s$$
+            </div>
+
+            <p>となります。</p>
+
+            <div class="note">
+                連鎖律は、多変数関数の合成関数を微分する際の基本公式です。$f(t(x,y), s(x,y))$ を $x$ で偏微分する場合、$f$ の変化は $t$ 方向の変化と $s$ 方向の変化の和として表されます。各方向の変化は、その方向への偏導関数と、その方向が $x$ に依存する度合い（偏導関数）の積として表されます。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">(2) $f_t$、$f_s$ を $f_x$、$f_y$ で表す</div>
+            
+            <p>まず、逆変換を求めます。すなわち、$(x,y)$ を $(t,s)$ で表します。</p>
+
+            <p>変数変換 $t = 2x + y$、$s = x - y$ から、連立方程式を解きます。</p>
+
+            <p>第1式と第2式を足すと、</p>
+
+            <div class="calculation">
+                $$t + s = (2x + y) + (x - y) = 3x$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="calculation">
+                $$x = \frac{t + s}{3} = \frac{1}{3}t + \frac{1}{3}s$$
+            </div>
+
+            <p>次に、第1式から第2式の2倍を引くと、</p>
+
+            <div class="calculation">
+                $$t - 2s = (2x + y) - 2(x - y) = 2x + y - 2x + 2y = 3y$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="calculation">
+                $$y = \frac{t - 2s}{3} = \frac{1}{3}t - \frac{2}{3}s$$
+            </div>
+
+            <p>逆変換は、</p>
+
+            <div class="formula">
+                $$x = \frac{1}{3}t + \frac{1}{3}s, \quad y = \frac{1}{3}t - \frac{2}{3}s$$
+            </div>
+
+            <p>となります。</p>
+
+            <p>次に、$x$ と $y$ の偏導関数を計算します。</p>
+
+            <p>$x = \frac{1}{3}t + \frac{1}{3}s$ を $t$ で偏微分すると、$s$ を定数として扱うため、$\frac{\partial x}{\partial t} = \frac{1}{3}$ となります。同様に、$x$ を $s$ で偏微分すると、$t$ を定数として扱うため、$\frac{\partial x}{\partial s} = \frac{1}{3}$ となります。</p>
+
+            <p>$y = \frac{1}{3}t - \frac{2}{3}s$ を $t$ で偏微分すると、$s$ を定数として扱うため、$\frac{\partial y}{\partial t} = \frac{1}{3}$ となります。同様に、$y$ を $s$ で偏微分すると、$t$ を定数として扱うため、$\frac{\partial y}{\partial s} = -\frac{2}{3}$ となります。</p>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$\frac{\partial x}{\partial t} = \frac{1}{3}, \quad \frac{\partial x}{\partial s} = \frac{1}{3}, \quad \frac{\partial y}{\partial t} = \frac{1}{3}, \quad \frac{\partial y}{\partial s} = -\frac{2}{3}$$
+            </div>
+
+            <p>次に、連鎖律を適用します。$f(x(t,s), y(t,s))$ を $t$ で偏微分するとき、連鎖律により、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial t} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial t} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial t}$$
+            </div>
+
+            <p>となります。計算した偏導関数を代入すると、</p>
+
+            <div class="calculation">
+                $$\frac{\partial f}{\partial t} = f_x \cdot \frac{1}{3} + f_y \cdot \frac{1}{3} = \frac{1}{3}f_x + \frac{1}{3}f_y$$
+            </div>
+
+            <p>同様に、$f(x(t,s), y(t,s))$ を $s$ で偏微分するとき、連鎖律により、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial s} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial s} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial s}$$
+            </div>
+
+            <p>となります。計算した偏導関数を代入すると、</p>
+
+            <div class="calculation">
+                $$\frac{\partial f}{\partial s} = f_x \cdot \frac{1}{3} + f_y \cdot \left(-\frac{2}{3}\right) = \frac{1}{3}f_x - \frac{2}{3}f_y$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$f_t = \frac{1}{3}f_x + \frac{1}{3}f_y, \quad f_s = \frac{1}{3}f_x - \frac{2}{3}f_y$$
+            </div>
+
+            <p>となります。</p>
+
+            <div class="note">
+                逆変換を求める際には、連立方程式を解く必要があります。この問題では、$t = 2x + y$ と $s = x - y$ の2つの式から、$x$ と $y$ を $t$ と $s$ で表すために、2つの式を組み合わせて解きます。加減法を用いることで、$x$ と $y$ をそれぞれ $t$ と $s$ の一次結合として表すことができます。
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            
+            <p>まず、(1)の結果が正しいことを確認します。(1)の結果 $f_x = 2f_t + f_s$、$f_y = f_t - f_s$ を(2)の結果に代入して、元に戻ることを確認します。</p>
+
+            <p>(2)の結果 $f_t = \frac{1}{3}f_x + \frac{1}{3}f_y$、$f_s = \frac{1}{3}f_x - \frac{2}{3}f_y$ に、(1)の結果を代入すると、</p>
+
+            <div class="calculation">
+                $$f_t = \frac{1}{3}(2f_t + f_s) + \frac{1}{3}(f_t - f_s) = \frac{1}{3}(2f_t + f_s + f_t - f_s) = \frac{1}{3} \cdot 3f_t = f_t$$
+            </div>
+
+            <p>となり、正しいことが確認できます。同様に、</p>
+
+            <div class="calculation">
+                $$f_s = \frac{1}{3}(2f_t + f_s) - \frac{2}{3}(f_t - f_s) = \frac{1}{3}(2f_t + f_s) - \frac{2}{3}f_t + \frac{2}{3}f_s = \frac{2}{3}f_t + \frac{1}{3}f_s - \frac{2}{3}f_t + \frac{2}{3}f_s = f_s$$
+            </div>
+
+            <p>となり、正しいことが確認できます。</p>
+
+            <p>次に、変数変換の偏導関数の計算が正しいことを確認します。$t = 2x + y$ を直接 $x$ で偏微分すると、$\frac{\partial t}{\partial x} = 2$ となり、計算が正しいことを確認できます。同様に、$s = x - y$ を $y$ で偏微分すると、$\frac{\partial s}{\partial y} = -1$ となり、計算が正しいことを確認できます。</p>
+
+            <p>最後に、逆変換が正しいことを確認します。逆変換 $x = \frac{1}{3}t + \frac{1}{3}s$、$y = \frac{1}{3}t - \frac{2}{3}s$ を元の変換 $t = 2x + y$、$s = x - y$ に代入すると、$t = 2(\frac{1}{3}t + \frac{1}{3}s) + (\frac{1}{3}t - \frac{2}{3}s) = \frac{2}{3}t + \frac{2}{3}s + \frac{1}{3}t - \frac{2}{3}s = t$ となり、正しいことが確認できます。</p>
+
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>(1) $f_x$、$f_y$ を $f_t$、$f_s$ で表すと、</p>
+            <div class="formula">
+                $$f_x = 2f_t + f_s, \quad f_y = f_t - f_s$$
+            </div>
+            <p>(2) $f_t$、$f_s$ を $f_x$、$f_y$ で表すと、</p>
+            <div class="formula">
+                $$f_t = \frac{1}{3}f_x + \frac{1}{3}f_y, \quad f_s = \frac{1}{3}f_x - \frac{2}{3}f_y$$
+            </div>
+            <p>となります。</p>
+        </div>
+
+    </div>
+</body>
+</html>

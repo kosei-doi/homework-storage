@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 02 Prop 4 1 9 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 02 Prop 4 1 9 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>$A \subset \mathbb{R}^{2}$ を閉集合とする。$\{\mathbf{x}_{n}\} \subset A$ なる点列があり、$\lim_{n\to\infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ であるとする。このとき、必ず $\mathbf{x}_{0} \in A$ であることを証明せよ。</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>閉集合の定義</strong>：集合 $A$ が閉集合であるとは、その補集合 $A^{c}$ が開集合であることをいいます。つまり、$A$ が閉集合ならば、$A^{c}$ は開集合です。</li>
+                    <li><strong>開集合の定義</strong>：集合 $U$ が開集合であるとは、任意の点 $\mathbf{x} \in U$ に対して、ある正の数 $\epsilon > 0$ が存在し、$\epsilon$-近傍 $U(\mathbf{x}:\epsilon) = \{\mathbf{y} \mid d(\mathbf{x},\mathbf{y}) < \epsilon\}$ が $U$ に含まれることをいいます。</li>
+                    <li><strong>点列の収束</strong>：点列 $\{\mathbf{x}_{n}\}$ が $\mathbf{x}_{0}$ に収束するとは、任意の $\epsilon > 0$ に対して、ある自然数 $N$ が存在し、$n \ge N$ を満たすすべての $n$ に対して $d(\mathbf{x}_{n},\mathbf{x}_{0}) < \epsilon$ が成り立つことをいいます。これを $\lim_{n\to\infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ と表します。</li>
+                    <li><strong>背理法</strong>：証明したい命題の否定を仮定し、そこから矛盾を導くことで、元の命題が正しいことを示す証明方法です。この問題では、「$\mathbf{x}_{0} \notin A$」と仮定して矛盾を導くことで、「$\mathbf{x}_{0} \in A$」を証明します。</li>
+                    <li><strong>補集合の性質</strong>：集合 $A$ の補集合 $A^{c}$ は、$A$ に属さないすべての点からなる集合です。$A$ が閉集合ならば $A^{c}$ は開集合であり、開集合の定義を利用できます。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を理解し、証明すべき命題を確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    背理法を用いるため、$\mathbf{x}_{0} \notin A$ と仮定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    $A$ が閉集合であることから、$A^{c}$ が開集合であることを利用する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    開集合の定義より、$\mathbf{x}_{0}$ の $\epsilon_{0}$-近傍が $A^{c}$ に含まれることを示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    点列の収束性より、十分大きな $n$ に対して $\mathbf{x}_{n}$ が $\epsilon_{0}$-近傍に含まれることを示す
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ5</div>
+                    $\mathbf{x}_{n} \in A^{c}$ であることを導く
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">矛盾の確認</div>
+                    $\{\mathbf{x}_{n}\} \subset A$ という条件と矛盾することを確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    背理法により、$\mathbf{x}_{0} \in A$ であることを結論づける
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、背理法を用いて証明します。すなわち、「$\mathbf{x}_{0} \notin A$」と仮定し、この仮定から矛盾を導くことで、「$\mathbf{x}_{0} \in A$」であることを示します。証明の流れは、まず $A$ が閉集合であることから $A^{c}$ が開集合であることを利用し、次に点列の収束性と開集合の定義を組み合わせて、$\mathbf{x}_{n}$ が $A^{c}$ に属することを導き、最後に $\{\mathbf{x}_{n}\} \subset A$ という条件と矛盾することを示します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）背理法の仮定</div>
+            <p>背理法を用いて証明します。すなわち、証明したい命題の否定を仮定します。</p>
+            
+            <p>$\mathbf{x}_{0} \notin A$ と仮定します。これは、$\mathbf{x}_{0}$ が集合 $A$ に属さないことを意味します。補集合の定義より、$\mathbf{x}_{0} \in A^{c}$ となります。</p>
+            
+            <div class="formula">
+                $$\mathbf{x}_{0} \in A^{c}$$
+            </div>
+            
+            <p>ここで、$A^{c}$ は $A$ の補集合、すなわち $A$ に属さないすべての点からなる集合です。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）閉集合と開集合の関係</div>
+            <p>問題の条件より、$A$ は閉集合です。閉集合の定義より、$A$ が閉集合であることと、その補集合 $A^{c}$ が開集合であることは同値です。</p>
+            
+            <div class="formula">
+                $$A \text{ が閉集合 } \iff A^{c} \text{ が開集合}$$
+            </div>
+            
+            <p>したがって、$A^{c}$ は開集合です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 閉集合と開集合は互いに補集合の関係にあります。閉集合の定義方法は複数ありますが、ここでは「補集合が開集合である集合」という定義を使用しています。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（3）開集合の定義の適用</div>
+            <p>$A^{c}$ が開集合であることから、開集合の定義を適用します。</p>
+            
+            <p>開集合の定義より、任意の点 $\mathbf{x} \in A^{c}$ に対して、ある正の数 $\epsilon > 0$ が存在し、$\epsilon$-近傍 $U(\mathbf{x}:\epsilon) = \{\mathbf{y} \mid d(\mathbf{x},\mathbf{y}) < \epsilon\}$ が $A^{c}$ に含まれます。</p>
+            
+            <p>ここで、$\mathbf{x}_{0} \in A^{c}$ であるため、開集合の定義より、ある $\epsilon_{0} > 0$ が存在し、$\epsilon_{0}$-近傍 $U(\mathbf{x}_{0}:\epsilon_{0})$ が $A^{c}$ に含まれます。</p>
+            
+            <div class="formula">
+                $$U(\mathbf{x}_{0}:\epsilon_{0}) \subset A^{c}$$
+            </div>
+            
+            <p>ここで、$U(\mathbf{x}_{0}:\epsilon_{0}) = \{\mathbf{y} \mid d(\mathbf{x}_{0},\mathbf{y}) < \epsilon_{0}\}$ は、$\mathbf{x}_{0}$ からの距離が $\epsilon_{0}$ 未満である点の集合です。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（4）点列の収束性の利用</div>
+            <p>問題の条件より、点列 $\{\mathbf{x}_{n}\}$ は $\mathbf{x}_{0}$ に収束します。すなわち、$\lim_{n\to\infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ です。</p>
+            
+            <p>点列の収束の定義より、任意の $\epsilon > 0$ に対して、ある自然数 $N$ が存在し、$n \ge N$ を満たすすべての $n$ に対して $d(\mathbf{x}_{n},\mathbf{x}_{0}) < \epsilon$ が成り立ちます。</p>
+            
+            <p>ここで、上で得られた $\epsilon_{0} > 0$ に対して、点列の収束性より、ある自然数 $N_{0} \in \mathbb{N}$ が存在し、$n \ge N_{0}$ を満たすすべての $n$ に対して、</p>
+            
+            <div class="formula">
+                $$d(\mathbf{x}_{n},\mathbf{x}_{0}) < \epsilon_{0}$$
+            </div>
+            
+            <p>が成り立ちます。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 点列の収束の定義では「任意の $\epsilon > 0$」とありますが、ここでは特に $\epsilon = \epsilon_{0}$ として適用しています。収束の定義により、このような $N_{0}$ が存在することが保証されます。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（5）点列の要素が補集合に属することの導出</div>
+            <p>上で得られた結果を組み合わせます。</p>
+            
+            <p>$n \ge N_{0}$ を満たすすべての $n$ に対して、$d(\mathbf{x}_{n},\mathbf{x}_{0}) < \epsilon_{0}$ が成り立つため、$\mathbf{x}_{n} \in U(\mathbf{x}_{0}:\epsilon_{0})$ です。すなわち、</p>
+            
+            <div class="formula">
+                $$\mathbf{x}_{n} \in U(\mathbf{x}_{0}:\epsilon_{0}) = \{\mathbf{y} \mid d(\mathbf{x}_{0},\mathbf{y}) < \epsilon_{0}\}$$
+            </div>
+            
+            <p>さらに、$U(\mathbf{x}_{0}:\epsilon_{0}) \subset A^{c}$ であるため、$n \ge N_{0}$ を満たすすべての $n$ に対して、</p>
+            
+            <div class="formula">
+                $$\mathbf{x}_{n} \in A^{c}$$
+            </div>
+            
+            <p>が成り立ちます。</p>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（6）矛盾の導出</div>
+            <p>ここで、問題の条件を確認します。問題の条件より、$\{\mathbf{x}_{n}\} \subset A$ です。これは、点列のすべての要素が集合 $A$ に属することを意味します。</p>
+            
+            <p>しかし、上で示したように、$n \ge N_{0}$ を満たすすべての $n$ に対して $\mathbf{x}_{n} \in A^{c}$ が成り立ちます。これは、$\mathbf{x}_{n}$ が $A$ に属さないことを意味します。</p>
+            
+            <p>したがって、$\{\mathbf{x}_{n}\} \subset A$ という条件と、$\mathbf{x}_{n} \in A^{c}$（すなわち $\mathbf{x}_{n} \notin A$）という結果が矛盾します。</p>
+            
+            <div class="explanation">
+                <p><strong>矛盾の内容：</strong></p>
+                <ul>
+                    <li>条件：$\{\mathbf{x}_{n}\} \subset A$（すべての $n$ に対して $\mathbf{x}_{n} \in A$）</li>
+                    <li>導出結果：$n \ge N_{0}$ に対して $\mathbf{x}_{n} \in A^{c}$（すなわち $\mathbf{x}_{n} \notin A$）</li>
+                    <li>これらは明らかに矛盾します。</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（7）結論</div>
+            <p>背理法により、最初の仮定「$\mathbf{x}_{0} \notin A$」が誤りであることが示されました。</p>
+            
+            <p>したがって、$\mathbf{x}_{0} \in A$ であることが証明されました。</p>
+            
+            <div class="formula">
+                $$\mathbf{x}_{0} \in A$$
+            </div>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>証明した内容を検証します。</p>
+            
+            <p>まず、証明の論理構造を確認します。背理法を用いて、命題の否定を仮定し、そこから矛盾を導くことで、元の命題が正しいことを示しました。この証明方法は論理的に正しく、数学において広く用いられる標準的な手法です。</p>
+            
+            <p>次に、使用した定義と定理の適用を確認します。閉集合の定義（補集合が開集合であること）、開集合の定義（各点に対して $\epsilon$-近傍が存在すること）、点列の収束の定義（任意の $\epsilon > 0$ に対して十分大きな $n$ で距離が $\epsilon$ 未満になること）をすべて正しく適用しています。また、各ステップでの論理的な推論も適切です。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>背理法を用いて証明します。$\mathbf{x}_{0} \notin A$ と仮定すると、$\mathbf{x}_{0} \in A^{c}$ です。$A$ が閉集合であることから、$A^{c}$ は開集合です。開集合の定義より、ある $\epsilon_{0} > 0$ が存在し、$U(\mathbf{x}_{0}:\epsilon_{0}) \subset A^{c}$ が成り立ちます。</p>
+            
+            <p>点列の収束性 $\lim_{n\to\infty} \mathbf{x}_{n}=\mathbf{x}_{0}$ より、この $\epsilon_{0}$ に対して、ある $N_{0} \in \mathbb{N}$ が存在し、$n \ge N_{0}$ を満たすすべての $n$ に対して $d(\mathbf{x}_{n},\mathbf{x}_{0}) < \epsilon_{0}$ が成り立ちます。したがって、$n \ge N_{0}$ に対して $\mathbf{x}_{n} \in U(\mathbf{x}_{0}:\epsilon_{0}) \subset A^{c}$ となり、$\mathbf{x}_{n} \in A^{c}$ です。</p>
+            
+            <p>しかし、これは条件 $\{\mathbf{x}_{n}\} \subset A$ に矛盾します。したがって、背理法により $\mathbf{x}_{0} \in A$ であることが証明されました。</p>
+        </div>
+    </div>
+</body>
+</html>

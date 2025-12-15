@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 問3 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 問3 解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>全微分可能な関数 $z=f(x,y)$ のグラフ上の点 $(x_{0},y_{0}, f(x_0, y_0))$ における接平面の方程式を求めよ。</p>
+        </div>
+
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>全微分可能性</strong>：関数 $f(x,y)$ が点 $(x_0, y_0)$ で全微分可能であるとは、その点の近くで関数が「ほぼ線形」に近似できることを意味します。つまり、$(x_0, y_0)$ の近くの点 $(x, y)$ において、$f(x, y) \approx f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$ という近似が成り立ちます。</li>
+                    <li><strong>偏導関数</strong>：多変数関数において、一つの変数だけを変化させたときの変化率を表します。$f_x(x_0, y_0)$ は点 $(x_0, y_0)$ における $x$ 方向の変化率、$f_y(x_0, y_0)$ は $y$ 方向の変化率を表します。</li>
+                    <li><strong>接平面</strong>：2変数関数 $z=f(x,y)$ のグラフ（曲面）上の点における接平面とは、その点で曲面に「接する」平面のことです。接平面は、その点における関数の一次近似を表し、全微分可能な関数では一意的に定まります。</li>
+                    <li><strong>全微分の公式</strong>：全微分可能な関数 $f(x,y)$ について、点 $(x_0, y_0)$ の近くで $f(x, y) - f(x_0, y_0) \approx f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$ が成り立ちます。この近似式の右辺を全微分といいます。</li>
+                    <li><strong>平面の方程式</strong>：3次元空間において、点 $(x_0, y_0, z_0)$ を通り、法線ベクトルが $(a, b, -1)$ である平面の方程式は $z - z_0 = a(x-x_0) + b(y-y_0)$ と表されます。接平面の場合、$a = f_x(x_0, y_0)$、$b = f_y(x_0, y_0)$、$z_0 = f(x_0, y_0)$ となります。</li>
+                </ul>
+            </div>
+
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を読み、求める内容を理解する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    全微分可能性の定義を確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    全微分の公式 $df = f_x dx + f_y dy$ を適用する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    接平面の方程式を $z = f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$ として導出する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    結果をまとめる
+                </div>
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+        <p>この問題では、全微分可能な関数の性質を用いて接平面の方程式を導出します。まず、全微分の概念を説明し、次に点 $(x_0, y_0)$ の近くでの関数の一次近似から接平面の方程式を求めます。最後に、具体例を計算して理解を深めます。</p>
+
+        <div class="step">
+            <div class="step-title">（1）全微分と接平面の関係</div>
+            
+            <p>関数 $z=f(x,y)$ が点 $(x_0, y_0)$ で全微分可能であるとき、その点の近くでの関数値の変化は、偏導関数を用いて次のように一次近似できます。</p>
+
+            <div class="formula">
+                $$f(x, y) - f(x_0, y_0) \approx f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$$
+            </div>
+
+            <p>この近似式は、点 $(x_0, y_0)$ から点 $(x, y)$ への移動に伴う関数値の変化を、$x$ 方向と $y$ 方向の変化率（偏導関数）の線形結合として表しています。右辺の $f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$ を全微分といいます。</p>
+
+            <p>この近似式を変形すると、</p>
+
+            <div class="formula">
+                $$f(x, y) \approx f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$$
+            </div>
+
+            <p>となります。この右辺は $(x, y)$ についての一次式であり、点 $(x_0, y_0, f(x_0, y_0))$ を通る平面の方程式を表しています。</p>
+
+            <div class="note">
+                全微分可能とは、関数がその点で「滑らか」であり、局所的に平面で近似できることを意味します。この性質により、曲面を点の近くで平面として扱うことができ、その平面が接平面となります。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）接平面の方程式の導出</div>
+            
+            <p>接平面とは、曲面 $z=f(x,y)$ 上の点 $(x_0, y_0, f(x_0, y_0))$ で曲面に接する平面のことです。この平面は、点 $(x_0, y_0, f(x_0, y_0))$ を通り、$x$ 方向の傾きが $f_x(x_0, y_0)$、$y$ 方向の傾きが $f_y(x_0, y_0)$ である平面です。</p>
+
+            <p>したがって、接平面の方程式は次のようになります。</p>
+
+            <div class="formula">
+                $$z = f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$$
+            </div>
+
+            <p>この式は、点 $(x_0, y_0, f(x_0, y_0))$ を通り、$(x, y)$ 平面に平行な2つのベクトル $(1, 0, f_x(x_0, y_0))$ と $(0, 1, f_y(x_0, y_0))$ によって張られる平面を表しています。</p>
+
+            <p>この式を変形すると、次のような形にも表すことができます。</p>
+
+            <div class="formula">
+                $$z - f(x_0, y_0) = f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$$
+            </div>
+
+            <p>この形は、点 $(x_0, y_0, f(x_0, y_0))$ を基準点とした変位ベクトルの関係を明示的に示しています。</p>
+
+            <div class="note">
+                接平面の方程式は、1変数関数の接線の方程式 $y = f(a) + f'(a)(x-a)$ の2変数版に対応しています。1変数の場合、接線は直線ですが、2変数の場合、接平面は平面となります。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）具体例による確認</div>
+            
+            <p>理解を深めるため、具体例を計算します。関数 $f(x,y) = xe^{xy}$ を考えます。この関数の点 $(x_0, y_0)$ における偏導関数を計算します。</p>
+
+            <p>まず、$f(x,y) = xe^{xy}$ を $x$ で偏微分するときは、$y$ を定数として扱います。積の微分法 $(uv)' = u'v + uv'$ を適用します。$u = x$、$v = e^{xy}$ とすると、$u' = 1$、$v' = ye^{xy}$（$e^{xy}$ を $x$ で偏微分すると $ye^{xy}$）となります。</p>
+
+            <div class="calculation">
+                $$f_x = \frac{\partial}{\partial x}(xe^{xy}) = 1 \cdot e^{xy} + x \cdot ye^{xy} = e^{xy} + xy e^{xy} = e^{xy}(1+xy)$$
+            </div>
+
+            <p>次に、$f(x,y) = xe^{xy}$ を $y$ で偏微分するときは、$x$ を定数として扱います。この場合、$x$ は定数なので、$xe^{xy}$ を $y$ で偏微分すると $x \cdot xe^{xy} = x^2 e^{xy}$ となります。</p>
+
+            <div class="calculation">
+                $$f_y = \frac{\partial}{\partial y}(xe^{xy}) = x \cdot \frac{\partial}{\partial y}(e^{xy}) = x \cdot xe^{xy} = x^2 e^{xy}$$
+            </div>
+
+            <p>したがって、点 $(x_0, y_0)$ における接平面の方程式は、</p>
+
+            <div class="formula">
+                $$z = x_0 e^{x_0 y_0} + e^{x_0 y_0}(1+x_0 y_0)(x-x_0) + x_0^2 e^{x_0 y_0}(y-y_0)$$
+            </div>
+
+            <p>となります。ここで、$f(x_0, y_0) = x_0 e^{x_0 y_0}$、$f_x(x_0, y_0) = e^{x_0 y_0}(1+x_0 y_0)$、$f_y(x_0, y_0) = x_0^2 e^{x_0 y_0}$ を用いました。</p>
+
+            <div class="note">
+                積の微分法とは、2つの関数の積を微分する際に使用する公式で、$(uv)' = u'v + uv'$ の形で表されます。この問題では、$x$ と $e^{xy}$ の積を微分する際に使用しています。また、合成関数の微分では、$e^{xy}$ を $x$ で偏微分する際に、$xy$ を $x$ で偏微分した結果 $y$ を掛け合わせます。
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            
+            <p>まず、接平面の方程式が点 $(x_0, y_0, f(x_0, y_0))$ を通ることを確認します。接平面の方程式 $z = f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$ に $x = x_0$、$y = y_0$ を代入すると、$z = f(x_0, y_0) + f_x(x_0, y_0) \cdot 0 + f_y(x_0, y_0) \cdot 0 = f(x_0, y_0)$ となり、確かに点 $(x_0, y_0, f(x_0, y_0))$ を通ることが確認できます。</p>
+
+            <p>次に、接平面の傾きが偏導関数と一致することを確認します。接平面の方程式を $z$ について解いた式 $z = f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$ を $x$ で偏微分すると、$z_x = f_x(x_0, y_0)$ となり、$y$ で偏微分すると、$z_y = f_y(x_0, y_0)$ となります。これは、接平面の $x$ 方向の傾きが $f_x(x_0, y_0)$ であり、$y$ 方向の傾きが $f_y(x_0, y_0)$ であることを示しています。</p>
+
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>全微分可能な関数 $z=f(x,y)$ のグラフ上の点 $(x_{0},y_{0}, f(x_0, y_0))$ における接平面の方程式は、</p>
+            <div class="formula">
+                $$z = f(x_0, y_0) + f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$$
+            </div>
+            <p>または</p>
+            <div class="formula">
+                $$z - f(x_0, y_0) = f_x(x_0, y_0)(x-x_0) + f_y(x_0, y_0)(y-y_0)$$
+            </div>
+            <p>で与えられます。ここで、$f_x(x_0, y_0)$ と $f_y(x_0, y_0)$ はそれぞれ点 $(x_0, y_0)$ における $f$ の $x$ および $y$ に関する偏導関数です。</p>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 14 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 14 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>原点において連続かを調べ、さらに原点での偏微分可能性・全微分可能性を調べる。</p>
+            <p>（1）$f(x,y)=\begin{cases}\dfrac{x^{2}y}{x^{2}+y^{2}} & (x,y) \ne (0,0)\\ 0 & (x,y)=(0,0)\end{cases}$</p>
+            <p>（2）$f(x,y)=\begin{cases}\dfrac{x+y}{x-y} & x \ne y\\ 0 & x=y\end{cases}$</p>
+            <p>（3）$f(x,y)=|xy|$ の原点での偏微分・全微分</p>
+            <p>（4）$f(x,y)=\begin{cases}\dfrac{|xy|}{\sqrt{x^{2}+y^{2}}} & (x,y) \ne (0,0)\\ 0 & (x,y)=(0,0)\end{cases}$ の原点での偏微分・全微分</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>極限の方向依存性</strong>：異なる経路で近づけて極限値が変わる場合、極限は存在しません。連続性や全微分可能性の判定で重要です。</li>
+                    <li><strong>極座標変換</strong>：$x=r\cos\theta,\ y=r\sin\theta$ とおくと $(x,y)\to(0,0)$ は $r\to 0$ に対応し、角度依存を明示できます。</li>
+                    <li><strong>はさみうち（サンドイッチ）定理</strong>：$|f(r)| \le g(r)$ かつ $\lim_{r\to 0}g(r)=0$ なら $\lim_{r\to 0}f(r)=0$。極座標に変換した後の評価に使います。</li>
+                    <li><strong>偏微分の定義</strong>：$f_{x}(a,b)=\lim_{h\to 0}\dfrac{f(a+h,b)-f(a,b)}{h}$、$f_{y}(a,b)$ も同様です。</li>
+                    <li><strong>全微分可能性の判定</strong>：$\displaystyle \lim_{(x,y)\to(0,0)} \dfrac{f(x,y)-f(0,0)-f_{x}(0,0)x-f_{y}(0,0)y}{\sqrt{x^{2}+y^{2}}}=0$ なら全微分可能です。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    連続性・偏微分・全微分を確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    連続性は極限 $\lim_{(x,y)\to(0,0)}f(x,y)$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    経路依存性を調べ、必要なら極座標変換や経路の比較を行う
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    偏微分の定義で $f_{x}, f_{y}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    全微分可能性の極限式を評価する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    極限が0か？経路で値が一致するか？
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    連続性・全微分可能性の結論をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、まず連続性の判定として原点での極限を調べます。経路によって極限が変わるかどうか、極座標で半径 $r\to 0$ の極限が0になるかを確認します。次に偏微分を定義通りに計算し、全微分可能性の判定式で極限が0かどうかを確認します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）$f(x,y)=\dfrac{x^{2}y}{x^{2}+y^{2}}\ (x,y)\ne(0,0)$、$f(0,0)=0$ の連続性</div>
+            <p>極座標に変換して原点での極限を調べます。$x=r\cos\theta,\ y=r\sin\theta$ とおくと $(x,y)\to(0,0)$ は $r\to 0$ に対応します。</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} f(x,y) = \lim_{r\to 0} \frac{(r\cos\theta)^{2}\, (r\sin\theta)}{(r\cos\theta)^{2}+(r\sin\theta)^{2}} = \lim_{r\to 0} \frac{r^{3}\cos^{2}\theta\sin\theta}{r^{2}} = \lim_{r\to 0} r\cos^{2}\theta\sin\theta$$
+            </div>
+            
+            <p>分母が $r^{2}$ になり簡約でき、残りは $r$ に比例します。</p>
+            
+            <p>はさみうちのため $g(r)=r$ と置き、絶対値で評価します。</p>
+            
+            <div class="formula">
+                $$\left|r\cos^{2}\theta\sin\theta\right| \le |r| = g(r)$$
+            </div>
+            
+            <p>$\lim_{r\to 0} g(r) = 0$ なので、はさみうちの原理より $\lim_{r\to 0} r\cos^{2}\theta\sin\theta = 0$ です。したがって</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} f(x,y) = 0 = f(0,0)$$
+            </div>
+            
+            <p>ゆえに原点で連続です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 極座標にすると分母が $r^{2}$ に揃い、$r\to 0$ のとき $r$ に比例する項が0へ収束することがわかりやすくなります。角度 $\theta$ に依存しない0への収束なので連続です。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）$f(x,y)=\dfrac{x+y}{x-y}\ (x\ne y)$、$f=0$ (x=y) の連続性</div>
+            <p>経路で極限が変わるかを調べます。定義より $x=y$ での値は 0 です。</p>
+            
+            <p>$x=y$ で近づけると常に $f=0$ です。一方、$y=kx\ (k\ne 1)$ で近づけると</p>
+            
+            <div class="formula">
+                $$\lim_{x\to 0} \frac{x+kx}{x-kx} = \lim_{x\to 0} \frac{1+k}{1-k} = \frac{1+k}{1-k}$$
+            </div>
+            
+            <p>となり、$k$ によって値が変わります。例えば $k=0$ なら $1$、$k=2$ なら $-3$ です。経路により極限値が異なるため、原点での極限は存在しません。</p>
+            
+            <p>したがって原点で不連続です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 連続性には「どの経路でも同じ極限に近づく」ことが必要です。$x=y$ 方向と $y=kx$ 方向で極限が異なるので不連続と判定できます。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（3）$f(x,y)=|xy|$ の偏微分と全微分</div>
+            <p>まず偏微分を定義から求めます。$f(0,0)=0$ です。</p>
+            
+            <div class="formula">
+                $$f_{x}(0,0) = \lim_{h\to 0} \frac{f(h,0)-f(0,0)}{h} = \lim_{h\to 0} \frac{|h\cdot 0|-0}{h} = 0$$
+            </div>
+            
+            <p>$f_{y}(0,0)$ も同様に 0 です。</p>
+            
+            <p>次に全微分可能性を確認するための極限を調べます。</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{f(x,y)-f(0,0)-f_{x}(0,0)x-f_{y}(0,0)y}{\sqrt{x^{2}+y^{2}}} = \lim_{(x,y)\to(0,0)} \frac{|xy|}{\sqrt{x^{2}+y^{2}}}$$
+            </div>
+            
+            <p>極座標で $x=r\cos\theta,\ y=r\sin\theta$ とすると</p>
+            
+            <div class="formula">
+                $$\lim_{r\to 0} \frac{|r^{2}\cos\theta\sin\theta|}{r} = \lim_{r\to 0} r\,|\cos\theta\sin\theta| = 0$$
+            </div>
+            
+            <p>$|\cos\theta\sin\theta| \le 1$ なので、$g(r)=r$ で上から押さえれば 0 に収束します。したがって全微分可能です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 分子が $r^{2}$、分母が $r$ となり $r\to 0$ で 0 に収束します。角度によらないため全方向で同じ極限になり、全微分可能と判定できます。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（4）$f(x,y)=\dfrac{|xy|}{\sqrt{x^{2}+y^{2}}}\ (x,y)\ne(0,0)$、$f(0,0)=0$ の偏微分と全微分</div>
+            <p>偏微分を定義から求めます。</p>
+            
+            <div class="formula">
+                $$f_{x}(0,0) = \lim_{h\to 0} \frac{f(h,0)-f(0,0)}{h} = \lim_{h\to 0} \frac{0-0}{h} = 0$$
+            </div>
+            
+            <p>$f_{y}(0,0)$ も同様に 0 です。</p>
+            
+            <p>次に全微分可能性を確認する極限を調べます。</p>
+            
+            <div class="formula">
+                $$\lim_{(x,y)\to(0,0)} \frac{f(x,y)-f(0,0)-f_{x}(0,0)x-f_{y}(0,0)y}{\sqrt{x^{2}+y^{2}}} = \lim_{(x,y)\to(0,0)} \frac{|xy|}{x^{2}+y^{2}}$$
+            </div>
+            
+            <p>極座標で $x=r\cos\theta,\ y=r\sin\theta$ とおくと</p>
+            
+            <div class="formula">
+                $$\lim_{r\to 0} \frac{|r^{2}\cos\theta\sin\theta|}{r^{2}} = |\cos\theta\sin\theta|$$
+            </div>
+            
+            <p>これは $\theta$ に依存し、0 に収束しません。例えば $\theta = \dfrac{\pi}{4}$ では $|\cos\dfrac{\pi}{4}\sin\dfrac{\pi}{4}| = \dfrac{1}{2} \ne 0$ となります。したがって極限は 0 にならず、全微分可能ではありません。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 偏微分が存在しても、全微分可能とは限りません。この例では偏微分は存在するものの、全微分を判定する極限が角度依存で 0 にならないため、全微分不可となります。
+            </div>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>（1）極座標で $r\cos^{2}\theta\sin\theta$ を評価し、はさみうちで 0 になることを確認しました。従って連続性判定は正しいです。</p>
+            <p>（2）$x=y$ 方向と $y=kx\ (k\ne 1)$ 方向で極限が異なることを確認し、極限不在→不連続と判定しました。</p>
+            <p>（3）偏微分が 0、全微分判定の極限が $\dfrac{|xy|}{\sqrt{x^{2}+y^{2}}}$ となり極座標で 0 に収束することを確認しました。</p>
+            <p>（4）偏微分は 0 だが、全微分判定の極限が $|\cos\theta\sin\theta|$ に依存し 0 にならない方向がある（$\theta=\pi/4$ で $1/2$）ことを確認しました。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）$f(x,y)=\dfrac{x^{2}y}{x^{2}+y^{2}}$ は原点で連続（極限 0 で値と一致）。</p>
+            <p>（2）$f(x,y)=\dfrac{x+y}{x-y}$ は原点で連続でない（経路により極限が異なる）。</p>
+            <p>（3）$f(x,y)=|xy|$ は原点で偏微分可能かつ全微分可能。</p>
+            <p>（4）$f(x,y)=\dfrac{|xy|}{\sqrt{x^{2}+y^{2}}}$ は原点で偏微分可能だが全微分不可。</p>
+        </div>
+    </div>
+</body>
+</html>

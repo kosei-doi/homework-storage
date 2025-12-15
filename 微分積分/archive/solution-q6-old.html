@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 問6解答</h1>
+
+        <h2>【解答】</h2>
+
+        <div class="problem">
+            <div class="problem-title">【問題】変数変換による偏微分の変換</div>
+            <p>変数変換 $(u, s) = (2x + y, x - y)$ が与えられています。このとき、$f(x,y)$ を $u, s$ の関数とみなして、以下の変換式を求めます。</p>
+            <p>（1）$f_x, f_y$ を $f_u, f_s$ で表します。</p>
+            <p>（2）$f_u, f_s$ を $f_x, f_y$ で表します。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（1）$f_x, f_y$ を $f_u, f_s$ で表します。</div>
+            
+            <p>変数変換 $(u, s) = (2x + y, x - y)$ が与えられています。$f$ を $u, s$ の関数とみなし、連鎖律で $f_x, f_y$ を表します。</p>
+
+            <p>$f$ を $x$ で偏微分するとき、連鎖律（Chain Rule）を用います。$f$ は $u$ と $s$ を通じて $x$ に依存しているため、次の式が成り立ちます。</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial x} = \frac{\partial f}{\partial u}\frac{\partial u}{\partial x} + \frac{\partial f}{\partial s}\frac{\partial s}{\partial x}$$
+            </div>
+
+            <p>$f$ の $x$ に関する変化率は、$u$ 経由と $s$ 経由の変化率の和で表されます。</p>
+
+            <p>変数変換 $(u, s) = (2x + y, x - y)$ から、$u$ と $s$ を $x$ で偏微分します。$y$ を定数として扱うと、</p>
+
+            <div class="calculation">
+                $$\frac{\partial u}{\partial x} = \frac{\partial}{\partial x}(2x + y) = 2$$
+                $$\frac{\partial s}{\partial x} = \frac{\partial}{\partial x}(x - y) = 1$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial x} = \frac{\partial f}{\partial u} \cdot 2 + \frac{\partial f}{\partial s} \cdot 1 = 2f_u + f_s$$
+            </div>
+
+            <p>同様に、$f$ を $y$ で偏微分するときも連鎖律を用います。</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial y} = \frac{\partial f}{\partial u}\frac{\partial u}{\partial y} + \frac{\partial f}{\partial s}\frac{\partial s}{\partial y}$$
+            </div>
+
+            <p>$u$ と $s$ を $y$ で偏微分します。$x$ を定数として扱うと、</p>
+
+            <div class="calculation">
+                $$\frac{\partial u}{\partial y} = \frac{\partial}{\partial y}(2x + y) = 1$$
+                $$\frac{\partial s}{\partial y} = \frac{\partial}{\partial y}(x - y) = -1$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial y} = \frac{\partial f}{\partial u} \cdot 1 + \frac{\partial f}{\partial s} \cdot (-1) = f_u - f_s$$
+            </div>
+
+            <div class="note">
+                連鎖律では「どの変数経由で依存しているか」を分解して足し合わせます。ここでは $x$ 方向に動くと $u$ は 2 倍、$s$ は 1 倍変わることを使っています。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）$f_u, f_s$ を $f_x, f_y$ で表します。</div>
+            
+            <p>逆の変換を求めるため、まず $x$ と $y$ を $u$ と $s$ で表します。連立方程式</p>
+
+            <div class="formula">
+                $$\begin{cases} u = 2x + y \\ s = x - y \end{cases}$$
+            </div>
+
+            <p>を解きます。第1式と第2式を足すと、</p>
+
+            <div class="calculation">
+                $$u + s = (2x + y) + (x - y) = 3x$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="calculation">
+                $$x = \frac{1}{3}(u + s) = \frac{1}{3}u + \frac{1}{3}s$$
+            </div>
+
+            <p>次に、$y$ を求めます。第1式から $y = u - 2x$ を第2式に代入すると、</p>
+
+            <div class="calculation">
+                $$s = x - (u - 2x) = x - u + 2x = 3x - u$$
+            </div>
+
+            <p>これより $3x = s + u$ なので、$x = \frac{1}{3}(u + s)$ が得られます（これは先ほど求めた結果と一致します）。</p>
+
+            <p>$y$ を求めるため、$x = \frac{1}{3}(u + s)$ を $y = u - 2x$ に代入すると、</p>
+
+            <div class="calculation">
+                $$y = u - 2 \cdot \frac{1}{3}(u + s) = u - \frac{2}{3}u - \frac{2}{3}s = \frac{1}{3}u - \frac{2}{3}s$$
+            </div>
+
+            <p>したがって、逆変換は次の通りです。</p>
+
+            <div class="formula">
+                $$x = \frac{1}{3}u + \frac{1}{3}s, \quad y = \frac{1}{3}u - \frac{2}{3}s$$
+            </div>
+
+            <p>次に、連鎖律で $f_u$ と $f_s$ を求めます。$f$ は $x,y$ を通じて $u,s$ に依存します。</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial u} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial u} + \frac{\partial f}{\partial y}\frac{\partial y}{\partial u}$$
+            </div>
+
+            <p>$x = \frac{1}{3}u + \frac{1}{3}s$、$y = \frac{1}{3}u - \frac{2}{3}s$ より、$s$ を定数として扱うと、</p>
+
+            <div class="calculation">
+                $$\frac{\partial x}{\partial u} = \frac{\partial}{\partial u}\left(\frac{1}{3}u + \frac{1}{3}s\right) = \frac{1}{3}$$
+                $$\frac{\partial y}{\partial u} = \frac{\partial}{\partial u}\left(\frac{1}{3}u - \frac{2}{3}s\right) = \frac{1}{3}$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial u} = \frac{\partial f}{\partial x} \cdot \frac{1}{3} + \frac{\partial f}{\partial y} \cdot \frac{1}{3} = \frac{1}{3}f_x + \frac{1}{3}f_y$$
+            </div>
+
+            <p>同様に、$f$ を $s$ で偏微分するときも連鎖律を用います。</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial s} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial s} + \frac{\partial f}{\partial y}\frac{\partial y}{\partial s}$$
+            </div>
+
+            <p>$u$ を定数として扱うと、</p>
+
+            <div class="calculation">
+                $$\frac{\partial x}{\partial s} = \frac{\partial}{\partial s}\left(\frac{1}{3}u + \frac{1}{3}s\right) = \frac{1}{3}$$
+                $$\frac{\partial y}{\partial s} = \frac{\partial}{\partial s}\left(\frac{1}{3}u - \frac{2}{3}s\right) = -\frac{2}{3}$$
+            </div>
+
+            <p>したがって、</p>
+
+            <div class="formula">
+                $$\frac{\partial f}{\partial s} = \frac{\partial f}{\partial x} \cdot \frac{1}{3} + \frac{\partial f}{\partial y} \cdot \left(-\frac{2}{3}\right) = \frac{1}{3}f_x - \frac{2}{3}f_y$$
+            </div>
+
+            <div class="note">
+                逆変換は連立一次方程式を解いて求めます。$x,y$ を $u,s$ に直したあと、連鎖律で偏微分を置き換えます。
+            </div>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【最終結果】</div>
+            
+            <p>（1）$f_x, f_y$ を $f_u, f_s$ で表すと、</p>
+
+            <div class="formula">
+                $$f_x = 2f_u + f_s, \quad f_y = f_u - f_s$$
+            </div>
+
+            <p>（2）$f_u, f_s$ を $f_x, f_y$ で表すと、</p>
+
+            <div class="formula">
+                $$f_u = \frac{1}{3}f_x + \frac{1}{3}f_y, \quad f_s = \frac{1}{3}f_x - \frac{2}{3}f_y$$
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">検証</div>
+            
+            <p>まず、（1）の式は $u_x=2,\ s_x=1,\ u_y=1,\ s_y=-1$ を連鎖律に代入すると確認できます。</p>
+
+            <p>次に、（2）は逆変換 $x=\frac{1}{3}(u+s),\ y=\frac{1}{3}u-\frac{2}{3}s$ から $x_u=y_u=\frac{1}{3}$、$x_s=\frac{1}{3}$、$y_s=-\frac{2}{3}$ を連鎖律に代入して確認できます。（1）（2）が互いに逆になっていることも一致します。</p>
+
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+
+    </div>
+</body>
+</html>

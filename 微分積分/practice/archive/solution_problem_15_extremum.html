@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 15 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 15 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>関数 $f(x,y)=x^{4}+y^{4}-x^{2}-2xy-y^{2}+3$ の極値を調べよ。</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>停留点</strong>：$f_{x}=0$ かつ $f_{y}=0$ を満たす点を求めます。極値は停留点でのみ起こり得ます。</li>
+                    <li><strong>2階偏導関数と判別式</strong>：$f_{xx}, f_{yy}, f_{xy}$ を計算し、$D=(f_{xy})^{2}-f_{xx}f_{yy}$ を用いて極値判定を行います。</li>
+                    <li><strong>判別式の判定</strong>：$D<0$ のとき $f_{xx}$ の符号で極大・極小を判定（$f_{xx}>0$ で極小、$f_{xx}<0$ で極大）。$D>0$ のとき鞍点（極値でない）。$D=0$ のとき判別式では決まらず、定義に戻って調べます。</li>
+                    <li><strong>代入と符号チェック</strong>：$D=0$ の場合、近傍の関数値を具体的な経路で比べ、極値か否かを判断します。</li>
+                    <li><strong>多項式の因数分解</strong>：共通因数をくくり、$x^{3}-y^{3}=(x-y)(x^{2}+xy+y^{2})$ を利用して停留点を整理します。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    関数と偏導関数を確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    $f_{x}, f_{y}$ を計算し、停留点を求める
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    2階偏導関数 $f_{xx}, f_{yy}, f_{xy}$ を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    判別式 $D=(f_{xy})^{2}-f_{xx}f_{yy}$ を求める
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step decision">
+                    <div class="flowchart-label">判定</div>
+                    $D$ と $f_{xx}$ の符号で極値を判定（$D=0$ は別途検討）
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    各停留点の極大・極小・非極値をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、まず1階偏導関数を計算して停留点を求め、次に2階偏導関数と判別式 $D$ を使って極値かどうかを判定します。$D=0$ の場合は、定義に戻って近傍の値を比較し、極値か否かを判断します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）偏導関数と停留点の計算</div>
+            <p>関数 $f(x,y)=x^{4}+y^{4}-x^{2}-2xy-y^{2}+3$ の1階偏導関数を求めます。</p>
+            
+            <p>$x$ について偏微分します。$x^{4}$ から $4x^{3}$、$-x^{2}$ から $-2x$、$-2xy$ から $-2y$ が出ます。$y^{4}$ と $-y^{2}$ と $+3$ は $x$ を含まないため 0 です。</p>
+            <div class="formula">$$f_{x}(x,y)=4x^{3}-2x-2y$$</div>
+            
+            <p>$y$ について偏微分します。$y^{4}$ から $4y^{3}$、$-y^{2}$ から $-2y$、$-2xy$ から $-2x$ が出ます。$x^{4}$ と $-x^{2}$ と $+3$ は $y$ を含まないため 0 です。</p>
+            <div class="formula">$$f_{y}(x,y)=4y^{3}-2x-2y$$</div>
+            
+            <p>停留点は $f_{x}=0$ かつ $f_{y}=0$ を満たす点です。まず $f_{x}=f_{y}$ を比較して差をとると、</p>
+            <div class="formula">$$4x^{3}-2x-2y = 4y^{3}-2x-2y \implies 4(x^{3}-y^{3})=0 \implies x^{3}-y^{3}=0 \implies x=y$$</div>
+            <p>となり、停留点は対角線 $x=y$ 上にあります。</p>
+            
+            <p>$x=y$ を $f_{x}=0$ に代入します。$4x^{3}-2x-2x=0$ より</p>
+            <div class="formula">$$4x^{3}-4x=0 \implies 4x(x^{2}-1)=0 \implies x=0,\ 1,\ -1$$</div>
+            <p>となります。$x=y$ なので停留点は $(0,0)$、$(1,1)$、$(-1,-1)$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> $x^{3}-y^{3}=(x-y)(x^{2}+xy+y^{2})$ から $x=y$ を得てもよいです。$x=y$ で整理すると $x^{2}-1=0$ となり、$x=\pm1$ と $0$ が得られます。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）2階偏導関数と判別式</div>
+            <p>2階偏導関数を計算します。</p>
+            
+            <p>$f_{xx}$：$f_{x}=4x^{3}-2x-2y$ を $x$ で偏微分し、$12x^{2}-2$。</p>
+            <div class="formula">$$f_{xx}(x,y)=12x^{2}-2$$</div>
+            
+            <p>$f_{yy}$：$f_{y}=4y^{3}-2x-2y$ を $y$ で偏微分し、$12y^{2}-2$。</p>
+            <div class="formula">$$f_{yy}(x,y)=12y^{2}-2$$</div>
+            
+            <p>$f_{xy}$：$f_{x}$ を $y$ で偏微分し、$-2$。</p>
+            <div class="formula">$$f_{xy}(x,y)=-2$$</div>
+            
+            <p>判別式 $D$ は</p>
+            <div class="formula">$$D=(f_{xy})^{2}-f_{xx}f_{yy}=(-2)^{2}-(12x^{2}-2)(12y^{2}-2)$$</div>
+            
+            <p>展開すると</p>
+            <div class="formula">$$D=4-(144x^{2}y^{2}-24x^{2}-24y^{2}+4)=-144x^{2}y^{2}+24x^{2}+24y^{2}=24(-6x^{2}y^{2}+x^{2}+y^{2})$$</div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（3）各停留点の判定と値</div>
+            <p>各停留点で $D$ と $f_{xx}$ を評価し、極値かどうかを判定します。</p>
+            
+            <div class="calculation">
+                <strong>$(0,0)$</strong>：$D(0,0)=0$。判別式では判定できないので、近傍の値を経路で比較します。$f(0,0)=3$ です。
+                
+                <p>まず、$f(x,y)$ を変形します。$-x^{2}-2xy-y^{2} = -(x^{2}+2xy+y^{2}) = -(x+y)^{2}$ であるため、</p>
+                
+                <div class="formula">
+                    $$f(x,y) = x^{4}+y^{4}-(x+y)^{2}+3$$
+                </div>
+                
+                <p>となります。</p>
+                
+                <p>次に、$y=-x$ という経路で $(0,0)$ に近づける場合を考えます。$y=-x$ を代入すると、$(x+y)^{2} = (x+(-x))^{2} = 0^{2} = 0$ であるため、</p>
+                
+                <div class="formula">
+                    $$f(x,-x) = x^{4}+(-x)^{4}-0+3 = x^{4}+x^{4}+3 = 2x^{4}+3$$
+                </div>
+                
+                <p>となります。$x \ne 0$ のとき $x^{4} > 0$ であるため、$f(x,-x) = 2x^{4}+3 > 3 = f(0,0)$ です。</p>
+                
+                <p>一方、$y=x$ という経路で $(0,0)$ に近づける場合を考えます。$y=x$ を代入すると、$(x+y)^{2} = (2x)^{2} = 4x^{2}$ であるため、</p>
+                
+                <div class="formula">
+                    $$f(x,x) = x^{4}+x^{4}-(2x)^{2}+3 = 2x^{4}-4x^{2}+3$$
+                </div>
+                
+                <p>となります。$2x^{4}-4x^{2}$ を因数分解すると、</p>
+                
+                <div class="formula">
+                    $$2x^{4}-4x^{2} = 2x^{2}(x^{2}-2)$$
+                </div>
+                
+                <p>となります。$|x|$ が小さいとき、$x^{2} < 2$ すなわち $x^{2}-2 < 0$ であるため、$2x^{2}(x^{2}-2) < 0$ です。したがって、</p>
+                
+                <div class="formula">
+                    $$f(x,x)-3 = 2x^{4}-4x^{2} = 2x^{2}(x^{2}-2) < 0$$
+                </div>
+                
+                <p>すなわち、$f(x,x) < 3 = f(0,0)$ です。</p>
+                
+                <p>したがって、$(0,0)$ の近傍に $f(x,y) > f(0,0)$ となる点（$y=-x$ 経路）と $f(x,y) < f(0,0)$ となる点（$y=x$ 経路）が存在するため、$(0,0)$ は極値ではありません。</p>
+            </div>
+            
+            <div class="calculation">
+                <strong>$(1,1)$</strong>：$D(1,1)=24(-6+1+1)=-96<0$。$f_{xx}(1,1)=12(1)^{2}-2=10>0$ より極小。値は
+                <div class="formula">$$f(1,1)=1+1-1-2-1+3=1$$</div>
+            </div>
+            
+            <div class="calculation">
+                <strong>$(-1,-1)$</strong>：$D(-1,-1)=-96<0$。$f_{xx}(-1,-1)=12(-1)^{2}-2=10>0$ より極小。値は
+                <div class="formula">$$f(-1,-1)=1+1-1-2-1+3=1$$</div>
+            </div>
+            
+            <div class="note">
+                <strong>補足：</strong> $D<0$ のときはヘッセ行列の符号判定で、$f_{xx}>0$ なら極小、$f_{xx}<0$ なら極大です。$D=0$ のときは定義に戻って近傍の値を比較する必要があります。
+            </div>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>偏導関数と2階偏導関数の計算：$f_{x}=4x^{3}-2x-2y$、$f_{y}=4y^{3}-2x-2y$、$f_{xx}=12x^{2}-2$、$f_{yy}=12y^{2}-2$、$f_{xy}=-2$ は正しいです。</p>
+            <p>停留点の求解：$x^{3}-y^{3}=0$ から $x=y$、代入で $x=0,\pm1$ を得て $(0,0),(1,1),(-1,-1)$ は妥当です。</p>
+            <p>判別式：$D=24(-6x^{2}y^{2}+x^{2}+y^{2})$ は展開結果と一致します。$(1,1),(-1,-1)$ で $D<0$ かつ $f_{xx}>0$ より極小、値はいずれも $1$ で計算と整合します。</p>
+            <p>$(0,0)$ について、$y=-x$ 方向で $f>f(0,0)$、$y=x$ 方向で $f<f(0,0)$ を確認し、極値でないことを示しています。</p>
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>極値候補 $(0,0),(1,1),(-1,-1)$ のうち：</p>
+            <p>$(1,1)$ は極小で $f(1,1)=1$。</p>
+            <p>$(-1,-1)$ は極小で $f(-1,-1)=1$。</p>
+            <p>$(0,0)$ は極値ではない（近傍に $f$ が大きくも小さくもなる点が存在）。</p>
+        </div>
+    </div>
+</body>
+</html>

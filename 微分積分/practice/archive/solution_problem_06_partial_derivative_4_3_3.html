@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 06 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 06 解答</h1>
+        
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>次の関数を偏微分せよ。</p>
+            <p>（1）$f(x,y)=x+y^{2}$</p>
+            <p>（2）$f(x,y)=\arctan\frac{y}{x}$</p>
+        </div>
+        
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>偏微分の定義</strong>：2変数関数 $f(x,y)$ の $x$ に関する偏微分係数は、$f_{x}(x,y) = \lim_{h \to 0} \frac{f(x+h,y)-f(x,y)}{h}$ で定義されます。同様に、$y$ に関する偏微分係数は $f_{y}(x,y) = \lim_{h \to 0} \frac{f(x,y+h)-f(x,y)}{h}$ で定義されます。ただし、通常は定義に戻らず、1変数の微分法を適用して計算します。</li>
+                    <li><strong>基本的な微分公式</strong>：$x$ を $x$ で微分すると $1$、定数を微分すると $0$、$y^{2}$ を $y$ で微分すると $2y$ です。偏微分では、微分する変数以外は定数として扱います。</li>
+                    <li><strong>合成関数の微分法</strong>：$f(g(x))$ の微分は、$f'(g(x)) \cdot g'(x)$ で計算されます。2変数関数の場合、$f(u(x,y))$ の $x$ に関する偏微分は、$\frac{\partial f}{\partial u} \cdot \frac{\partial u}{\partial x}$ で計算されます。</li>
+                    <li><strong>逆三角関数の微分</strong>：$\arctan u$ の微分は、$\frac{d}{du}\arctan u = \frac{1}{1+u^{2}}$ です。この公式を利用して、$\arctan\frac{y}{x}$ の偏微分を計算します。</li>
+                    <li><strong>商の微分法</strong>：$\frac{y}{x}$ を $x$ で偏微分する場合、$y$ は定数として扱い、$\frac{\partial}{\partial x}\left(\frac{y}{x}\right) = y \cdot \frac{\partial}{\partial x}\left(\frac{1}{x}\right) = y \cdot \left(-\frac{1}{x^{2}}\right) = -\frac{y}{x^{2}}$ となります。</li>
+                </ul>
+            </div>
+            
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    各関数について、$x$ と $y$ に関する偏微分を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（1）</div>
+                    $f_{x}$ を計算する：$y$ を定数として $x$ で微分する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（1）</div>
+                    $f_{y}$ を計算する：$x$ を定数として $y$ で微分する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（2）</div>
+                    $f_{x}$ を計算する：合成関数の微分法を用いる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">問題（2）</div>
+                    $f_{y}$ を計算する：合成関数の微分法を用いる
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    各関数の偏微分の結果をまとめる
+                </div>
+            </div>
+        </div>
+        
+        <h2>【解答】</h2>
+        <p>この問題では、2つの関数について、$x$ と $y$ に関する偏微分を計算します。問題（1）では、基本的な微分公式を適用します。問題（2）では、合成関数の微分法と逆三角関数の微分公式を組み合わせて計算します。</p>
+        
+        <div class="step">
+            <div class="step-title">（1）関数 $f(x,y)=x+y^{2}$ について</div>
+            <p>まず、$x$ に関する偏微分 $f_{x}(x,y)$ を計算します。偏微分の定義より、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = \lim_{h \to 0} \frac{f(x+h,y)-f(x,y)}{h}$$
+            </div>
+            
+            <p>ここで、$f(x+h,y) = (x+h)+y^{2} = x+h+y^{2}$、$f(x,y) = x+y^{2}$ です。したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = \lim_{h \to 0} \frac{(x+h+y^{2})-(x+y^{2})}{h} = \lim_{h \to 0} \frac{x+h+y^{2}-x-y^{2}}{h} = \lim_{h \to 0} \frac{h}{h} = \lim_{h \to 0} 1 = 1$$
+            </div>
+            
+            <p>したがって、$f_{x}(x,y)=1$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 偏微分では、$y$ を定数として扱います。したがって、$y^{2}$ は定数として扱われ、$x$ に関する偏微分では $0$ になります。$x$ を $x$ で微分すると $1$ であるため、結果は $1$ となります。
+            </div>
+            
+            <p>次に、$y$ に関する偏微分 $f_{y}(x,y)$ を計算します。偏微分では、$x$ を定数として扱います。したがって、$x$ を $y$ で微分すると $0$ となり、$y^{2}$ を $y$ で微分すると $2y$ となります。</p>
+            
+            <p>通常、偏微分の定義に戻らず、1変数の微分法を適用して計算します。$x$ は定数として扱うため、</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = \frac{\partial}{\partial y}(x+y^{2}) = \frac{\partial}{\partial y}(x) + \frac{\partial}{\partial y}(y^{2}) = 0 + 2y = 2y$$
+            </div>
+            
+            <p>したがって、$f_{y}(x,y)=2y$ です。</p>
+            
+            <div class="note">
+                <strong>補足：</strong> 偏微分では、微分する変数以外は定数として扱います。$x$ を $y$ で偏微分すると $0$ となり、$y^{2}$ を $y$ で偏微分すると $2y$ となります。これは、1変数関数 $g(y)=y^{2}$ の微分が $g'(y)=2y$ であることと同じです。
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-title">（2）関数 $f(x,y)=\arctan\frac{y}{x}$ について</div>
+            <p>この関数は合成関数の形になっています。$u = \frac{y}{x}$ とおくと、$f(x,y) = \arctan u$ です。</p>
+            
+            <p>まず、逆三角関数の微分公式を確認します。$\arctan u$ の微分は、</p>
+            
+            <div class="formula">
+                $$\frac{d}{du}\arctan u = \frac{1}{1+u^{2}}$$
+            </div>
+            
+            <p>です。この公式を利用して偏微分を計算します。</p>
+            
+            <p>まず、$x$ に関する偏微分 $f_{x}(x,y)$ を計算します。合成関数の微分法より、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = \frac{\partial}{\partial x}\left(\arctan\frac{y}{x}\right) = \frac{d}{du}\arctan u \Big|_{u=\frac{y}{x}} \cdot \frac{\partial}{\partial x}\left(\frac{y}{x}\right)$$
+            </div>
+            
+            <p>ここで、$\frac{d}{du}\arctan u = \frac{1}{1+u^{2}}$ であるため、$u = \frac{y}{x}$ を代入すると、</p>
+            
+            <div class="formula">
+                $$\frac{d}{du}\arctan u \Big|_{u=\frac{y}{x}} = \frac{1}{1+\left(\frac{y}{x}\right)^{2}} = \frac{1}{1+\frac{y^{2}}{x^{2}}} = \frac{1}{\frac{x^{2}+y^{2}}{x^{2}}} = \frac{x^{2}}{x^{2}+y^{2}}$$
+            </div>
+            
+            <p>次に、$\frac{\partial}{\partial x}\left(\frac{y}{x}\right)$ を計算します。$y$ は定数として扱うため、</p>
+            
+            <div class="formula">
+                $$\frac{\partial}{\partial x}\left(\frac{y}{x}\right) = y \cdot \frac{\partial}{\partial x}\left(\frac{1}{x}\right) = y \cdot \left(-\frac{1}{x^{2}}\right) = -\frac{y}{x^{2}}$$
+            </div>
+            
+            <div class="note">
+                <strong>補足：</strong> $\frac{1}{x} = x^{-1}$ の微分は、$(x^{-1})' = -x^{-2} = -\frac{1}{x^{2}}$ です。ここでは、$y$ を定数として扱っているため、$y$ はそのまま掛け算されます。
+            </div>
+            
+            <p>したがって、</p>
+            
+            <div class="formula">
+                $$f_{x}(x,y) = \frac{1}{1+\left(\frac{y}{x}\right)^{2}} \cdot \left(-\frac{y}{x^{2}}\right) = \frac{x^{2}}{x^{2}+y^{2}} \cdot \left(-\frac{y}{x^{2}}\right) = -\frac{y}{x^{2}+y^{2}}$$
+            </div>
+            
+            <p>次に、$y$ に関する偏微分 $f_{y}(x,y)$ を計算します。合成関数の微分法より、</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = \frac{\partial}{\partial y}\left(\arctan\frac{y}{x}\right) = \frac{d}{du}\arctan u \Big|_{u=\frac{y}{x}} \cdot \frac{\partial}{\partial y}\left(\frac{y}{x}\right)$$
+            </div>
+            
+            <p>ここで、$\frac{d}{du}\arctan u \Big|_{u=\frac{y}{x}} = \frac{1}{1+\left(\frac{y}{x}\right)^{2}} = \frac{x^{2}}{x^{2}+y^{2}}$ は上で計算した通りです。</p>
+            
+            <p>次に、$\frac{\partial}{\partial y}\left(\frac{y}{x}\right)$ を計算します。$x$ は定数として扱うため、</p>
+            
+            <div class="formula">
+                $$\frac{\partial}{\partial y}\left(\frac{y}{x}\right) = \frac{1}{x} \cdot \frac{\partial}{\partial y}(y) = \frac{1}{x} \cdot 1 = \frac{1}{x}$$
+            </div>
+            
+            <div class="note">
+                <strong>補足：</strong> $\frac{y}{x} = \frac{1}{x} \cdot y$ と見ると、$\frac{1}{x}$ は定数として扱われ、$y$ を $y$ で偏微分すると $1$ となります。したがって、$\frac{\partial}{\partial y}\left(\frac{y}{x}\right) = \frac{1}{x}$ です。
+            </div>
+            
+            <p>したがって、</p>
+            
+            <div class="formula">
+                $$f_{y}(x,y) = \frac{1}{1+\left(\frac{y}{x}\right)^{2}} \cdot \frac{1}{x} = \frac{x^{2}}{x^{2}+y^{2}} \cdot \frac{1}{x} = \frac{x}{x^{2}+y^{2}}$$
+            </div>
+        </div>
+        
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            <p>計算した内容を検証します。</p>
+            
+            <p>まず、問題（1）の計算を確認します。$f(x,y)=x+y^{2}$ について、$f_{x}(x,y)=1$、$f_{y}(x,y)=2y$ と計算しました。これは、$x$ を $x$ で微分すると $1$、$y^{2}$ を $y$ で微分すると $2y$ であることから正しいです。また、偏微分の定義に従って計算した $f_{x}(x,y)$ も $1$ となり、結果が一致しています。</p>
+            
+            <p>次に、問題（2）の計算を確認します。$f(x,y)=\arctan\frac{y}{x}$ について、合成関数の微分法を用いて計算しました。$\frac{d}{du}\arctan u = \frac{1}{1+u^{2}}$ という公式を正しく適用し、$\frac{\partial}{\partial x}\left(\frac{y}{x}\right) = -\frac{y}{x^{2}}$、$\frac{\partial}{\partial y}\left(\frac{y}{x}\right) = \frac{1}{x}$ を正しく計算しました。最終的な結果 $f_{x}(x,y) = -\frac{y}{x^{2}+y^{2}}$、$f_{y}(x,y) = \frac{x}{x^{2}+y^{2}}$ も正しいです。</p>
+            
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+        
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>（1）$f(x,y)=x+y^{2}$ について：</p>
+            <p>$f_{x}(x,y)=1$、$f_{y}(x,y)=2y$</p>
+            <p>偏微分では、微分する変数以外は定数として扱います。$x$ を $x$ で偏微分すると $1$、$y^{2}$ を $y$ で偏微分すると $2y$ となります。</p>
+            
+            <p>（2）$f(x,y)=\arctan\frac{y}{x}$ について：</p>
+            <p>$f_{x}(x,y) = -\frac{y}{x^{2}+y^{2}}$、$f_{y}(x,y) = \frac{x}{x^{2}+y^{2}}$</p>
+            <p>合成関数の微分法と逆三角関数の微分公式 $\frac{d}{du}\arctan u = \frac{1}{1+u^{2}}$ を用いて計算します。$u = \frac{y}{x}$ とおくと、$f_{x} = \frac{1}{1+u^{2}} \cdot \frac{\partial u}{\partial x} = \frac{1}{1+\left(\frac{y}{x}\right)^{2}} \cdot \left(-\frac{y}{x^{2}}\right) = -\frac{y}{x^{2}+y^{2}}$、$f_{y} = \frac{1}{1+u^{2}} \cdot \frac{\partial u}{\partial y} = \frac{1}{1+\left(\frac{y}{x}\right)^{2}} \cdot \frac{1}{x} = \frac{x}{x^{2}+y^{2}}$ となります。</p>
+        </div>
+    </div>
+</body>
+</html>

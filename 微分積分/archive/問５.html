@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分積分 問5 解答</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Yu Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+            line-height: 2;
+            color: #000;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px 60px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #000;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        h2 {
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .problem {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #000;
+        }
+
+        .problem-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 3px solid #000;
+            padding-left: 25px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .formula {
+            background: #fff;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .explanation {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 2px solid #666;
+            padding-left: 20px;
+        }
+
+        .answer-box {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #000;
+        }
+
+        .answer-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .verification {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .verification-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calculation {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 2px solid #ccc;
+            padding-left: 15px;
+        }
+
+        .note {
+            background: #fff;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px dashed #666;
+            font-size: 0.95em;
+        }
+
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+
+        .solution-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .strategy {
+            background: #fff;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px solid #333;
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .knowledge {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #666;
+        }
+
+        .knowledge-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        .flowchart-step {
+            background: #f0f0f0;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            min-width: 250px;
+            max-width: 600px;
+            text-align: center;
+            font-size: 0.95em;
+            position: relative;
+        }
+
+        .flowchart-step.start {
+            background: #e3f2fd;
+            border-color: #1976d2;
+        }
+
+        .flowchart-step.process {
+            background: #fff3e0;
+            border-color: #f57c00;
+        }
+
+        .flowchart-step.decision {
+            background: #f3e5f5;
+            border-color: #7b1fa2;
+        }
+
+        .flowchart-step.end {
+            background: #e8f5e9;
+            border-color: #388e3c;
+        }
+
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 15px solid #333;
+            margin: 5px 0;
+        }
+
+        .flowchart-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微分積分 問5 解答</h1>
+
+        <div class="problem">
+            <div class="problem-title">【問題】</div>
+            <p>関数 $f(\boldsymbol{x})$ の点 $(1,2)$ における $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ 方向への微分の定義を書け。</p>
+        </div>
+
+        <div class="strategy">
+            <div class="strategy-title">【方針】</div>
+            
+            <div class="knowledge">
+                <div class="knowledge-title">必要な知識・テクニック</div>
+                <ul>
+                    <li><strong>方向微分</strong>：多変数関数 $f(\boldsymbol{x})$ において、特定の方向 $\boldsymbol{a}$ への変化率を表す概念です。点 $\boldsymbol{x}_0$ における方向 $\boldsymbol{a}$ への方向微分は、$\boldsymbol{x}_0$ から $\boldsymbol{a}$ 方向に微小距離 $t$ だけ移動したときの関数値の変化率として定義されます。</li>
+                    <li><strong>方向ベクトル</strong>：方向微分を定義する際には、方向を表すベクトル $\boldsymbol{a}$ が必要です。通常、方向ベクトルは単位ベクトル（長さが1のベクトル）として扱われます。この問題では、$\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ は単位ベクトルです（$\|\boldsymbol{a}\| = \sqrt{(\frac{1}{\sqrt{2}})^2 + (-\frac{1}{\sqrt{2}})^2} = 1$）。</li>
+                    <li><strong>極限の定義</strong>：方向微分は極限として定義されます。$t \to 0$ のときの極限を考えることで、点 $\boldsymbol{x}_0$ における瞬間的な変化率を表します。これは1変数関数の微分の定義 $f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$ の多変数への拡張です。</li>
+                    <li><strong>ベクトルの和とスカラー倍</strong>：方向微分の定義では、点 $\boldsymbol{x}_0$ に方向ベクトル $\boldsymbol{a}$ の $t$ 倍を加えた点 $\boldsymbol{x}_0 + t\boldsymbol{a}$ を考えます。これは、$\boldsymbol{x}_0$ から $\boldsymbol{a}$ 方向に距離 $|t|$ だけ移動した点を表します。</li>
+                </ul>
+            </div>
+
+            <div class="flowchart">
+                <div class="flowchart-step start">
+                    <div class="flowchart-label">開始</div>
+                    問題を読み、求める内容を理解する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ1</div>
+                    方向微分の一般的な定義を確認する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ2</div>
+                    与えられた点 $(1,2)$ と方向ベクトル $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ を特定する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ3</div>
+                    点 $(1,2)$ から方向 $\boldsymbol{a}$ に $t$ だけ移動した点を計算する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step process">
+                    <div class="flowchart-label">ステップ4</div>
+                    方向微分の定義式に具体的な値を代入する
+                </div>
+                <div class="flowchart-arrow"></div>
+                <div class="flowchart-step end">
+                    <div class="flowchart-label">終了</div>
+                    定義式を完成させる
+                </div>
+            </div>
+        </div>
+
+        <h2>【解答】</h2>
+        <p>この問題では、方向微分の一般的な定義を確認し、与えられた点 $(1,2)$ と方向ベクトル $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ を具体的な定義式に代入します。まず、方向微分の概念を説明し、次に具体的な計算を行って定義式を完成させます。</p>
+
+        <div class="step">
+            <div class="step-title">（1）方向微分の一般的な定義</div>
+            
+            <p>多変数関数 $f(\boldsymbol{x})$ の点 $\boldsymbol{x}_0$ における方向ベクトル $\boldsymbol{a}$ への方向微分は、次の極限として定義されます。</p>
+
+            <div class="formula">
+                $$\lim_{t \to 0} \frac{f(\boldsymbol{x}_0 + t\boldsymbol{a}) - f(\boldsymbol{x}_0)}{t}$$
+            </div>
+
+            <p>ここで、$t$ は実数で、$t \to 0$ の極限を考えます。$\boldsymbol{x}_0 + t\boldsymbol{a}$ は、点 $\boldsymbol{x}_0$ から方向ベクトル $\boldsymbol{a}$ に沿って距離 $|t|$ だけ移動した点を表します。この定義は、1変数関数の微分の定義 $f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$ の多変数への拡張です。</p>
+
+            <div class="note">
+                方向微分は、関数が特定の方向にどれだけ変化するかを表します。偏微分は座標軸方向（$x$ 方向や $y$ 方向）への方向微分の特別な場合です。方向微分により、任意の方向への関数の変化率を考えることができます。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（2）与えられた条件の確認</div>
+            
+            <p>問題では、点 $\boldsymbol{x}_0 = (1, 2)$ と方向ベクトル $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ が与えられています。</p>
+
+            <p>まず、方向ベクトル $\boldsymbol{a}$ が単位ベクトルであることを確認します。ベクトルの長さ（ノルム）は、</p>
+
+            <div class="calculation">
+                $$\|\boldsymbol{a}\| = \sqrt{\left(\frac{1}{\sqrt{2}}\right)^2 + \left(-\frac{1}{\sqrt{2}}\right)^2} = \sqrt{\frac{1}{2} + \frac{1}{2}} = \sqrt{1} = 1$$
+            </div>
+
+            <p>となり、確かに単位ベクトルです。方向ベクトルは通常単位ベクトルとして扱われますが、この問題では既に単位ベクトルとして与えられています。</p>
+
+            <p>次に、点 $(1,2)$ から方向 $\boldsymbol{a}$ に $t$ だけ移動した点を計算します。</p>
+
+            <div class="calculation">
+                $$\boldsymbol{x}_0 + t\boldsymbol{a} = (1, 2) + t\left(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}\right) = \left(1 + \frac{t}{\sqrt{2}}, 2 - \frac{t}{\sqrt{2}}\right)$$
+            </div>
+
+            <p>この点の座標は、$(1+\frac{t}{\sqrt{2}}, 2-\frac{t}{\sqrt{2}})$ となります。</p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（3）方向微分の定義式への代入</div>
+            
+            <p>方向微分の一般的な定義式に、具体的な値を代入します。</p>
+
+            <p>$\boldsymbol{x}_0 = (1, 2)$、$\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ より、$\boldsymbol{x}_0 + t\boldsymbol{a} = (1+\frac{t}{\sqrt{2}}, 2-\frac{t}{\sqrt{2}})$ となります。</p>
+
+            <p>したがって、方向微分の定義式は、</p>
+
+            <div class="formula">
+                $$\lim_{t \to 0} \frac{f(1+\frac{t}{\sqrt{2}}, 2-\frac{t}{\sqrt{2}}) - f(1,2)}{t}$$
+            </div>
+
+            <p>となります。</p>
+
+            <p>この式は、点 $(1,2)$ から方向 $(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ に微小距離 $t$ だけ移動したときの関数値の変化率を表しています。分子は関数値の変化量、分母は移動距離を表し、その比の極限が方向微分となります。</p>
+
+            <div class="note">
+                方向ベクトル $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ は、$x$ 軸方向に $\frac{1}{\sqrt{2}}$、$y$ 軸方向に $-\frac{1}{\sqrt{2}}$ の成分を持つベクトルです。これは、$x$ 方向に正の成分、$y$ 方向に負の成分を持つ方向を表しています。
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">（4）定義式の完成</div>
+            
+            <p>以上より、関数 $f(\boldsymbol{x})$ の点 $(1,2)$ における $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ 方向への微分の定義は、</p>
+
+            <div class="formula">
+                $$\lim_{t \to 0} \frac{f(1+\frac{t}{\sqrt{2}}, 2-\frac{t}{\sqrt{2}}) - f(1,2)}{t}$$
+            </div>
+
+            <p>で与えられます。</p>
+
+            <p>この定義式は、次のように解釈できます。点 $(1,2)$ から方向ベクトル $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ に沿って微小距離 $t$ だけ移動した点 $(1+\frac{t}{\sqrt{2}}, 2-\frac{t}{\sqrt{2}})$ における関数値と、元の点 $(1,2)$ における関数値の差を、移動距離 $t$ で割った値の極限（$t \to 0$）が方向微分です。</p>
+
+            <div class="note">
+                方向微分が存在するためには、この極限が存在する必要があります。関数が全微分可能である場合、方向微分は偏導関数と方向ベクトルの内積として表すことができ、$\frac{\partial f}{\partial \boldsymbol{a}} = \nabla f \cdot \boldsymbol{a} = f_x \boldsymbol{a}_x + f_y \boldsymbol{a}_y$ となります。ただし、この問題では定義を書くことが求められているため、極限による定義式を書きます。
+            </div>
+        </div>
+
+        <div class="verification">
+            <div class="verification-title">【検証】</div>
+            
+            <p>まず、方向ベクトル $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ が単位ベクトルであることを確認します。$\|\boldsymbol{a}\| = \sqrt{(\frac{1}{\sqrt{2}})^2 + (-\frac{1}{\sqrt{2}})^2} = \sqrt{\frac{1}{2} + \frac{1}{2}} = 1$ となり、確かに単位ベクトルです。方向微分の定義では、方向ベクトルは通常単位ベクトルとして扱われるため、この確認は重要です。</p>
+
+            <p>次に、点 $(1,2)$ から方向 $\boldsymbol{a}$ に $t$ だけ移動した点が正しく計算されることを確認します。$\boldsymbol{x}_0 + t\boldsymbol{a} = (1, 2) + t(\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}}) = (1 + \frac{t}{\sqrt{2}}, 2 - \frac{t}{\sqrt{2}})$ となり、$t = 0$ のとき $(1,2)$ に戻り、$t > 0$ のとき $x$ 座標は増加し、$y$ 座標は減少することが確認できます。これは方向ベクトル $\boldsymbol{a}$ の成分が正と負であることと一致しています。</p>
+
+            <p>最後に、定義式の構造が正しいことを確認します。分子は関数値の変化量 $f(\boldsymbol{x}_0 + t\boldsymbol{a}) - f(\boldsymbol{x}_0)$ を表し、分母は移動距離 $t$ を表します。この比の極限が方向微分であり、1変数関数の微分の定義と同様の構造を持っていることを確認できます。</p>
+
+            <p>以上より求めた結果の正しさを確認しました。</p>
+        </div>
+
+        <div class="answer-box">
+            <div class="answer-title">【答】</div>
+            <p>関数 $f(\boldsymbol{x})$ の点 $(1,2)$ における $\boldsymbol{a} = (\frac{1}{\sqrt{2}},-\frac{1}{\sqrt{2}})$ 方向への微分の定義は、</p>
+            <div class="formula">
+                $$\lim_{t \to 0} \frac{f(1+\frac{t}{\sqrt{2}}, 2-\frac{t}{\sqrt{2}}) - f(1,2)}{t}$$
+            </div>
+            <p>で与えられます。ここで、$t$ は実数で、$t \to 0$ の極限を考えます。この定義式は、点 $(1,2)$ から方向ベクトル $\boldsymbol{a}$ に沿って微小距離 $t$ だけ移動したときの関数値の変化率を表しています。</p>
+        </div>
+
+    </div>
+</body>
+</html>
